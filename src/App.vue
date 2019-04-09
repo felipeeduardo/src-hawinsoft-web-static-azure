@@ -1,30 +1,23 @@
 <template>
-  <v-app>
-    <v-toolbar app dark color="primary">
-      <v-toolbar-title class="headline text-uppercase">
-        <span class="font-weight-light">HAWINSOFT</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-
-    <v-content>
-      <card-home/>
-    </v-content>
+  <v-app light>
+    <Header/>
+    <Content/>
+    <Footer/>
   </v-app>
 </template>
 
 <script>
-import CardHome from './components/CardHome'
+//components global
+import Header from "./components/Layouts/Header";
+import Content from "./components/Layouts/Content";
+import Footer from "./components/Layouts/Footer";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    CardHome
-  },
-  data () {
-    return {
-      //
-    }
+    Header,
+    Content,
+    Footer
   }
-}
+};
 </script>
