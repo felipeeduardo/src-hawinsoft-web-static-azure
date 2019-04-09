@@ -4,7 +4,7 @@
       <v-flex>
         <v-card class="elevation-4">
           <v-card-title>
-            <v-icon large left>folder</v-icon>
+            <v-icon large left color="primary">folder</v-icon>
             <span class="title font-weight-light">Process</span>
           </v-card-title>
           <v-card-text>
@@ -12,6 +12,14 @@
               <template v-slot:items="props">
                 <td class="text-xs-left">{{ props.item.name }}</td>
                 <td class="text-xs-left">{{ props.item.calories }}</td>
+                <td class="text-xs-right" style="width:15%">
+                  <v-btn flat icon color="green">
+                    <v-icon>cloud_download</v-icon>
+                  </v-btn>
+                  <v-btn flat icon color="green">
+                    <v-icon>edit</v-icon>
+                  </v-btn>
+                </td>
               </template>
             </v-data-table>
           </v-card-text>
@@ -36,6 +44,12 @@ export default {
           text: "Date",
           align: "left",
           value: "calories"
+        },
+        {
+          text: "",
+          sortable: false,
+          align: "",
+          value: ""
         }
       ],
       desserts: [

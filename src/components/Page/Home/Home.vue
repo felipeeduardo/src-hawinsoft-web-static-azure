@@ -1,19 +1,17 @@
 <template>
   <v-container grid-list-md text-xs-center>
-    <v-layout row wrap>
-      <card-admin></card-admin>
-      <card-group></card-group>
-    </v-layout>
+    <card-group></card-group>
+    <content-admin></content-admin>
   </v-container>
 </template>
 
 <script>
 import CardGroup from "@/components/Card/CardGroup";
-import CardAdmin from "@/components/Card/CardAdmin";
+import ContentAdmin from "@/organisms/Admin/ContentAdmin";
 export default {
   components: {
     CardGroup,
-    CardAdmin
+    ContentAdmin
   }
 };
 </script>
