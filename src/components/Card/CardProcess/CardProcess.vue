@@ -12,12 +12,9 @@
               <template v-slot:items="props">
                 <td class="text-xs-left">{{ props.item.name }}</td>
                 <td class="text-xs-left">{{ props.item.calories }}</td>
-                <td class="text-xs-right" style="width:15%">
+                <td class="text-xs-right" style="width:5%;">
                   <v-btn flat icon color="green">
                     <v-icon>cloud_download</v-icon>
-                  </v-btn>
-                  <v-btn flat icon color="green">
-                    <v-icon>edit</v-icon>
                   </v-btn>
                 </td>
               </template>

@@ -20,14 +20,6 @@ export default {
   components: {
     MenuHeader
   },
-  data: () => ({
-    items: [
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me 2" }
-    ]
-  }),
   methods: {
     gohome: function() {
       router.push({ name: "Home" });

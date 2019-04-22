@@ -2,9 +2,9 @@
   <v-container>
     <v-layout justify-center wrap>
       <v-flex xs12 sm5>
-        <v-card class="elevation-3">
+        <v-card class="elevation-4">
           <v-card-title>
-            <span class="title font-weight-light">Login</span>
+            <span class="title font-weight-light">New user</span>
           </v-card-title>
           <v-card-text>
             <v-form>
@@ -16,16 +16,20 @@
                 id="password"
                 type="password"
               ></v-text-field>
+              <v-text-field
+                prepend-icon="lock"
+                name="password"
+                label="Confirm Password"
+                id="password"
+                type="password"
+              ></v-text-field>
+              <v-text-field prepend-icon="announcement" name="email" label="Project" type="text"></v-text-field>
             </v-form>
-            <span class="font-weight-light">I forgot my password</span>
           </v-card-text>
           <v-card-actions>
-            <v-btn flat color="primary" @click="goNewUse()">
-              <v-icon>person_add</v-icon>
-            </v-btn>
             <v-spacer></v-spacer>
             <v-btn color="success" flat>
-              <v-icon>done</v-icon>
+              <v-icon>person_add</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -37,12 +41,7 @@
 </template>
 
 <script>
-import router from "@/router";
 export default {
-  methods: {
-    goNewUse: function() {
-      router.push({ name: "Create" });
-    }
-  }
+  data: () => ({})
 };
 </script>
