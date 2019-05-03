@@ -1,7 +1,5 @@
 <template>
-  
-    <card-login></card-login>
-  
+  <card-login></card-login>
 </template>
 
 <script>
