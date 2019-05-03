@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PageLogin from '@/components/Page/User/Login'
-import PageCreateUser from '@/components/Page/User/Create'
-import PageHome from '@/components/Page/Home'
-import PageClient from '@/components/Page/Client'
-import PageProcess from '@/components/Page/Process'
-import NotFound from '@/components/Page/NotFound'
+import PublicPageHome from '@/components/Page/Public/Home'
+
+import PageLogin from '@/components/Page/Private/User/Login'
+import PageCreateUser from '@/components/Page/Private/User/Create'
+import PageHome from '@/components/Page/Private/Home'
+import PageClient from '@/components/Page/Private/Client'
+import PageProcess from '@/components/Page/Private/Process'
+import NotFound from '@/components/Page/Private/NotFound'
 
 Vue.use(Router)
 
@@ -13,6 +15,11 @@ export default new Router({
     routes: [
         {
             path: "/",
+            name: 'Public',
+            component: PublicPageHome
+        },
+        {
+            path: '/login',
             name: 'Login',
             component: PageLogin
         },
