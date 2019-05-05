@@ -33,7 +33,9 @@
               @verify="onVerify"
               @expired="onExpired"
               :sitekey="sitekey"
-            ></vue-recaptcha>
+            >
+              <button>Click me</button>
+            </vue-recaptcha>
             <v-btn color="success" flat>
               <v-icon>person_add</v-icon>
             </v-btn>
