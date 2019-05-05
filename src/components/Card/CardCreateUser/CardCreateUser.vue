@@ -28,11 +28,15 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <vue-recaptcha sitekey="6LdgGlcUAAAAAFIsWvC1zj-34STRZkLGBRcTArdl">
-              <v-btn color="success" flat>
-                <v-icon>person_add</v-icon>
-              </v-btn>
-            </vue-recaptcha>
+            <vue-recaptcha
+              ref="recaptcha"
+              @verify="onVerify"
+              @expired="onExpired"
+              :sitekey="sitekey"
+            ></vue-recaptcha>
+            <v-btn color="success" flat>
+              <v-icon>person_add</v-icon>
+            </v-btn>
           </v-card-actions>
         </v-card>
 
@@ -41,12 +45,31 @@
     </v-layout>
   </v-container>
 </template>
-
+<script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
 <script>
 import VueRecaptcha from "vue-recaptcha";
 export default {
   components: {
     VueRecaptcha
+  },
+  data() {
+    return {
+      sitekey: "6LdgGlcUAAAAAFIsWvC1zj-34STRZkLGBRcTArdl"
+    };
+  },
+  methods: {
+    onSubmit: function() {
+      this.$refs.invisibleRecaptcha.execute();
+    },
+    onVerify: function(response) {
+      console.log("Verify: " + response);
+    },
+    onExpired: function() {
+      console.log("Expired");
+    },
+    resetRecaptcha() {
+      this.$refs.recaptcha.reset(); // Direct call reset method
+    }
   }
 };
 </script>
