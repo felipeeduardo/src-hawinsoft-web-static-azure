@@ -24,19 +24,13 @@
                 type="password"
               ></v-text-field>
               <v-text-field prepend-icon="announcement" name="email" label="Project" type="text"></v-text-field>
+              <v-flex xs12>
+                <vue-recaptcha :sitekey="sitekey"></vue-recaptcha>
+              </v-flex>
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <vue-recaptcha
-              ref="recaptcha"
-              @verify="onVerify"
-              @expired="onExpired"
-              :sitekey="sitekey"
-            >
-              <button>Click me</button>
-            </vue-recaptcha>
-            <v-btn color="success" flat>
+            <v-btn color="primary" flat block>
               <v-icon>person_add</v-icon>
             </v-btn>
           </v-card-actions>
@@ -56,22 +50,8 @@ export default {
   },
   data() {
     return {
-      sitekey: "6LdgGlcUAAAAAFIsWvC1zj-34STRZkLGBRcTArdl"
+      sitekey: "6LeZ5KEUAAAAACpusBSqlh7MWDGXuIp42Ogkg16z"
     };
-  },
-  methods: {
-    onSubmit: function() {
-      this.$refs.invisibleRecaptcha.execute();
-    },
-    onVerify: function(response) {
-      console.log("Verify: " + response);
-    },
-    onExpired: function() {
-      console.log("Expired");
-    },
-    resetRecaptcha() {
-      this.$refs.recaptcha.reset(); // Direct call reset method
-    }
   }
 };
 </script>
