@@ -25,7 +25,7 @@
               ></v-text-field>
               <v-text-field prepend-icon="announcement" name="email" label="Project" type="text"></v-text-field>
               <v-flex xs12>
-                <vue-recaptcha :sitekey="sitekey"></vue-recaptcha>
+                <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
               </v-flex>
             </v-form>
           </v-card-text>
@@ -52,6 +52,14 @@ export default {
     return {
       sitekey: "6LeZ5KEUAAAAACpusBSqlh7MWDGXuIp42Ogkg16z"
     };
+  },
+  methods: {
+    onVerify: function(response) {
+      console.log("Verify: " + response);
+    },
+    onExpired: function() {
+      console.log("Expired");
+    }
   }
 };
 </script>
