@@ -5,7 +5,7 @@
     <Footer/>
   </v-app>
 </template>
-
+<script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
 <script>
 //components global
 import Header from "./components/Layouts/Header";
