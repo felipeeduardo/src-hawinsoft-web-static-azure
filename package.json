@@ -12,6 +12,7 @@
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "vue": "^2.6.6",
+    "vue-recaptcha": "^1.1.1",
     "vue-router": "^3.0.3",
     "vuetify": "^1.5.5"
   },

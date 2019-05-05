@@ -28,9 +28,16 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="success" flat>
-              <v-icon>person_add</v-icon>
-            </v-btn>
+            <vue-recaptcha
+              ref="recaptcha"
+              @verify="onVerify"
+              @expired="onExpired"
+              :sitekey="sitekey"
+            >
+              <v-btn color="success" flat>
+                <v-icon>person_add</v-icon>
+              </v-btn>
+            </vue-recaptcha>
           </v-card-actions>
         </v-card>
 
@@ -41,7 +48,27 @@
 </template>
 
 <script>
+import VueRecaptcha from "vue-recaptcha";
 export default {
-  data: () => ({})
+  components: {
+    VueRecaptcha
+  },
+  data: {
+    sitekey: "6LdgGlcUAAAAAFIsWvC1zj-34STRZkLGBRcTArdl"
+  },
+  methods: {
+    onSubmit: function() {
+      this.$refs.invisibleRecaptcha.execute();
+    },
+    onVerify: function(response) {
+      console.log("Verify: " + response);
+    },
+    onExpired: function() {
+      console.log("Expired");
+    },
+    resetRecaptcha() {
+      this.$refs.recaptcha.reset(); // Direct call reset method
+    }
+  }
 };
 </script>
