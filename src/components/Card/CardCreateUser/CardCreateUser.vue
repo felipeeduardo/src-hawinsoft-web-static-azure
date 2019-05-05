@@ -29,9 +29,6 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <vue-recaptcha
-              ref="recaptcha"
-              @verify="onVerify"
-              @expired="onExpired"
               :sitekey="sitekey"
             >
               <button>Click me</button>
