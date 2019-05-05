@@ -29,6 +29,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <vue-recaptcha
+              ref="recaptcha"
+              @verify="onVerify"
+              @expired="onExpired"
               :sitekey="sitekey"
             >
               <button>Click me</button>
@@ -44,7 +47,7 @@
     </v-layout>
   </v-container>
 </template>
-<script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
+
 <script>
 import VueRecaptcha from "vue-recaptcha";
 export default {
