@@ -1,17 +1,17 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <card-group></card-group>
-    <content-admin></content-admin>
+    <card-download></card-download>
   </v-container>
 </template>
 
 <script>
 import CardGroup from "@/components/Card/CardGroup";
-import ContentAdmin from "@/organisms/Admin/ContentAdmin";
+import CardDownload from "@/components/Card/CardDownload";
 export default {
   components: {
     CardGroup,
-    ContentAdmin
+    CardDownload
   }
 };
 </script>

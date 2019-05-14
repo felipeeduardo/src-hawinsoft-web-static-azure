@@ -14,7 +14,7 @@
                 <td class="text-xs-left">{{ props.item.calories }}</td>
                 <td class="text-xs-right" style="width:5%;">
                   <v-btn flat icon color="green">
-                    <v-icon>cloud_download</v-icon>
+                    <v-icon>input</v-icon>
                   </v-btn>
                 </td>
               </template>
