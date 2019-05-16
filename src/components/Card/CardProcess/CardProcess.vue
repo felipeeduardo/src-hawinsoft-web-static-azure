@@ -13,7 +13,7 @@
                 <td class="text-xs-left">{{ props.item.name }}</td>
                 <td class="text-xs-left">{{ props.item.calories }}</td>
                 <td class="text-xs-right" style="width:5%;">
-                  <v-btn flat icon color="green">
+                  <v-btn flat icon color="green" @click="goStep(props.item.id)">
                     <v-icon>input</v-icon>
                   </v-btn>
                 </td>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import router from "@/router";
 export default {
   data() {
     return {
@@ -51,35 +52,47 @@ export default {
       ],
       desserts: [
         {
+          id: 1,
           name: "Frozen Yogurt",
           calories: 159
         },
         {
+          id: 2,
           name: "Ice cream sandwich",
           calories: 237
         },
         {
+          id: 3,
           name: "Eclair",
           calories: 262
         },
         {
+          id: 4,
           name: "Cupcake",
           calories: 305
         },
         {
+          id: 5,
           name: "Gingerbread",
           calories: 356
         },
         {
+          id: 6,
           name: "Jelly bean",
           calories: 375
         },
         {
+          id: 7,
           name: "Lollipop",
           calories: 392
         }
       ]
     };
+  },
+  methods: {
+    goStep: function(id) {
+      router.push({ name: "Steps", params: { Pid: id } });
+    }
   }
 };
 </script>
