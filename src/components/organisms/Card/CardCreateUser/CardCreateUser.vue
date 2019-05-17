@@ -51,8 +51,7 @@
                 :rules="isProjectValid"
               ></v-text-field>
               <v-checkbox v-model="form.checkbox" :rules="isCheck" label="Do you agree?" required></v-checkbox>
-              <br>
-              <v-flex xs12>
+              <v-flex xs12 mt-3>
                 <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
               </v-flex>
             </v-form>
@@ -60,7 +59,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn :disabled="!valid" color="success" flat @click="validate">
-              <v-icon>done</v-icon>Register
+              <v-icon left>done</v-icon>Register
             </v-btn>
           </v-card-actions>
           <v-snackbar v-model="snackbar" :color="color" :timeout="timeout" :top="y === 'top'">
@@ -107,7 +106,8 @@ export default {
       ],
       isConfPasswordValid: [
         v => !!v || "Confirm password is required",
-        v => v.length >= 8 || "Confirm password must be than 8 characters"
+        v => v.length >= 8 || "Confirm password must be than 8 characters",
+        v => this.form.password === this.form.confpassword || "password and confirm password divergent"
       ],
       isProjectValid: [v => !!v || "Project is required"],
       isCheck: [v => !!v || "You must agree to continue"]

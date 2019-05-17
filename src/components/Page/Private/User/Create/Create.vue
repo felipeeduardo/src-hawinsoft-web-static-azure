@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CardCreate from "@/components/Card/CardCreateUser";
+import CardCreate from "@/components/organisms/Card/CardCreateUser";
 export default {
   components: {
     CardCreate

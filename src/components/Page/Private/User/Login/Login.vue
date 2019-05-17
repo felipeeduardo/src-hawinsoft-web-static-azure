@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CardLogin from "@/components/Card/CardLogin";
+import CardLogin from "@/components/organisms/Card/CardLogin";
 export default {
   components: {
     CardLogin

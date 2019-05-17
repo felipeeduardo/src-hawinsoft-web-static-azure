@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import MenuHeader from "@/components/Menu";
+import MenuHeader from "@/components/organisms/Menu/Private/MenuHeader";
 import router from "@/router";
 export default {
   components: {

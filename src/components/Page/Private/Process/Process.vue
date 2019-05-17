@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CardProcess from "@/components/Card/CardProcess";
+import CardProcess from "@/components/organisms/Card/CardProcess";
 export default {
   components: {
     CardProcess

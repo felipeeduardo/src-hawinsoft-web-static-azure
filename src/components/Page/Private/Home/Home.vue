@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import CardGroup from "@/components/Card/CardGroup";
-import CardDownload from "@/components/Card/CardDownload";
+import CardGroup from "@/components/organisms/Card/CardGroup";
+import CardDownload from "@/components/organisms/Card/CardDownload";
 export default {
   components: {
     CardGroup,
