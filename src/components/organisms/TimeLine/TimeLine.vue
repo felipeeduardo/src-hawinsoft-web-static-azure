@@ -1,27 +1,45 @@
 <template>
-  <v-container>
-    <div class="text-xs-center">
-      <v-btn color="success" outline small>Export</v-btn>
-      <v-btn color="success" outline small>Include RPA</v-btn>
+  <v-card class="elevation-3">
+    <v-card-title>
+      <v-icon large left color="primary">folder</v-icon>
+      <span class="title font-weight-light">[Process name]</span>
+    </v-card-title>
+    <div>
+      <v-btn flat small color="primary">
+        <v-icon left>save_alt</v-icon>Cypress
+      </v-btn>
+      <v-btn flat small color="primary">
+        <v-icon left>settings_system_daydream</v-icon>RPA
+      </v-btn>
     </div>
-    <v-timeline align-top>
-      <v-timeline-item v-for="(item, i) in items" :key="i" color="green" icon="check" fill-dot>
-        <v-card class="elevation-4">
-          <v-card-text class="white text--primary">
-            <p>
-              <b>Data:</b>
-              Lorem.
-            </p>
-            <p>
-              <b>Selection:</b>
-              Lorem ipsum dolor sit amet, no nam oblique veritus.
-            </p>
-            <v-btn color="primary" class="mx-0" outline small>Edit</v-btn>
-          </v-card-text>
-        </v-card>
-      </v-timeline-item>
-    </v-timeline>
-  </v-container>
+    <v-card-text>
+      <v-timeline align-top dense>
+        <v-timeline-item
+          color="success"
+          small
+          fill-dot
+          v-for="(item, i) in items"
+          :key="i"
+          icon="check"
+        >
+          <v-layout pt-3>
+            <v-flex xs4>
+              <strong>Selection:</strong>
+              <div class="caption ellipsis">[Selection]</div>
+            </v-flex>
+            <v-flex>
+              <strong>Event:</strong>
+              <div class="caption ellipsis">click</div>
+            </v-flex>
+            <v-flex>
+              <strong>Data:</strong>
+              <div class="caption ellipsis">Mobile App</div>
+            </v-flex>
+          </v-layout>
+        </v-timeline-item>
+      </v-timeline>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

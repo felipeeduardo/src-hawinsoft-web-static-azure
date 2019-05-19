@@ -7,7 +7,7 @@ import PageCreateUser from '@/components/Page/Private/User/Create'
 import PageHome from '@/components/Page/Private/Home'
 import PageClient from '@/components/Page/Private/Client'
 import PageProcess from '@/components/Page/Private/Process'
-import PageStep from '@/components/Page/Private/Steps'
+import PageRun from '@/components/Page/Private/Run'
 import NotFound from '@/components/Page/Private/NotFound'
 
 Vue.use(Router)
@@ -35,9 +35,9 @@ export default new Router({
             component: PageProcess
         },
         {
-            path: '/step/:Pid',
-            name: 'Steps',
-            component: PageStep
+            path: '/run/:Pid',
+            name: 'Run',
+            component: PageRun
         },
         {
             path: '/client',

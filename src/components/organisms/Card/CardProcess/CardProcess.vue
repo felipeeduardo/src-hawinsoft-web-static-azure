@@ -13,7 +13,7 @@
                 <td class="text-xs-left">{{ props.item.name }}</td>
                 <td class="text-xs-left">{{ props.item.calories }}</td>
                 <td class="text-xs-right" style="width:5%;">
-                  <v-btn flat icon color="green" @click="goStep(props.item.id)">
+                  <v-btn flat icon color="green" @click="goRun(props.item.id)">
                     <v-icon>input</v-icon>
                   </v-btn>
                 </td>
@@ -90,8 +90,8 @@ export default {
     };
   },
   methods: {
-    goStep: function(id) {
-      router.push({ name: "Steps", params: { Pid: id } });
+    goRun: function(id) {
+      router.push({ name: "Run", params: { Pid: id } });
     }
   }
 };
