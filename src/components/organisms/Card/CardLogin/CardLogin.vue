@@ -23,8 +23,8 @@
                 id="password"
                 type="password"
                 required
-                maxlength="8"
-                :counter="8"
+                maxlength="6"
+                :counter="6"
                 v-model="form.password"
                 :rules="isPasswordValid"
               ></v-text-field>
@@ -38,11 +38,11 @@
           </v-card-text>
           <v-card-actions>
             <v-btn flat color="primary" @click="goNewUse()">
-              <v-icon left >person_add</v-icon> Register
+              <v-icon left>person_add</v-icon>Register
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn :disabled="!valid" color="success" flat @click="validate">
-              <v-icon left>done</v-icon> Ok
+              <v-icon left>done</v-icon>Ok
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -54,6 +54,7 @@
 <script>
 import router from "@/router";
 import VueRecaptcha from "vue-recaptcha";
+import http from "@/services/httpClient";
 export default {
   components: {
     VueRecaptcha
@@ -62,6 +63,7 @@ export default {
     return {
       sitekey: "6LesJKQUAAAAAPuojWPcTSEYQbDBOzmQtMTS8j_g",
       valid: true,
+      recaptcha: false,
       reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       form: {
         email: "",
@@ -73,44 +75,17 @@ export default {
       ],
       isPasswordValid: [
         v => !!v || "Password is required",
-        v => v.length >= 8 || "Password must be than 8 characters"
+        v => v.length >= 6 || "Password must be than 8 characters"
       ]
     };
   },
   methods: {
     onVerify: function(recaptchaToken) {
-      //console.log("Verify: " + recaptchaToken);
-
-      const self = this;
-      self.status = "submitting";
-      self.$refs.recaptcha.reset();
-
-      axios
-        .post("https://vue-recaptcha-demo.herokuapp.com/signup", this.form)
-        .then(response => {
-          self.sucessfulServerResponse = response.data.message;
-        })
-        .catch(err => {
-          self.serverError = getErrorMessage(err);
-
-          //helper to get a displayable message to the user
-          function getErrorMessage(err) {
-            let responseBody;
-            responseBody = err.response;
-            if (!responseBody) {
-              responseBody = err;
-            } else {
-              responseBody = err.response.data || responseBody;
-            }
-            return responseBody.message || JSON.stringify(responseBody);
-          }
-        })
-        .then(() => {
-          self.status = "";
-        });
+      if (recaptchaToken) {
+        this.recaptcha = true;
+      }
     },
     onExpired: function() {
-      console.log("Expired");
       this.$refs.recaptcha.reset();
     },
     goNewUse() {
@@ -118,7 +93,24 @@ export default {
     },
     validate() {
       if (this.$refs.form.validate()) {
-        router.push({ name: "Home" });
+        if (this.recaptcha) {
+          http
+            .login(this.form)
+            .then(res => {
+              console.log("id", res.data.id);
+              console.log(this.onVerify());
+              if (res.data.auth) {
+                sessionStorage.token_hawinsoft = res.data.token;
+                sessionStorage.id_hawinsoft = res.data.id;
+                router.push({ name: "Home" });
+              }
+            })
+            .catch(err => {
+              console.log("err", err);
+            });
+        }
+      } else {
+        console.log("recaptcha invalid");
       }
     }
   }

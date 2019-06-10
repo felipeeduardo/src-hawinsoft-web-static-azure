@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export const http = axios.create({
-    baseURL: 'http://felipeeduardo-com.umbler.net/priska'
+    baseURL: 'http://api-hawinsoft-com-br.umbler.net/hawinsoft/api/'
 })
