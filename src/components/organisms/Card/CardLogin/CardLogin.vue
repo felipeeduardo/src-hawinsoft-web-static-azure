@@ -41,13 +41,18 @@
               <v-icon left>person_add</v-icon>Register
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn :disabled="!valid" color="success" flat @click="validate">
+            <v-btn :disabled="!valid" color="success" flat @click="validate(); snackbar = true">
               <v-icon left>done</v-icon>Ok
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
+    <!-- snackbar-->
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="y === 'top'" :color="snackcolor">
+      {{ snacktext }}
+      <v-btn flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -69,6 +74,11 @@ export default {
         email: "",
         password: ""
       },
+      snackbar: false,
+      y: "top",
+      timeout: 6000,
+      snacktext: "",
+      snackcolor: "",
       isEmailValid: [
         v => !!v || "Email is required",
         v => this.reg.test(this.form.email) || "Invalid email"
@@ -103,6 +113,9 @@ export default {
                 sessionStorage.token_hawinsoft = res.data.token;
                 sessionStorage.id_hawinsoft = res.data.id;
                 router.push({ name: "Home" });
+              } else {
+                this.snacktext = "Invalid user or password !";
+                this.snackcolor = "error";
               }
             })
             .catch(err => {
@@ -110,7 +123,8 @@ export default {
             });
         }
       } else {
-        console.log("recaptcha invalid");
+        this.snacktext = "Invalid Recaptcha !";
+        this.snackcolor = "error";
       }
     }
   }
