@@ -41,7 +41,7 @@
               <v-icon left>person_add</v-icon>Register
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn :disabled="!valid" color="success" flat @click="validate(); snackbar = true">
+            <v-btn :disabled="!valid" color="success" flat @click="validate()">
               <v-icon left>done</v-icon>Ok
             </v-btn>
           </v-card-actions>
@@ -107,13 +107,13 @@ export default {
           http
             .login(this.form)
             .then(res => {
-              console.log("id", res.data.id);
-              console.log(this.onVerify());
               if (res.data.auth) {
+                this.snackbar = false;
                 sessionStorage.token_hawinsoft = res.data.token;
                 sessionStorage.id_hawinsoft = res.data.id;
                 router.push({ name: "Home" });
               } else {
+                this.snackbar = true;
                 this.snacktext = "Invalid user or password !";
                 this.snackcolor = "error";
               }
@@ -123,6 +123,7 @@ export default {
             });
         }
       } else {
+        this.snackbar = true;
         this.snacktext = "Invalid Recaptcha !";
         this.snackcolor = "error";
       }
