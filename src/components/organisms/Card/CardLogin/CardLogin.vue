@@ -102,8 +102,6 @@ export default {
       router.push({ name: "Create" });
     },
     validate() {
-      sessionStorage.token_hawinsoft = "1234";
-      sessionStorage.id_hawinsoft = 123;
       if (this.$refs.form.validate()) {
         if (this.recaptcha) {
           http
