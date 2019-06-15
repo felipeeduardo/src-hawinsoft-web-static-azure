@@ -2,7 +2,7 @@
   <v-menu bottom left>
     <template v-slot:activator="{ on }">
       <v-btn dark icon v-on="on">
-        <v-icon>person</v-icon>
+        entrar
       </v-btn>
     </template>
   </v-menu>
