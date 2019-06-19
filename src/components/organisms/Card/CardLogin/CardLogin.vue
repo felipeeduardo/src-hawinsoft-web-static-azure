@@ -23,8 +23,8 @@
                 id="password"
                 type="password"
                 required
-                maxlength="6"
-                :counter="6"
+                maxlength="8"
+                :counter="8"
                 v-model="form.password"
                 :rules="isPasswordValid"
               ></v-text-field>
@@ -60,12 +60,14 @@
 import router from "@/router";
 import VueRecaptcha from "vue-recaptcha";
 import http from "@/services/httpClient";
+import { EventBus } from "@/services/event-bus.js";
 export default {
   components: {
     VueRecaptcha
   },
   data() {
     return {
+      showMenuPrivate: false,
       sitekey: "6LesJKQUAAAAAPuojWPcTSEYQbDBOzmQtMTS8j_g",
       valid: true,
       recaptcha: false,
@@ -85,7 +87,7 @@ export default {
       ],
       isPasswordValid: [
         v => !!v || "Password is required",
-        v => v.length >= 6 || "Password must be than 8 characters"
+        v => v.length >= 8 || "Password must be than 8 characters"
       ]
     };
   },
@@ -101,7 +103,7 @@ export default {
     goNewUse() {
       router.push({ name: "Create" });
     },
-    validate() {
+    validate(event) {
       if (this.$refs.form.validate()) {
         if (this.recaptcha) {
           http
@@ -111,6 +113,7 @@ export default {
                 this.snackbar = false;
                 sessionStorage.token_hawinsoft = res.data.token;
                 sessionStorage.id_hawinsoft = res.data.id;
+                EventBus.$emit("showMenuPrivate", true);
                 router.push({ name: "Home" });
               } else {
                 this.snackbar = true;

@@ -5,6 +5,10 @@ import PublicPageHome from '@/components/Page/Public/Home'
 import PageLogin from '@/components/Page/Private/User/Login'
 import PageCreateUser from '@/components/Page/Private/User/Create'
 import PageHome from '@/components/Page/Private/Home'
+import PageRpa from '@/components/Page/Private/Rpa'
+import PageTest from '@/components/Page/Private/Test'
+import PageReport from '@/components/Page/Private/Report'
+import PagePayment from '@/components/Page/Private/Payment'
 import PageClient from '@/components/Page/Private/Client'
 import PageProcess from '@/components/Page/Private/Process'
 import PageRun from '@/components/Page/Private/Run'
@@ -28,6 +32,26 @@ export default new Router({
             path: '/home',
             name: 'Home',
             component: PageHome
+        },
+        {
+            path: '/rpa/:Pid',
+            name: 'Rpa',
+            component: PageRpa
+        },
+        {
+            path: '/test/:Pid',
+            name: 'Test',
+            component: PageTest
+        },
+        {
+            path: '/report/:Pid',
+            name: 'Report',
+            component: PageReport
+        },
+        {
+            path: '/payment/:Pid',
+            name: 'Payment',
+            component: PagePayment
         },
         {
             path: '/process/:Pid',

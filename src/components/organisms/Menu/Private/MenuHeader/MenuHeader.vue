@@ -1,16 +1,15 @@
 <template>
   <v-menu bottom left>
     <template v-slot:activator="{ on }">
-      <div v-if="showMenuPrivate">
+      <div v-show="showMenuPrivate">
         <v-btn dark icon v-on="on">
           <v-icon>person</v-icon>
         </v-btn>
       </div>
-      <div v-if="!showMenuPrivate">
+      <div v-show="!showMenuPrivate">
         <v-btn outline @click="goLogin()">LOG IN</v-btn>
       </div>
     </template>
-
     <v-list v-if="showMenuPrivate">
       <v-list-tile>
         <v-list-tile-title>
@@ -28,23 +27,33 @@
 </template>
 
 <script>
+import { EventBus } from "@/services/event-bus.js";
 import router from "@/router";
 export default {
-  showMenuPrivate: false,
-  id: "",
-  token: "",
-  beforeCreate() {
+  data() {
+    return {
+      showMenuPrivate: false,
+      id: "",
+      token: ""
+    };
+  },
+  created() {
     if (
-      sessionStorage.getItem("id_hawinsoft") != "" &&
-      sessionStorage.getItem("token_hawinsoft") != ""
+      sessionStorage.getItem("id_hawinsoft") ||
+      sessionStorage.getItem("token_hawinsoft")
     ) {
       this.showMenuPrivate = true;
       this.id = sessionStorage.getItem("id_hawinsoft");
       this.token = sessionStorage.getItem("token_hawinsoft");
     } else {
       this.showMenuPrivate = false;
-      router.push({ name: "Public" });
+      //router.push({ name: "Public" });
     }
+  },
+  mounted() {
+    EventBus.$on("showMenuPrivate", event => {
+      this.showMenuPrivate = event;
+    });
   },
   methods: {
     goLogin() {
@@ -53,6 +62,7 @@ export default {
     logout() {
       sessionStorage.id_hawinsoft = "";
       sessionStorage.token_hawinsoft = "";
+      this.showMenuPrivate = false;
       router.push({ name: "Public" });
     }
   }
