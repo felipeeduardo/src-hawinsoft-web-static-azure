@@ -16,18 +16,10 @@ export default {
       rpa: true,
       cards: [
         {
-          banner: require("@/assets/img/hawinsoft-add-user.png"),
-          title: "Add user",
-          path: "Rpa",
-          enabled: true,
-          hoveText: "",
-          hoveTextColor: "",
-          hoveColor: "light-blue lighten-4"
-        },
-        {
+          idRpa: 1,
           banner: require("@/assets/img/hawinsoft-rpa-web.png"),
-          title: "Web vendas - VIVO",
-          path: "Rpa",
+          title: "RPA - Web vendas",
+          path: "RpaUniue",
           enabled: true,
           hoveText: "Enabled",
           hoveTextColor: "green--text",

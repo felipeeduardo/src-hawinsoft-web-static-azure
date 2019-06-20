@@ -6,7 +6,7 @@
           slot-scope="{ hover }"
           class="elevation-3 text-md-center"
           :style="{ cursor: 'pointer'}"
-          @click="goPath(item.path)"
+          @click="goPath(item.path, item.idRpa)"
         >
           <div class="py-4">
             <v-img height="200px" contain :src="item.banner"></v-img>
@@ -38,10 +38,10 @@ export default {
     }
   },
   methods: {
-    goPath(path) {
+    goPath(path, id) {
       router.push({
         name: `${path}`,
-        params: { Pid: sessionStorage.getItem("id_hawinsoft") }
+        params: { Pid: sessionStorage.getItem("id_hawinsoft"), Rid: id }
       });
     }
   }

@@ -6,15 +6,25 @@ import PageLogin from '@/components/Page/Private/User/Login'
 import PageCreateUser from '@/components/Page/Private/User/Create'
 import PageHome from '@/components/Page/Private/Home'
 import PageRpa from '@/components/Page/Private/Rpa'
-import PageTest from '@/components/Page/Private/Test'
+import PageRpaUnique from '@/components/Page/Private/RpaUnique'
+//import PageTest from '@/components/Page/Private/Test'
 import PageReport from '@/components/Page/Private/Report'
-import PagePayment from '@/components/Page/Private/Payment'
+//import PagePayment from '@/components/Page/Private/Payment'
 import PageClient from '@/components/Page/Private/Client'
 import PageProcess from '@/components/Page/Private/Process'
 import PageRun from '@/components/Page/Private/Run'
 import NotFound from '@/components/Page/Private/NotFound'
+import UnderConstruction from '@/components/Page/Private/UnderConstruction'
 
 Vue.use(Router)
+
+const ifAuthenticated = (to, from, next) => {
+    if (sessionStorage.getItem("id_hawinsoft")) {
+        next()
+        return
+    }
+    next('/login')
+}
 
 export default new Router({
     routes: [
@@ -29,54 +39,71 @@ export default new Router({
             component: PageLogin
         },
         {
-            path: '/home',
-            name: 'Home',
-            component: PageHome
-        },
-        {
-            path: '/rpa/:Pid',
-            name: 'Rpa',
-            component: PageRpa
-        },
-        {
-            path: '/test/:Pid',
-            name: 'Test',
-            component: PageTest
-        },
-        {
-            path: '/report/:Pid',
-            name: 'Report',
-            component: PageReport
-        },
-        {
-            path: '/payment/:Pid',
-            name: 'Payment',
-            component: PagePayment
-        },
-        {
-            path: '/process/:Pid',
-            name: 'Process',
-            component: PageProcess
-        },
-        {
-            path: '/run/:Pid',
-            name: 'Run',
-            component: PageRun
-        },
-        {
-            path: '/client',
-            name: 'Client',
-            component: PageClient
-        },
-        {
             path: '/newuser',
             name: 'Create',
-            component: PageCreateUser
+            component: PageCreateUser,
         },
         {
             path: '*',
             name: 'NotFound',
             component: NotFound
+        },
+        {
+            path: '/home',
+            name: 'Home',
+            component: PageHome,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/rpa/:Pid',
+            name: 'Rpa',
+            component: PageRpa,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            //Pid = id_user | Rid = id_Rpa 
+            path: '/rpa/:Pid/:Rid',
+            name: 'RpaUniue',
+            component: PageRpaUnique,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/test/:Pid',
+            name: 'Test',
+            component: UnderConstruction,
+            //component: PageTest,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/report/:Pid',
+            name: 'Report',
+            component: PageReport,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/payment/:Pid',
+            name: 'Payment',
+            component: UnderConstruction,
+            //component: PagePayment,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/process/:Pid',
+            name: 'Process',
+            component: PageProcess,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/run/:Pid',
+            name: 'Run',
+            component: PageRun,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/client',
+            name: 'Client',
+            component: PageClient,
+            beforeEnter: ifAuthenticated
         }
     ]
 })
