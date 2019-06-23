@@ -113,6 +113,7 @@ export default {
                 this.snackbar = false;
                 sessionStorage.token_hawinsoft = res.data.token;
                 sessionStorage.id_hawinsoft = res.data.id;
+                sessionStorage.email_hawinsoft = res.data.email;
                 EventBus.$emit("showMenuPrivate", true);
                 router.push({ name: "Home" });
               } else {

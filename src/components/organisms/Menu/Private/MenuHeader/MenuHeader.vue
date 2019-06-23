@@ -14,7 +14,7 @@
       <v-list-tile>
         <v-list-tile-title>
           <v-icon color="primary">person</v-icon>
-          {{id}}
+          {{email}}
         </v-list-tile-title>
       </v-list-tile>
       <v-list-tile>
@@ -34,20 +34,22 @@ export default {
     return {
       showMenuPrivate: false,
       id: "",
+      email: "",
       token: ""
     };
   },
   created() {
     if (
       sessionStorage.getItem("id_hawinsoft") ||
-      sessionStorage.getItem("token_hawinsoft")
+      sessionStorage.getItem("token_hawinsoft") ||
+      sessionStorage.getItem("email_hawinsoft")
     ) {
       this.showMenuPrivate = true;
       this.id = sessionStorage.getItem("id_hawinsoft");
+      this.email = sessionStorage.getItem("email_hawinsoft");
       this.token = sessionStorage.getItem("token_hawinsoft");
     } else {
       this.showMenuPrivate = false;
-      //router.push({ name: "Public" });
     }
   },
   mounted() {
