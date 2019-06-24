@@ -31,26 +31,26 @@
               ></v-text-field>
               <v-text-field
                 prepend-icon="lock"
-                name="confpassword"
+                name="confirmpassword"
                 label="Confirm Password"
-                id="confpassword"
+                id="confirmpassword"
                 type="password"
                 required
                 maxlength="8"
                 :counter="8"
-                v-model="form.confpassword"
-                :rules="isConfPasswordValid"
+                v-model="form.confirmpassword"
+                :rules="isConfirmPasswordValid"
               ></v-text-field>
               <v-text-field
                 prepend-icon="business"
-                name="project"
+                name="company"
                 label="Company or project"
                 type="text"
                 required
-                v-model="form.project"
-                :rules="isProjectValid"
+                v-model="form.company"
+                :rules="isCompanyValid"
               ></v-text-field>
-              <v-checkbox v-model="form.checkbox" :rules="isCheck" label="Do you agree?" required></v-checkbox>
+              <v-checkbox v-model="checkbox" :rules="isCheck" label="Do you agree?" required></v-checkbox>
               <v-flex xs12 mt-3>
                 <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
               </v-flex>
@@ -62,9 +62,10 @@
               <v-icon left>done</v-icon>Register
             </v-btn>
           </v-card-actions>
-          <v-snackbar v-model="snackbar" :color="color" :timeout="timeout" :top="y === 'top'">
-            {{ text }}
-            <v-btn dark flat @click="snackbar = false">Close</v-btn>
+          <!-- snackbar-->
+          <v-snackbar v-model="snackbar" :timeout="timeout" :top="y === 'top'" :color="snackcolor">
+            {{ snacktext }}
+            <v-btn flat @click="snackbar = false">Close</v-btn>
           </v-snackbar>
         </v-card>
       </v-flex>
@@ -74,6 +75,8 @@
 
 <script>
 import VueRecaptcha from "vue-recaptcha";
+import http from "@/services/httpClient";
+import router from "@/router";
 export default {
   components: {
     VueRecaptcha
@@ -81,21 +84,21 @@ export default {
   data() {
     return {
       valid: true,
+      recaptcha: false,
       sitekey: "6LeZ5KEUAAAAACpusBSqlh7MWDGXuIp42Ogkg16z",
       reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       form: {
         email: "",
         password: "",
-        confpassword: "",
-        project: "",
-        checkbox: false
+        confirmpassword: "",
+        company: ""
       },
+      checkbox: false,
       snackbar: false,
-      color: "success",
-      timeout: 6000,
-      text: null,
       y: "top",
-
+      timeout: 6000,
+      snacktext: "",
+      snackcolor: "",
       isEmailValid: [
         v => !!v || "Email is required",
         v => this.reg.test(this.form.email) || "Invalid email"
@@ -104,55 +107,51 @@ export default {
         v => !!v || "Password is required",
         v => v.length >= 8 || "Password must be than 8 characters"
       ],
-      isConfPasswordValid: [
+      isConfirmPasswordValid: [
         v => !!v || "Confirm password is required",
         v => v.length >= 8 || "Confirm password must be than 8 characters",
-        v => this.form.password === this.form.confpassword || "password and confirm password divergent"
+        v =>
+          this.form.password === this.form.confirmpassword ||
+          "password and confirm password divergent"
       ],
-      isProjectValid: [v => !!v || "Project is required"],
+      isCompanyValid: [v => !!v || "Project is required"],
       isCheck: [v => !!v || "You must agree to continue"]
     };
   },
   methods: {
     onVerify: function(recaptchaToken) {
-      //console.log("Verify: " + recaptchaToken);
-
-      const self = this;
-      self.status = "submitting";
-      self.$refs.recaptcha.reset();
-
-      axios
-        .post("https://vue-recaptcha-demo.herokuapp.com/signup", this.form)
-        .then(response => {
-          self.sucessfulServerResponse = response.data.message;
-        })
-        .catch(err => {
-          self.serverError = getErrorMessage(err);
-
-          //helper to get a displayable message to the user
-          function getErrorMessage(err) {
-            let responseBody;
-            responseBody = err.response;
-            if (!responseBody) {
-              responseBody = err;
-            } else {
-              responseBody = err.response.data || responseBody;
-            }
-            return responseBody.message || JSON.stringify(responseBody);
-          }
-        })
-        .then(() => {
-          self.status = "";
-        });
+      if (recaptchaToken) {
+        this.recaptcha = true;
+      }
     },
     onExpired: function() {
       console.log("Expired");
       this.$refs.recaptcha.reset();
     },
-    validate() {
+    validate(event) {
       if (this.$refs.form.validate()) {
-        this.text = "Successfully submitted registration";
+        if (this.recaptcha) {
+          http
+            .newUser(this.form)
+            .then(res => {
+              if (res.data.message == "success") {
+                this.snackbar = false;
+
+                router.push({ name: "Success" });
+              } else {
+                this.snackbar = true;
+                this.snacktext = "Erro !";
+                this.snackcolor = "error";
+              }
+            })
+            .catch(err => {
+              console.log("err", err);
+            });
+        }
+      } else {
         this.snackbar = true;
+        this.snacktext = "Invalid Recaptcha !";
+        this.snackcolor = "error";
       }
     }
   }

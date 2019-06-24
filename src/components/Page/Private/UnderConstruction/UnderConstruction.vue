@@ -4,7 +4,7 @@
       <v-img
         :src="require('@/assets/img/hawinsoft-page-under-construction.png')"
         contain
-        height="350"
+        height="250"
       ></v-img>
     </v-flex>
     <v-flex xs12>

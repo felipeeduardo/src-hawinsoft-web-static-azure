@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PublicPageHome from '@/components/Page/Public/Home'
 
-import PageLogin from '@/components/Page/Private/User/Login'
-import PageCreateUser from '@/components/Page/Private/User/Create'
+import PageLogin from '@/components/Page/Public/User/Login'
+import PageCreateUser from '@/components/Page/Public/User/Create'
 import PageHome from '@/components/Page/Private/Home'
 import PageRpa from '@/components/Page/Private/Rpa'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
@@ -13,6 +13,7 @@ import PageReport from '@/components/Page/Private/Report'
 import PageClient from '@/components/Page/Private/Client'
 import PageProcess from '@/components/Page/Private/Process'
 import PageRun from '@/components/Page/Private/Run'
+import PageSuccess from '@/components/Page/Public/Success'
 import NotFound from '@/components/Page/Private/NotFound'
 import UnderConstruction from '@/components/Page/Private/UnderConstruction'
 
@@ -42,6 +43,11 @@ export default new Router({
             path: '/newuser',
             name: 'Create',
             component: PageCreateUser,
+        },
+        {
+            path: '/success',
+            name: 'Success',
+            component: PageSuccess,
         },
         {
             path: '*',
