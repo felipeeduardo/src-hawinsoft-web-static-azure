@@ -4,12 +4,12 @@
       <v-hover>
         <v-card
           slot-scope="{ hover }"
-          class="elevation-3 text-md-center"
+          class="elevation-3 text-md-center title-hover"
           :style="{ cursor: 'pointer'}"
           @click="goPath(item.path, item.idRpa)"
         >
-          <div class="py-4">
-            <v-img height="200px" contain :src="item.banner"></v-img>
+          <div class="py-4 card-bord-top">
+            <v-img height="170px" contain :src="item.banner"></v-img>
           </div>
           <v-divider light></v-divider>
           <v-card-text>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import router from "@/router";
 export default {
   props: {
@@ -37,17 +38,27 @@ export default {
       default: null
     }
   },
+  computed: {
+    ...mapState("auth", ["auth"])
+  },
   methods: {
     goPath(path, id) {
       router.push({
         name: `${path}`,
-        params: { Pid: sessionStorage.getItem("id_hawinsoft"), Rid: id }
+        params: { Pid: this.auth.id, Rid: id }
       });
     }
   }
 };
 </script>
 <style>
+.title-hover:hover {
+  color: #357ca5;
+}
+.card-bord-top {
+  border-top-style: solid;
+  border-top-color: #357ca5;
+}
 .v-card--reveal {
   align-items: center;
   bottom: 0;

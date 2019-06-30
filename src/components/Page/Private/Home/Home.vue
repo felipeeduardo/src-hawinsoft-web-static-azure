@@ -1,14 +1,17 @@
 <template>
   <v-container grid-list-md text-xs-center>
+    <breadcrumb :data="breadcrumb"/>
     <card-generic :data="cards"/>
   </v-container>
 </template>
 
 <script>
 import CardGeneric from "@/components/organisms/Card/CardGeneric";
+import Breadcrumb from "@/components/organisms/Breadcrumb";
 export default {
   components: {
-    CardGeneric
+    CardGeneric,
+    Breadcrumb
   },
   data() {
     return {
@@ -20,7 +23,7 @@ export default {
           enabled: true,
           hoveText: "Enabled",
           hoveTextColor: "green--text",
-          hoveColor: "green lighten-4"
+          hoveColor: "grey lighten-4"
         },
         {
           banner: require("@/assets/img/lab-test-hawinsoft.png"),
@@ -29,7 +32,7 @@ export default {
           enabled: false,
           hoveText: "Desabled",
           hoveTextColor: "red--text",
-          hoveColor: "red lighten-5"
+          hoveColor: "grey lighten-5"
         },
         {
           banner: require("@/assets/img/hawinsoft-bug.png"),
@@ -48,6 +51,18 @@ export default {
           hoveText: "Payment",
           hoveTextColor: "green--text",
           hoveColor: "blue-grey lighten-5"
+        }
+      ],
+      breadcrumb: [
+        {
+          text: "Home",
+          disabled: false,
+          href: "/#/home"
+        },
+        {
+          text: "Welcome Project",
+          disabled: true,
+          href: "#"
         }
       ]
     };

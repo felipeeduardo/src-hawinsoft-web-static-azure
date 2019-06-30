@@ -1,5 +1,5 @@
 <template>
-  <v-breadcrumbs :items="items">
+  <v-breadcrumbs :items="data">
     <template v-slot:divider>
       <v-icon>chevron_right</v-icon>
     </template>
@@ -8,22 +8,11 @@
 
 <script>
 export default {
-  data: () => ({
-    items: [
-      {
-        text: "Home",
-        disabled: false,
-        href: "/#/home"
-      },
-      {
-        text: "Link 1",
-        disabled: false,
-        href: "breadcrumbs_link_1"
-      }
-    ]
-  })
+  props: {
+    data: {
+      type: Array,
+      default: null
+    }
+  }
 };
 </script>
-
-<style>
-</style>

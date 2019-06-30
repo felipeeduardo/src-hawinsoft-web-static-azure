@@ -3,48 +3,50 @@
     <v-layout justify-center wrap>
       <v-flex xs12 sm5>
         <v-card class="elevation-3">
-          <v-card-title>
-            <span class="title font-weight-light">Login</span>
-          </v-card-title>
-          <v-card-text>
-            <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field
-                prepend-icon="mail"
-                name="email"
-                label="Email"
-                type="text"
-                :rules="isEmailValid"
-                v-model="form.email"
-              ></v-text-field>
-              <v-text-field
-                prepend-icon="lock"
-                name="password"
-                label="Password"
-                id="password"
-                type="password"
-                required
-                maxlength="8"
-                :counter="8"
-                v-model="form.password"
-                :rules="isPasswordValid"
-              ></v-text-field>
-            </v-form>
-            <v-flex xs12 mt-1>
-              <span class="font-weight-light">I forgot my password</span>
-            </v-flex>
-            <v-flex xs12 mt-3>
-              <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
-            </v-flex>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn flat color="primary" @click="goNewUse()">
-              <v-icon left>person_add</v-icon>Register
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn :disabled="!valid" color="success" flat @click="validate()">
-              <v-icon left>done</v-icon>Ok
-            </v-btn>
-          </v-card-actions>
+          <div class="card-bord-top">
+            <v-card-title>
+              <span class="title font-weight-light">Login</span>
+            </v-card-title>
+            <v-card-text>
+              <v-form ref="form" v-model="valid" lazy-validation>
+                <v-text-field
+                  prepend-icon="mail"
+                  name="email"
+                  label="Email"
+                  type="text"
+                  :rules="isEmailValid"
+                  v-model="form.email"
+                ></v-text-field>
+                <v-text-field
+                  prepend-icon="lock"
+                  name="password"
+                  label="Password"
+                  id="password"
+                  type="password"
+                  required
+                  maxlength="8"
+                  :counter="8"
+                  v-model="form.password"
+                  :rules="isPasswordValid"
+                ></v-text-field>
+              </v-form>
+              <v-flex xs12 mt-1>
+                <span class="font-weight-light">I forgot my password</span>
+              </v-flex>
+              <v-flex xs12 mt-3>
+                <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
+              </v-flex>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn flat color="primary" @click="goNewUse()">
+                <v-icon left>person_add</v-icon>Register
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-btn :disabled="!valid" color="success" flat @click="validate()">
+                <v-icon left>done</v-icon>Ok
+              </v-btn>
+            </v-card-actions>
+          </div>
         </v-card>
       </v-flex>
     </v-layout>
@@ -57,9 +59,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import router from "@/router";
 import VueRecaptcha from "vue-recaptcha";
-import http from "@/services/httpClient";
 import { EventBus } from "@/services/event-bus.js";
 export default {
   components: {
@@ -92,6 +94,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("auth", ["logIn"]),
     onVerify: function(recaptchaToken) {
       if (recaptchaToken) {
         this.recaptcha = true;
@@ -106,14 +109,11 @@ export default {
     validate(event) {
       if (this.$refs.form.validate()) {
         if (this.recaptcha) {
-          http
-            .login(this.form)
+          this.logIn(this.form)
             .then(res => {
               if (res.data.auth) {
                 this.snackbar = false;
-                sessionStorage.token_hawinsoft = res.data.token;
-                sessionStorage.id_hawinsoft = res.data.id;
-                sessionStorage.email_hawinsoft = res.data.email;
+                sessionStorage.hawinsoft = res.data.auth;
                 EventBus.$emit("showMenuPrivate", true);
                 router.push({ name: "Home" });
               } else {
@@ -135,3 +135,9 @@ export default {
   }
 };
 </script>
+<style>
+.card-bord-top {
+  border-top-style: solid;
+  border-top-color: #357ca5;
+}
+</style>

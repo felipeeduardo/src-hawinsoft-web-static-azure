@@ -20,7 +20,8 @@ import UnderConstruction from '@/components/Page/Private/UnderConstruction'
 Vue.use(Router)
 
 const ifAuthenticated = (to, from, next) => {
-    if (sessionStorage.getItem("id_hawinsoft")) {
+    const verify = sessionStorage.getItem("hawinsoft");
+    if (verify == 'true') {
         next()
         return
     }
