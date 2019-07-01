@@ -7,6 +7,7 @@ import PageCreateUser from '@/components/Page/Public/User/Create'
 import PageHome from '@/components/Page/Private/Home'
 import PageRpa from '@/components/Page/Private/Rpa'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
+import PageRpaDownload from '@/components/Page/Private/RpaDownload'
 //import PageTest from '@/components/Page/Private/Test'
 import PageReport from '@/components/Page/Private/Report'
 //import PagePayment from '@/components/Page/Private/Payment'
@@ -62,13 +63,19 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/rpa/:Pid',
+            path: '/rpa',
             name: 'Rpa',
             component: PageRpa,
             beforeEnter: ifAuthenticated
         },
         {
-            //Pid = id_user | Rid = id_Rpa 
+            path: '/rpadownload/:Rid',
+            name: 'RpaDownload',
+            component: PageRpaDownload,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            //Pid = id_user | Rid = id_Rpa
             path: '/rpa/:Pid/:Rid',
             name: 'RpaUniue',
             component: PageRpaUnique,

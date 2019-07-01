@@ -14,7 +14,7 @@
       </v-flex>
       <v-flex>
         <p class="text-xs-center">OR</p>
-        <h3 class="text-xs-center" style="color:blue">support@hawinsofr.com.br</h3>
+        <h3 class="text-xs-center" style="color:blue">support@hawinsoft.com.br</h3>
       </v-flex>
     </v-layout>
     <breadcrumb v-if="!verifyUserRpa" :data="breadcrumb"/>

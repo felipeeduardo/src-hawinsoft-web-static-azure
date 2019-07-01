@@ -36,9 +36,10 @@ export default {
           hoveColor: "grey lighten-5 lighten-4"
         },
         {
+          idRpa: this.$route.params.Rid,
           banner: require("@/assets/img/hawinsoft-download-client.png"),
           title: "Download client",
-          path: "Rpa",
+          path: "RpaDownload",
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
@@ -72,7 +73,7 @@ export default {
         {
           text: "Panel RPAs",
           disabled: false,
-          href: "/#/rpa/" + this.$route.params.Pid
+          href: "/#/rpa/"
         },
         {
           text: "",
