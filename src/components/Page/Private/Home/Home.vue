@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md text-xs-center>
-    <breadcrumb :data="breadcrumb"/>
-    <card-generic :data="cards"/>
+    <h1 class="title font-weight-light">HOME</h1>
+    <card-generic :data="cards" />
   </v-container>
 </template>
 
@@ -51,18 +51,6 @@ export default {
           hoveText: "Payment",
           hoveTextColor: "green--text",
           hoveColor: "blue-grey lighten-5"
-        }
-      ],
-      breadcrumb: [
-        {
-          text: "Home",
-          disabled: false,
-          href: "/#/home"
-        },
-        {
-          text: "Welcome Project",
-          disabled: true,
-          href: "#"
         }
       ]
     };

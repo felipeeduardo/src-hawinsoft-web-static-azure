@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center wrap>
-    <v-flex xs12>
+    <v-flex xs12 sm5>
       <v-card class="elevation-3">
         <div class="card-bord-top">
           <v-card-title>
@@ -32,10 +32,10 @@
           </v-card-actions>
         </div>
       </v-card>
-    </v-flex>
-    <v-flex xs12 sm7 class="py-4">
-      <p class="text-xs-center">OR</p>
-      <h3 class="text-xs-center" style="color:blue">support@hawinsoft.com.br</h3>
+      <div class="py-4">
+        <p class="text-xs-center">OR</p>
+        <h3 class="text-xs-center" style="color:blue">support@hawinsoft.com.br</h3>
+      </div>
     </v-flex>
     <!-- snackbar-->
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="y === 'top'" :color="snackcolor">

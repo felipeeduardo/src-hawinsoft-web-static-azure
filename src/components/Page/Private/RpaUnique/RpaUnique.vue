@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md text-xs-center>
-    <breadcrumb :data="breadcrumb"/>
-    <card-generic :data="cards"/>
+    <h1 class="title font-weight-light">{{this.pageTitle}}</h1>
+    <card-generic :data="cards" />
   </v-container>
 </template>
 
@@ -21,15 +21,17 @@ export default {
     const selected = this.product.filter(
       rpa => rpa.id_user_product == this.$route.params.Rid
     );
-    this.breadcrumb[2].text = "RPA - " + selected[0].name_rpa;
+    this.pageTitle = selected[0].name_rpa;
   },
   data() {
     return {
+      pageTitle: "",
       cards: [
         {
+          idRpa: this.$route.params.Rid,
           banner: require("@/assets/img/hawinsoft-add-user.png"),
           title: "Create User",
-          path: "Rpa",
+          path: "RpaNewUser",
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
@@ -55,30 +57,14 @@ export default {
           hoveColor: "grey lighten-5 lighten-4"
         },
         {
+          idRpa: this.$route.params.Rid,
           banner: require("@/assets/img/hawinsoft-chart.png"),
           title: "Results RPA",
-          path: "Rpa",
+          path: "RpaResults",
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
           hoveColor: "grey lighten-5 lighten-4"
-        }
-      ],
-      breadcrumb: [
-        {
-          text: "Home",
-          disabled: false,
-          href: "/#/home"
-        },
-        {
-          text: "Panel RPAs",
-          disabled: false,
-          href: "/#/rpa/"
-        },
-        {
-          text: "",
-          disabled: true,
-          href: "#"
         }
       ]
     };

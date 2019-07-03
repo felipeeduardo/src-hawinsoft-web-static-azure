@@ -5,7 +5,7 @@ const mutations = {
         state.product = product
     },
     [types.PRODUCT_ERROR](state, product) {
-        state.auth = product
+        state.product = product
     }
 }
 

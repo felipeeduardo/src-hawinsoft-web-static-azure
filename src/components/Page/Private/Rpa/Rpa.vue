@@ -1,5 +1,6 @@
 <template>
   <v-container grid-list-md text-xs-center>
+    <h1 v-if="!verifyUserRpa" class="title font-weight-light">PANEL RPA</h1>
     <v-layout v-if="verifyUserRpa" text-xs-center wrap ma-4>
       <v-flex xs12>
         <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="250"></v-img>
@@ -17,8 +18,7 @@
         <h3 class="text-xs-center" style="color:blue">support@hawinsoft.com.br</h3>
       </v-flex>
     </v-layout>
-    <breadcrumb v-if="!verifyUserRpa" :data="breadcrumb"/>
-    <card-generic v-if="!verifyUserRpa" :data="cards"/>
+    <card-generic v-if="!verifyUserRpa" :data="cards" />
   </v-container>
 </template>
 
@@ -36,19 +36,7 @@ export default {
   data() {
     return {
       verifyUserRpa: false,
-      cards: [],
-      breadcrumb: [
-        {
-          text: "Home",
-          disabled: false,
-          href: "/#/home"
-        },
-        {
-          text: "Panel RPAs",
-          disabled: true,
-          href: "#"
-        }
-      ]
+      cards: []
     };
   },
   computed: {

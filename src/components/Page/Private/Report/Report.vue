@@ -1,6 +1,5 @@
 <template>
   <v-container grid-list-md text-xs-center>
-    <breadcrumb :data="breadcrumb"/>
     <card-report/>
   </v-container>
 </template>
@@ -12,22 +11,6 @@ export default {
   components: {
     CardReport,
     Breadcrumb
-  },
-  data() {
-    return {
-      breadcrumb: [
-        {
-          text: "Home",
-          disabled: false,
-          href: "/#/home"
-        },
-        {
-          text: "Report problem",
-          disabled: true,
-          href: "#"
-        }
-      ]
-    };
   }
 };
 </script>
