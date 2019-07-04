@@ -9,6 +9,7 @@ import PageRpa from '@/components/Page/Private/Rpa'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
 import PageRpaDownload from '@/components/Page/Private/RpaDownload'
 import PageRpaResults from '@/components/Page/Private/RpaResults'
+import PageRpaImport from '@/components/Page/Private/RpaImport'
 //import PageTest from '@/components/Page/Private/Test'
 import PageReport from '@/components/Page/Private/Report'
 import PageUserRpa from '@/components/Page/Private/User/UserRpa'
@@ -86,6 +87,12 @@ export default new Router({
             path: '/rparesult/:Rid',
             name: 'RpaResults',
             component: PageRpaResults,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/rpaimport/:Rid',
+            name: 'RpaImport',
+            component: PageRpaImport,
             beforeEnter: ifAuthenticated
         },
         {

@@ -1,5 +1,6 @@
 <template>
   <v-layout justify-center wrap>
+    <dialog-session />
     <v-flex xs12>
       <v-card class="elevation-3">
         <div class="card-bord-top">
@@ -32,9 +33,12 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
+import DialogSession from "@/components/organisms/Dialog/DialogSession";
 export default {
+  components: {
+    DialogSession
+  },
   computed: {
     ...mapState("product", ["product"]),
     ...mapState("auth", ["auth"])
@@ -63,19 +67,12 @@ export default {
       })
       .catch(err => {
         //erro 500 -> auth expired
-        this.sessionExpired();
+        EventBus.$emit("dialogSession", true);
       });
   },
   methods: {
     ...mapActions("rpa", ["resultRpaUser"]),
     ...mapActions("rpa", ["resultRpaUserSelected"]),
-    ...mapActions("auth", ["logOut"]),
-    sessionExpired() {
-      EventBus.$emit("showMenuPrivate", false);
-      sessionStorage.hawinsoft = false;
-      this.logOut();
-      router.push({ name: "Login" });
-    },
     goDownload(selected, fileType, fileName) {
       const data = {
         token: this.auth.token,
@@ -106,7 +103,7 @@ export default {
         })
         .catch(err => {
           //erro 500 -> auth expired
-          this.sessionExpired();
+          EventBus.$emit("dialogSession", true);
         });
     }
   },

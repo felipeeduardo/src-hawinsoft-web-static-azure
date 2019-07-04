@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-md text-xs-center>
+  <v-container grid-list-md>
     <h1 class="title font-weight-light">{{this.pageTitle}}</h1>
     <card-generic :data="cards" />
   </v-container>
@@ -48,9 +48,10 @@ export default {
           hoveColor: "grey lighten-5 lighten-4"
         },
         {
+          idRpa: this.$route.params.Rid,
           banner: require("@/assets/img/hawinsoft-upload.png"),
           title: "Import data",
-          path: "Rpa",
+          path: "RpaImport",
           enabled: true,
           hoveText: "",
           hoveTextColor: "",

@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap class="py-3 px-2">
+  <v-layout row wrap class="py-3">
     <v-flex v-for="item in data" :key="item.index" d-flex xs12 sm3 md3 class="px-2 py-1">
       <v-hover>
         <v-card
@@ -9,7 +9,7 @@
           @click="goPath(item.path, item.idRpa)"
         >
           <div class="py-4 card-bord-top">
-            <v-img height="170px" contain :src="item.banner"></v-img>
+            <v-img height="130px" contain :src="item.banner"></v-img>
           </div>
           <v-divider light></v-divider>
           <v-card-text>

@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-md text-xs-center>
+  <v-container grid-list-md>
     <h1 class="title font-weight-light">HOME</h1>
     <card-generic :data="cards" />
   </v-container>

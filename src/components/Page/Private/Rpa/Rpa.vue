@@ -1,5 +1,6 @@
 <template>
-  <v-container grid-list-md text-xs-center>
+  <v-container grid-list-md>
+    <dialog-session />
     <h1 v-if="!verifyUserRpa" class="title font-weight-light">PANEL RPA</h1>
     <v-layout v-if="verifyUserRpa" text-xs-center wrap ma-4>
       <v-flex xs12>
@@ -27,11 +28,11 @@ import { mapActions, mapState } from "vuex";
 import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
 import CardGeneric from "@/components/organisms/Card/CardGeneric";
-import Breadcrumb from "@/components/organisms/Breadcrumb";
+import DialogSession from "@/components/organisms/Dialog/DialogSession";
 export default {
   components: {
     CardGeneric,
-    Breadcrumb
+    DialogSession
   },
   data() {
     return {
@@ -48,12 +49,6 @@ export default {
     ...mapActions("auth", ["logOut"]),
     goHome(path) {
       router.push({ name: "Home" });
-    },
-    sessionExpired() {
-      EventBus.$emit("showMenuPrivate", false);
-      sessionStorage.hawinsoft = false;
-      this.logOut();
-      router.push({ name: "Login" });
     }
   },
   created() {
@@ -88,7 +83,7 @@ export default {
         })
         .catch(err => {
           //erro 500 -> auth expired
-          this.sessionExpired();
+          EventBus.$emit("dialogSession", true);
         });
     }
   }

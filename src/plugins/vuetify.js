@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
+import { Ripple } from 'vuetify/lib/directives'
 
 Vue.use(Vuetify, {
   theme: {
@@ -9,5 +10,8 @@ Vue.use(Vuetify, {
     accent: '#8c9eff',
     error: '#b71c1c'
   },
-  iconfont: 'md'
+  iconfont: 'md',
+  directives: {
+    Ripple
+  }
 })
