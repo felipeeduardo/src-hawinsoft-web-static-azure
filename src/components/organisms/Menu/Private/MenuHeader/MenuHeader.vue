@@ -64,6 +64,7 @@ export default {
     logout() {
       this.showMenuPrivate = false;
       sessionStorage.hawinsoft = false;
+      sessionStorage.hawinsoft_profile = "";
       this.logOut();
       router.push({ name: "Public" });
     }

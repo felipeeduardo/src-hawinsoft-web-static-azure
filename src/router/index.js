@@ -32,6 +32,16 @@ const ifAuthenticated = (to, from, next) => {
     next('/login')
 }
 
+/*const ifPermissionProfile = (to, from, next) => {
+    const profile = sessionStorage.getItem("hawinsoft_profile");
+    //profile basic RPA
+    if (profile == 3) {
+        next()
+        return
+    }
+    next('/login')
+}*/
+
 export default new Router({
     routes: [
         {

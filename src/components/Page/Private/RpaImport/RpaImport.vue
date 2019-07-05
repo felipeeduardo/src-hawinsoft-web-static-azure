@@ -1,9 +1,6 @@
 <template>
   <v-container grid-list-md>
     <h1 class="title font-weight-light">{{this.pageTitle}}</h1>
-    <div class="py-3">
-      <v-alert :value="true" type="info" color="blue lighten-2">This is a info alert.</v-alert>
-    </div>
     <card-import />
   </v-container>
 </template>

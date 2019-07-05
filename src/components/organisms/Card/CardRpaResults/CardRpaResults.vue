@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center wrap>
-    <dialog-session />
+    <dialog-generic :data="data" />
     <v-flex xs12>
       <v-card class="elevation-3">
         <div class="card-bord-top">
@@ -34,10 +34,10 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
-import DialogSession from "@/components/organisms/Dialog/DialogSession";
+import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
 export default {
   components: {
-    DialogSession
+    DialogGeneric
   },
   computed: {
     ...mapState("product", ["product"]),
@@ -67,7 +67,7 @@ export default {
       })
       .catch(err => {
         //erro 500 -> auth expired
-        EventBus.$emit("dialogSession", true);
+        EventBus.$emit("dialogGeneric", true);
       });
   },
   methods: {
@@ -103,13 +103,22 @@ export default {
         })
         .catch(err => {
           //erro 500 -> auth expired
-          EventBus.$emit("dialogSession", true);
+          EventBus.$emit("dialogGeneric", true);
         });
     }
   },
   data() {
     return {
       cardTitle: "",
+      data: {
+        // success | information | error
+        type: "information",
+        title: "Session expired!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290"
+      },
       headers: [
         {
           text: "Quantify",

@@ -1,6 +1,6 @@
 <template>
   <v-container grid-list-md>
-    <dialog-session />
+    <dialog-generic :data="data" />
     <h1 v-if="!verifyUserRpa" class="title font-weight-light">PANEL RPA</h1>
     <v-layout v-if="verifyUserRpa" text-xs-center wrap ma-4>
       <v-flex xs12>
@@ -28,16 +28,25 @@ import { mapActions, mapState } from "vuex";
 import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
 import CardGeneric from "@/components/organisms/Card/CardGeneric";
-import DialogSession from "@/components/organisms/Dialog/DialogSession";
+import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
 export default {
   components: {
     CardGeneric,
-    DialogSession
+    DialogGeneric
   },
   data() {
     return {
       verifyUserRpa: false,
-      cards: []
+      cards: [],
+      data: {
+        // success | information | error
+        type: "information",
+        title: "Session expired!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290"
+      }
     };
   },
   computed: {
@@ -83,7 +92,7 @@ export default {
         })
         .catch(err => {
           //erro 500 -> auth expired
-          EventBus.$emit("dialogSession", true);
+          EventBus.$emit("dialogGeneric", true);
         });
     }
   }

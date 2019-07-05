@@ -114,6 +114,7 @@ export default {
               if (res.data.auth) {
                 this.snackbar = false;
                 sessionStorage.hawinsoft = res.data.auth;
+                sessionStorage.hawinsoft_profile = res.data.id_user_profile;
                 EventBus.$emit("showMenuPrivate", true);
                 router.push({ name: "Home" });
               } else {

@@ -46,7 +46,7 @@
     </v-navigation-drawer>
     <!--footer-->
     <v-footer color="#3c8dbc" class="pa-3 white--text" app>
-      <span>Project Hawinsoft</span>
+      <span>Plataform Hawinsoft</span>
       <v-spacer></v-spacer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
