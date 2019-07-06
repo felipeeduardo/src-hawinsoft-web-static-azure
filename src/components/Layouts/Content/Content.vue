@@ -51,16 +51,19 @@
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
     <!--content-->
+    <loader :loader="this.loading" />
     <router-view></router-view>
   </v-content>
 </template>
 <script>
 import router from "@/router";
 import MenuHeader from "@/components/organisms/Menu/Private/MenuHeader";
-import { mapActions, mapState } from "vuex";
+import Loader from "@/components/organisms/Loader";
+import { mapState } from "vuex";
 export default {
   components: {
-    MenuHeader
+    MenuHeader,
+    Loader
   },
   methods: {
     goPath(path, id) {
@@ -72,9 +75,7 @@ export default {
   },
   computed: {
     ...mapState("auth", ["auth"]),
-    vefifyAuth() {
-      console.log(this.auth);
-    }
+    ...mapState(["loading"])
   },
   data() {
     return {
