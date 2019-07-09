@@ -108,7 +108,7 @@ export default {
     },
     validate(event) {
       if (this.$refs.form.validate()) {
-        //if (this.recaptcha) {
+        if (this.recaptcha) {
           this.logIn(this.form)
             .then(res => {
               if (res.data.auth) {
@@ -126,7 +126,7 @@ export default {
             .catch(err => {
               console.log("err", err);
             });
-        //}
+        }
       } else {
         this.snackbar = true;
         this.snacktext = "Invalid Recaptcha !";
