@@ -5,6 +5,7 @@ import PublicPageHome from '@/components/Page/Public/Home'
 import PageLogin from '@/components/Page/Public/User/Login'
 import PageCreateUser from '@/components/Page/Public/User/Create'
 import PageHome from '@/components/Page/Private/Home'
+import PageMessage from '@/components/Page/Private/Message'
 import PageRpa from '@/components/Page/Private/Rpa'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
 import PageRpaDownload from '@/components/Page/Private/RpaDownload'
@@ -73,6 +74,12 @@ export default new Router({
             path: '/home',
             name: 'Home',
             component: PageHome,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/message',
+            name: 'Message',
+            component: PageMessage,
             beforeEnter: ifAuthenticated
         },
         {

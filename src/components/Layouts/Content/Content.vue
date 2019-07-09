@@ -12,23 +12,7 @@
     </v-toolbar>
 
     <!--navigation-->
-    <v-navigation-drawer v-model="drawer" fixed app clipped>
-      <!--navigation auth -> false -->
-      <v-list dense v-if="!this.auth.auth">
-        <v-list-tile
-          v-for="item in itemsMenu"
-          :key="item.index"
-          @click="goPath(item.path, item.idRpa)"
-        >
-          <v-list-tile-action>
-            <v-icon color="primary">{{item.icon}}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{item.title}}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-      <!--navigation auth -> true -->
+    <v-navigation-drawer v-if="this.auth.auth" v-model="drawer" fixed app clipped>
       <v-list dense v-if="this.auth.auth">
         <v-list-tile
           v-for="item in itemsMenuAuth"
@@ -80,23 +64,6 @@ export default {
   data() {
     return {
       drawer: null,
-      itemsMenu: [
-        {
-          icon: "home",
-          title: "Home",
-          path: "Public"
-        },
-        {
-          icon: "lock",
-          title: "Log in",
-          path: "Login"
-        },
-        {
-          icon: "person_add",
-          title: "Register",
-          path: "Create"
-        }
-      ],
       itemsMenuAuth: [
         {
           icon: "home",
@@ -122,6 +89,11 @@ export default {
           icon: "payment",
           title: "Payment",
           path: "Payment"
+        },
+        {
+          icon: "mail",
+          title: "Message",
+          path: "Message"
         }
       ]
     };

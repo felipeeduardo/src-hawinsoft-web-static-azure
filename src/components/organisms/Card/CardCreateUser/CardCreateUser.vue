@@ -84,6 +84,7 @@
 import { mapActions, mapState } from "vuex";
 import VueRecaptcha from "vue-recaptcha";
 import router from "@/router";
+//import mail from "@/services/mail"
 export default {
   components: {
     VueRecaptcha

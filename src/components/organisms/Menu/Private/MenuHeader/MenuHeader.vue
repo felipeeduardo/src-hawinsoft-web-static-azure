@@ -2,6 +2,16 @@
   <v-menu bottom left>
     <template v-slot:activator="{ on }">
       <div v-show="showMenuPrivate">
+        <!--message-->
+        <v-btn dark icon @click="goMessage()">
+          <v-badge rigth color="red lighten-1">
+            <template v-slot:badge>
+              <span>0</span>
+            </template>
+            <v-icon>mail</v-icon>
+          </v-badge>
+        </v-btn>
+        <!--person-->
         <v-btn dark icon v-on="on">
           <v-icon>person_pin</v-icon>
         </v-btn>
@@ -41,7 +51,6 @@ export default {
     ...mapState("auth", ["auth"])
   },
   created() {
-    //console.log("teste", { ...this.auth });
     if (this.auth.auth) {
       this.showMenuPrivate = true;
       this.id = this.auth.id;
@@ -60,6 +69,9 @@ export default {
     ...mapActions("auth", ["logOut"]),
     goLogin() {
       router.push({ name: "Login" });
+    },
+    goMessage() {
+      router.push({ name: "Message" });
     },
     logout() {
       this.showMenuPrivate = false;

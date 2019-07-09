@@ -45,7 +45,7 @@ export default {
   },
   created() {
     const selected = this.product.filter(
-      rpa => rpa.id_user_product == this.$route.params.Rid
+      rpa => rpa.id_rpa_type == this.$route.params.Rid
     );
     this.cardTitle = selected[0].name_rpa;
     const data = {
