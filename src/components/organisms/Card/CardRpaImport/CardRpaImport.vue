@@ -6,9 +6,9 @@
         <div class="card-bord-top">
           <v-card-text style="height:309px">
             <v-img height="157px" contain :src="require('@/assets/img/hawinsoft-import-data.png')"></v-img>
-            <h1 class="title font-weight-light py-2">Example file</h1>
+            <h1 class="title font-weight-light py-2">Exemplpo de arquivo</h1>
             <v-img contain :src="require('@/assets/img/hawinsoft-ex-import.png')"></v-img>
-            <h1 class="title font-weight-light py-2">*Limit line 300</h1>
+            <h1 class="title font-weight-light py-2">*Limite de linhas 300</h1>
           </v-card-text>
           <v-divider light></v-divider>
           <!--button upload-->
@@ -17,7 +17,7 @@
             color="success"
             block
             @file-update="fileImport"
-            title="Import file"
+            title="Importar arquivo"
             accept=".txt"
           ></upload-button>
         </div>
@@ -29,16 +29,16 @@
           <v-card-text style="height:320px">
             <v-layout row wrap>
               <v-flex xs12>
-                <v-textarea outline label="Preview" v-model="preview"></v-textarea>
+                <v-textarea outline label="Visualizar" v-model="preview"></v-textarea>
               </v-flex>
               <v-flex xs6>
-                <h3 class="title font-weight-light py-2" color="red--text">Success</h3>
+                <h3 class="title font-weight-light py-2" color="red--text">Sucesso</h3>
               </v-flex>
               <v-flex xs6>
                 <h3 class="title font-weight-light py-2">{{this.qtdSuccess}}</h3>
               </v-flex>
               <v-flex xs6>
-                <h3 class="title font-weight-light py-2" color="success">Error</h3>
+                <h3 class="title font-weight-light py-2" color="success">Erro</h3>
               </v-flex>
               <v-flex xs6>
                 <h3 class="title font-weight-light py-2">{{this.qtdError}}</h3>
@@ -54,7 +54,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="success" flat @click="confirmImport()">
-              <v-icon left>done</v-icon>Confirm import
+              <v-icon left>done</v-icon>Confirmar importação
             </v-btn>
           </v-card-actions>
         </div>
@@ -116,7 +116,7 @@ export default {
                 this.count++;
                 if (this.qtdSuccess == this.count) {
                   this.dataDialog.type = "success";
-                  this.dataDialog.title = "Imported successfully";
+                  this.dataDialog.title = "Importado com sucesso";
                   this.dataDialog.textButton = "OK";
                   this.dataDialog.iconButton = "check";
                   this.dataDialog.sessionExpired = false;
@@ -140,7 +140,7 @@ export default {
       dataDialog: {
         // success | information | error
         type: "information",
-        title: "Session expired!",
+        title: "Sessão expirada!",
         textButton: "log in",
         iconButton: "keyboard_backspace",
         sessionExpired: true,

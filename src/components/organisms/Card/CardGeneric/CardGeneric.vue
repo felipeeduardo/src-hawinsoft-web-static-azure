@@ -11,6 +11,7 @@
           <div class="py-4 card-bord-top">
             <v-img height="130px" contain :src="item.banner"></v-img>
           </div>
+          <div></div>
           <v-divider light></v-divider>
           <v-card-text>
             <p class="title font-weight-light text-md-center">{{item.title}}</p>

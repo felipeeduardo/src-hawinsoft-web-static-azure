@@ -40,7 +40,7 @@ export default {
         {
           idRpa: this.$route.params.Rid,
           banner: require("@/assets/img/hawinsoft-add-user.png"),
-          title: "Create User",
+          title: "Criar usuário básico",
           path: "RpaNewUser",
           enabled: true,
           hoveText: "",
@@ -50,7 +50,7 @@ export default {
         {
           idRpa: this.$route.params.Rid,
           banner: require("@/assets/img/hawinsoft-download-client.png"),
-          title: "Download client",
+          title: "Download",
           path: "RpaDownload",
           enabled: true,
           hoveText: "",
@@ -60,7 +60,7 @@ export default {
         {
           idRpa: this.$route.params.Rid,
           banner: require("@/assets/img/hawinsoft-upload.png"),
-          title: "Import data",
+          title: "Importar dados",
           path: "RpaImport",
           enabled: true,
           hoveText: "",
@@ -70,7 +70,7 @@ export default {
         {
           idRpa: this.$route.params.Rid,
           banner: require("@/assets/img/hawinsoft-chart.png"),
-          title: "Results RPA",
+          title: "Resultados",
           path: "RpaResults",
           enabled: true,
           hoveText: "",

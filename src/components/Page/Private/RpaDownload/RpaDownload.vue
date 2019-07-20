@@ -5,13 +5,12 @@
         <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="250"></v-img>
       </v-flex>
       <v-flex xs12>
-        <p>{{rpa}}</p>
-        <h1
+        <h2
           :style="{ cursor: 'pointer'}"
           class="textopen font-weight-light"
           color="grey--text"
           @click="goDownload(urlBlob)"
-        >Open storege</h1>
+        >Download robô<br> {{rpa}}</h2>
       </v-flex>
     </v-layout>
   </v-container>

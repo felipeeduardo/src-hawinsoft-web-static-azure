@@ -5,7 +5,7 @@
         <v-card class="elevation-4">
           <div class="card-bord-top">
             <v-card-title>
-              <span class="title font-weight-light">New user</span>
+              <span class="title font-weight-light">Novo usuário</span>
             </v-card-title>
             <v-card-text>
               <v-form ref="form" v-model="valid" lazy-validation>
@@ -21,7 +21,7 @@
                 <v-text-field
                   prepend-icon="lock"
                   name="password"
-                  label="Password"
+                  label="Senha"
                   id="password"
                   type="password"
                   required
@@ -33,7 +33,7 @@
                 <v-text-field
                   prepend-icon="lock"
                   name="confirmpassword"
-                  label="Confirm Password"
+                  label="Confirmação de senha"
                   id="confirmpassword"
                   type="password"
                   required
@@ -45,13 +45,13 @@
                 <v-text-field
                   prepend-icon="business"
                   name="company"
-                  label="Company or project"
+                  label="Empresa ou projeto"
                   type="text"
                   required
                   v-model="form.company"
                   :rules="isCompanyValid"
                 ></v-text-field>
-                <v-checkbox v-model="checkbox" :rules="isCheck" label="Do you agree?" required></v-checkbox>
+                <v-checkbox v-model="checkbox" :rules="isCheck" label="você concorda?" required></v-checkbox>
                 <v-flex xs12 mt-3>
                   <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
                 </v-flex>
@@ -60,7 +60,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn :disabled="!valid" color="success" flat @click="validate">
-                <v-icon left>done</v-icon>Register
+                <v-icon left>done</v-icon>Registrar
               </v-btn>
             </v-card-actions>
             <!-- snackbar-->
@@ -71,7 +71,7 @@
               :color="snackcolor"
             >
               {{ snacktext }}
-              <v-btn flat @click="snackbar = false">Close</v-btn>
+              <v-btn flat @click="snackbar = false">Fechar</v-btn>
             </v-snackbar>
           </div>
         </v-card>
@@ -109,22 +109,22 @@ export default {
       snacktext: "",
       snackcolor: "",
       isEmailValid: [
-        v => !!v || "Email is required",
-        v => this.reg.test(this.form.email) || "Invalid email"
+        v => !!v || "Email é obrigatório",
+        v => this.reg.test(this.form.email) || "Email inválido"
       ],
       isPasswordValid: [
-        v => !!v || "Password is required",
-        v => v.length >= 8 || "Password must be than 8 characters"
+        v => !!v || "Senha é obrigatório",
+        v => v.length >= 8 || "A senha deve ter no máximo 8 caracteres"
       ],
       isConfirmPasswordValid: [
-        v => !!v || "Confirm password is required",
-        v => v.length >= 8 || "Confirm password must be than 8 characters",
+        v => !!v || "Confirmação de senha é obrigatório",
+        v => v.length >= 8 || "A Confirmação de senha deve ter no máximo 8 caracteres",
         v =>
           this.form.password === this.form.confirmpassword ||
-          "password and confirm password divergent"
+          "Senha e confirmação de senha divergente"
       ],
-      isCompanyValid: [v => !!v || "Project is required"],
-      isCheck: [v => !!v || "You must agree to continue"]
+      isCompanyValid: [v => !!v || "Empresa ou projeto é obrigatório"],
+      isCheck: [v => !!v || "Você deve concordar em continuar"]
     };
   },
   methods: {
@@ -159,7 +159,7 @@ export default {
         }
       } else {
         this.snackbar = true;
-        this.snacktext = "Invalid Recaptcha !";
+        this.snacktext = "Recaptcha inválido!";
         this.snackcolor = "error";
       }
     }

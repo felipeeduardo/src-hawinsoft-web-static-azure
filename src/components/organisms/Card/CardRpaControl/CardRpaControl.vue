@@ -3,10 +3,10 @@
     <dialog-generic :data="data" />
     <v-flex xs12>
       <v-btn color="success" outline @click="playRpa()">
-        <v-icon left>play_arrow</v-icon>Play
+        <v-icon left>play_arrow</v-icon>Iniciar
       </v-btn>
       <v-btn color="error" outline @click="stopRpa()">
-        <v-icon left>stop</v-icon>Stop
+        <v-icon left>stop</v-icon>Parar
       </v-btn>
     </v-flex>
   </v-layout>
@@ -34,11 +34,11 @@ export default {
   },
   methods: {
     playRpa() {
-      this.data.title = "Robot started";
+      this.data.title = "Robô iniciado";
       EventBus.$emit("dialogGeneric", true);
     },
     stopRpa() {
-      this.data.title = "Robot stoped";
+      this.data.title = "Robô parado";
       EventBus.$emit("dialogGeneric", true);
     }
   }

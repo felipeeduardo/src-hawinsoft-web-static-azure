@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <dialog-generic :data="data" />
-    <h1 v-if="!verifyUserRpa" class="title font-weight-light">PANEL RPA</h1>
+    <h1 v-if="!verifyUserRpa" class="title font-weight-light">(RPA) AUTOMAÇÃO DE PROCESSOS ROBÓTICOS</h1>
     <v-layout v-if="verifyUserRpa" text-xs-center wrap ma-4>
       <v-flex xs12>
         <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="250"></v-img>
@@ -41,7 +41,7 @@ export default {
       data: {
         // success | information | error
         type: "information",
-        title: "Session expired!",
+        title: "Sessão expirada!",
         textButton: "log in",
         iconButton: "keyboard_backspace",
         sessionExpired: true,
@@ -77,7 +77,7 @@ export default {
                   title: element.name_rpa,
                   path: "RpaUniue",
                   enabled: element.active == 1 ? true : false,
-                  hoveText: element.active == 1 ? "Enabled" : "Desabled",
+                  hoveText: element.active == 1 ? "Ativado" : "Desativado",
                   hoveTextColor:
                     element.active == 1 ? "green--text" : "red--text",
                   hoveColor:

@@ -30,7 +30,7 @@
     </v-navigation-drawer>
     <!--footer-->
     <v-footer color="#3c8dbc" class="pa-3 white--text" app>
-      <span>Plataform Hawinsoft</span>
+      <span>Plataforma Hawinsoft</span>
       <v-spacer></v-spacer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -67,32 +67,32 @@ export default {
       itemsMenuAuth: [
         {
           icon: "home",
-          title: "Home",
+          title: "Página inicial",
           path: "Home"
         },
         {
           icon: "memory",
-          title: "Robotic process automation",
+          title: "(RPA) Automação de processos",
           path: "Rpa"
         },
         {
           icon: "desktop_windows",
-          title: "Test laboratory",
+          title: "Laboratório de teste",
           path: "Test"
         },
         {
           icon: "bug_report",
-          title: "Report problem",
+          title: "Reportar problema",
           path: "Report"
         },
         {
           icon: "payment",
-          title: "Payment",
+          title: "Forma de pagamento",
           path: "Payment"
         },
         {
           icon: "mail",
-          title: "Message",
+          title: "Mensagem",
           path: "Message"
         }
       ]

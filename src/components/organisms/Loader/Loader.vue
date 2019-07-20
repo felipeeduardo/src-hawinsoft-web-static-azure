@@ -5,7 +5,7 @@
         <v-card-text>
           <v-img height="100px" contain :src="require('@/assets/img/hawinsoft-loading.gif')"></v-img>
           <div class="mt-4">
-            <h1 class="title text-xs-center font-weight-light" color="red--text">Loading...</h1>
+            <h1 class="title text-xs-center font-weight-light" color="red--text">Carregando...</h1>
           </div>
         </v-card-text>
       </v-card>

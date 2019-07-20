@@ -4,10 +4,8 @@
       <v-flex xs12 sm5>
         <v-card class="elevation-3">
           <div class="card-bord-top">
-            <v-card-title>
-              <span class="title font-weight-light">Login</span>
-            </v-card-title>
             <v-card-text>
+              <v-img class="mb-3" height="120px" contain :src="require('@/assets/img/hawinsoft-add-user.png')"></v-img>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
                   prepend-icon="mail"
@@ -20,7 +18,7 @@
                 <v-text-field
                   prepend-icon="lock"
                   name="password"
-                  label="Password"
+                  label="Senha"
                   id="password"
                   type="password"
                   required
@@ -31,7 +29,7 @@
                 ></v-text-field>
               </v-form>
               <v-flex xs12 mt-1>
-                <span class="font-weight-light">I forgot my password</span>
+                <span class="font-weight-light">Esqueci a minha senha</span>
               </v-flex>
               <v-flex xs12 mt-3>
                 <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
@@ -39,11 +37,11 @@
             </v-card-text>
             <v-card-actions>
               <v-btn flat color="primary" @click="goNewUse()">
-                <v-icon left>person_add</v-icon>Register
+                <v-icon left>person_add</v-icon>Registre-se
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn :disabled="!valid" color="success" flat @click="validate()">
-                <v-icon left>done</v-icon>Ok
+                <v-icon left>done</v-icon>Entrar
               </v-btn>
             </v-card-actions>
           </div>
@@ -53,7 +51,7 @@
     <!-- snackbar-->
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="y === 'top'" :color="snackcolor">
       {{ snacktext }}
-      <v-btn flat @click="snackbar = false">Close</v-btn>
+      <v-btn flat @click="snackbar = false">Fechar</v-btn>
     </v-snackbar>
   </v-container>
 </template>
@@ -84,12 +82,12 @@ export default {
       snacktext: "",
       snackcolor: "",
       isEmailValid: [
-        v => !!v || "Email is required",
-        v => this.reg.test(this.form.email) || "Invalid email"
+        v => !!v || "Email é obrigatório",
+        v => this.reg.test(this.form.email) || "Email inválido"
       ],
       isPasswordValid: [
-        v => !!v || "Password is required",
-        v => v.length >= 8 || "Password must be than 8 characters"
+        v => !!v || "Senha é obrigatório",
+        v => v.length >= 8 || "A senha deve ter no máximo 8 caracteres"
       ]
     };
   },
@@ -119,7 +117,7 @@ export default {
                 router.push({ name: "Home" });
               } else {
                 this.snackbar = true;
-                this.snacktext = "Invalid user or password !";
+                this.snacktext = "Usuário ou senha inválido!";
                 this.snackcolor = "error";
               }
             })
@@ -129,7 +127,7 @@ export default {
         }
       } else {
         this.snackbar = true;
-        this.snacktext = "Invalid Recaptcha !";
+        this.snacktext = "Recaptcha inválido!";
         this.snackcolor = "error";
       }
     }

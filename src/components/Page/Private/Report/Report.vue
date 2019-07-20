@@ -1,6 +1,7 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <card-report/>
+  <v-container grid-list-md>
+    <h1 class="title font-weight-light">REPORTAR PROBLEMA</h1>
+    <card-report />
   </v-container>
 </template>
 

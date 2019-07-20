@@ -6,6 +6,7 @@ import PageLogin from '@/components/Page/Public/User/Login'
 import PageCreateUser from '@/components/Page/Public/User/Create'
 import PageHome from '@/components/Page/Private/Home'
 import PageMessage from '@/components/Page/Private/Message'
+import PageHandler from '@/components/Page/Private/Handler'
 import PageRpa from '@/components/Page/Private/Rpa'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
 import PageRpaDownload from '@/components/Page/Private/RpaDownload'
@@ -14,7 +15,7 @@ import PageRpaImport from '@/components/Page/Private/RpaImport'
 //import PageTest from '@/components/Page/Private/Test'
 import PageReport from '@/components/Page/Private/Report'
 import PageUserRpa from '@/components/Page/Private/User/UserRpa'
-//import PagePayment from '@/components/Page/Private/Payment'
+import PagePayment from '@/components/Page/Private/Payment'
 import PageClient from '@/components/Page/Private/Client'
 import PageProcess from '@/components/Page/Private/Process'
 import PageRun from '@/components/Page/Private/Run'
@@ -33,15 +34,15 @@ const ifAuthenticated = (to, from, next) => {
     next('/login')
 }
 
-/*const ifPermissionProfile = (to, from, next) => {
+const ifAuthenticatedBasic = (to, from, next) => {
+    const verify = sessionStorage.getItem("hawinsoft");
     const profile = sessionStorage.getItem("hawinsoft_profile");
-    //profile basic RPA
-    if (profile == 3) {
+    if (verify == 'true' && profile != 3) {
         next()
         return
     }
-    next('/login')
-}*/
+    next('/error')
+}
 
 export default new Router({
     routes: [
@@ -83,6 +84,12 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
+            path: '/error',
+            name: 'ErrorHandler',
+            component: PageHandler,
+            beforeEnter: ifAuthenticated
+        },
+        {
             path: '/rpa',
             name: 'Rpa',
             component: PageRpa,
@@ -98,7 +105,7 @@ export default new Router({
             path: '/rpauser/:Rid',
             name: 'RpaNewUser',
             component: PageUserRpa,
-            beforeEnter: ifAuthenticated
+            beforeEnter: ifAuthenticatedBasic
         },
         {
             path: '/rparesult/:Rid',
@@ -133,10 +140,10 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/payment/:Pid',
+            path: '/payment',
             name: 'Payment',
-            component: UnderConstruction,
-            //component: PagePayment,
+            //component: UnderConstruction,
+            component: PagePayment,
             beforeEnter: ifAuthenticated
         },
         {

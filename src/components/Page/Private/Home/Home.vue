@@ -1,55 +1,53 @@
 <template>
   <v-container grid-list-md>
-    <h1 class="title font-weight-light">HOME</h1>
+    <h1 class="title font-weight-light">PÁGINA INICIAL</h1>
     <card-generic :data="cards" />
   </v-container>
 </template>
 
 <script>
 import CardGeneric from "@/components/organisms/Card/CardGeneric";
-import Breadcrumb from "@/components/organisms/Breadcrumb";
 export default {
   components: {
-    CardGeneric,
-    Breadcrumb
+    CardGeneric
   },
   data() {
     return {
       cards: [
         {
           banner: require("@/assets/img/hawinsoft-robot.png"),
-          title: "Robotic process",
+          title: "Automação de processos",
           path: "Rpa",
           enabled: true,
-          hoveText: "Enabled",
+          hoveText: "Ativado",
           hoveTextColor: "green--text",
           hoveColor: "grey lighten-4"
         },
         {
           banner: require("@/assets/img/lab-test-hawinsoft.png"),
-          title: "Test laboratory",
+          title: "Laboratório de teste",
           path: "Test",
           enabled: false,
-          hoveText: "Desabled",
+          hoveText: "Desativado",
           hoveTextColor: "red--text",
           hoveColor: "grey lighten-5"
         },
         {
           banner: require("@/assets/img/hawinsoft-bug.png"),
-          title: "Report problem",
+          title: "Reportar problema",
           path: "Report",
           enabled: true,
-          hoveText: "Report",
-          hoveTextColor: "blue--text",
+          hoveText: "",
+          hoveTextColor: "",
           hoveColor: "blue-grey lighten-5"
         },
         {
           banner: require("@/assets/img/money-hawinsoft.png"),
-          title: "Payment",
+          title: "Forma de pagamento",
           path: "Payment",
           enabled: true,
-          hoveText: "Payment",
-          hoveTextColor: "green--text",
+          hoveText: "",
+          hoveTextColor: "",
           hoveColor: "blue-grey lighten-5"
         }
       ]

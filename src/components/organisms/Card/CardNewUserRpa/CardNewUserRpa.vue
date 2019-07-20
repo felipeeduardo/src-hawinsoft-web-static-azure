@@ -20,7 +20,7 @@
               <v-text-field
                 prepend-icon="lock"
                 name="password"
-                label="Password"
+                label="Senha"
                 id="password"
                 type="password"
                 required
@@ -32,7 +32,7 @@
               <v-text-field
                 prepend-icon="lock"
                 name="confirmpassword"
-                label="Confirm Password"
+                label="Confirmação de senha"
                 id="confirmpassword"
                 type="password"
                 required
@@ -44,7 +44,7 @@
               <v-text-field
                 prepend-icon="business"
                 name="company"
-                label="Company or project"
+                label="Empresa ou projeto"
                 type="text"
                 required
                 v-model="form.company"
@@ -55,7 +55,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn :disabled="!valid" color="success" flat @click="validate">
-              <v-icon left>done</v-icon>Register
+              <v-icon left>done</v-icon>Registrar
             </v-btn>
           </v-card-actions>
           <!-- snackbar-->

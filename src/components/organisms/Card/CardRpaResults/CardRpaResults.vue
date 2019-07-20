@@ -113,7 +113,7 @@ export default {
       data: {
         // success | information | error
         type: "information",
-        title: "Session expired!",
+        title: "Sessão expirada!",
         textButton: "log in",
         iconButton: "keyboard_backspace",
         sessionExpired: true,
@@ -121,13 +121,13 @@ export default {
       },
       headers: [
         {
-          text: "Quantify",
+          text: "Quantidade",
           align: "left",
           sortable: true,
           value: "name"
         },
         {
-          text: "Date",
+          text: "Data",
           align: "left",
           value: "dates"
         },
