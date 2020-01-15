@@ -1,22 +1,18 @@
 <template>
   <v-container grid-list-md>
     <dialog-generic :data="data" />
-    <h1 v-if="!verifyUserRpa" class="title font-weight-light">(RPA) AUTOMAÇÃO DE PROCESSOS ROBÓTICOS</h1>
-    <v-layout v-if="verifyUserRpa" text-xs-center wrap ma-4>
+    <h1 class="title font-weight-light">
+      <v-icon>memory</v-icon>Robotic process automation
+    </h1>
+    <v-layout v-if="verifyUserRpa" text-xs-center wrap ma-2>
       <v-flex xs12>
-        <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="250"></v-img>
+        <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="300"></v-img>
       </v-flex>
       <v-flex xs12>
-        <h1 class="font-weight-light" color="grey--text">You do not have RPA</h1>
+        <h1 class="font-weight-light" color="grey--text">Você não possui RPA associado a sua conta.</h1>
       </v-flex>
       <v-flex xs12>
-        <v-btn color="primary" outline @click="goHome()">
-          <v-icon left>adb</v-icon>Request a quote
-        </v-btn>
-      </v-flex>
-      <v-flex>
-        <p class="text-xs-center">OR</p>
-        <h3 class="text-xs-center" style="color:blue">support@hawinsoft.com.br</h3>
+        <v-btn color="success" large flat outline round @click="goHome()">Criar RPA</v-btn>
       </v-flex>
     </v-layout>
     <card-generic v-if="!verifyUserRpa" :data="cards" />
@@ -56,7 +52,7 @@ export default {
   methods: {
     ...mapActions("product", ["getProductsUser"]),
     ...mapActions("auth", ["logOut"]),
-    goHome(path) {
+    goHome() {
       router.push({ name: "Home" });
     }
   },
@@ -73,11 +69,11 @@ export default {
               if (element != "") {
                 const item = {
                   idRpa: element.id_rpa_type,
-                  banner: require("@/assets/img/hawinsoft-rpa-web.png"),
+                  banner: require("@/assets/img/hawinsoft-bot.png"),
                   title: element.name_rpa,
                   path: "RpaUniue",
                   enabled: element.active == 1 ? true : false,
-                  hoveText: element.active == 1 ? "Ativado" : "Desativado",
+                  hoveText: element.active == 1 ? "Ativo" : "Inativo",
                   hoveTextColor:
                     element.active == 1 ? "green--text" : "red--text",
                   hoveColor:
@@ -90,7 +86,7 @@ export default {
             this.verifyUserRpa = true;
           }
         })
-        .catch(err => {
+        .catch(() => {
           //erro 500 -> auth expired
           EventBus.$emit("dialogGeneric", true);
         });

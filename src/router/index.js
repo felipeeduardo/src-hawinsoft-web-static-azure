@@ -9,19 +9,12 @@ import PageMessage from '@/components/Page/Private/Message'
 import PageHandler from '@/components/Page/Private/Handler'
 import PageRpa from '@/components/Page/Private/Rpa'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
-import PageRpaDownload from '@/components/Page/Private/RpaDownload'
 import PageRpaResults from '@/components/Page/Private/RpaResults'
-import PageRpaImport from '@/components/Page/Private/RpaImport'
-//import PageTest from '@/components/Page/Private/Test'
 import PageReport from '@/components/Page/Private/Report'
 import PageUserRpa from '@/components/Page/Private/User/UserRpa'
-import PagePayment from '@/components/Page/Private/Payment'
-import PageClient from '@/components/Page/Private/Client'
-import PageProcess from '@/components/Page/Private/Process'
-import PageRun from '@/components/Page/Private/Run'
 import PageSuccess from '@/components/Page/Public/Success'
 import NotFound from '@/components/Page/Private/NotFound'
-import UnderConstruction from '@/components/Page/Private/UnderConstruction'
+//import UnderConstruction from '@/components/Page/Private/UnderConstruction'
 
 Vue.use(Router)
 
@@ -96,12 +89,6 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/rpadownload/:Rid',
-            name: 'RpaDownload',
-            component: PageRpaDownload,
-            beforeEnter: ifAuthenticated
-        },
-        {
             path: '/rpauser/:Rid',
             name: 'RpaNewUser',
             component: PageUserRpa,
@@ -114,12 +101,6 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/rpaimport/:Rid',
-            name: 'RpaImport',
-            component: PageRpaImport,
-            beforeEnter: ifAuthenticated
-        },
-        {
             //Pid = id_user | Rid = id_Rpa
             path: '/rpa/:Pid/:Rid',
             name: 'RpaUniue',
@@ -127,41 +108,9 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/test/:Pid',
-            name: 'Test',
-            component: UnderConstruction,
-            //component: PageTest,
-            beforeEnter: ifAuthenticated
-        },
-        {
             path: '/report/:Pid',
             name: 'Report',
             component: PageReport,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/payment',
-            name: 'Payment',
-            //component: UnderConstruction,
-            component: PagePayment,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/process/:Pid',
-            name: 'Process',
-            component: PageProcess,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/run/:Pid',
-            name: 'Run',
-            component: PageRun,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/client',
-            name: 'Client',
-            component: PageClient,
             beforeEnter: ifAuthenticated
         }
     ]

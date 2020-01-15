@@ -4,7 +4,7 @@
       <v-hover>
         <v-card
           slot-scope="{ hover }"
-          class="elevation-3 text-md-center title-hover"
+          class="elevation-3 text-md-center title-hover text-truncate"
           :style="{ cursor: 'pointer'}"
           @click="goPath(item.path, item.idRpa)"
         >
@@ -16,6 +16,7 @@
           <v-card-text>
             <p class="title font-weight-light text-md-center">{{item.title}}</p>
           </v-card-text>
+
           <v-expand-transition>
             <div
               v-if="hover"
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
 import router from "@/router";
 export default {
   props: {

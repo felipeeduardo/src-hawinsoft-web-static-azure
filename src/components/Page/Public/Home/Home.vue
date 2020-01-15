@@ -1,31 +1,16 @@
 <template>
-  <!--<v-layout wrap text-xs-center>
-    <v-flex xs12 class="mt-3">
-      <v-img :src="require('@/assets/img/hawinsoft-public.png')" contain max-height="450"></v-img>
-    </v-flex>
-    <v-flex xs12 class="mt-3">
-      <span class="title font-weight-light">PLATAFORMA HAWINSOFT</span>
-    </v-flex>
-        <v-flex xs12 class="mt-3">
-      <span class="title font-weight-light">...</span>
-    </v-flex>
-    <v-flex xs12 class="mt-3">
-      <v-btn color="success" large outline @click="goNewUse()">Registre-se</v-btn>
-    </v-flex>
-  </v-layout>-->
-  <v-layout row wrap class="py-1 px-2">
-    <!--banner-->
-    <v-flex xs12 sm7 text-xs-center>
-      <v-flex xs12 class="mt-3">
-        <v-img :src="require('@/assets/img/hawinsoft-public.png')" contain max-height="450"></v-img>
-      </v-flex>
-    </v-flex>
+  <v-layout justify-center wrap class="py-1 px-2">
     <!--text-->
     <v-flex xs12 sm5>
       <v-flex xs12 class="mt-3">
-        <h2 class="font-weight-light">
-          <v-icon left color="success">done</v-icon>Automação de processos
-        </h2>
+        <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="250"></v-img>
+      </v-flex>
+      <v-flex xs12 class="mt-2 text-center" text-xs-center>
+        <h1 class="font-weight-light">HAWINSOFT</h1>
+      </v-flex>
+      <v-flex xs12 text-xs-center class="mt-2">
+        <v-btn color="primary" round large outline @click="goNewUse()" class="sizebtn">Cadastre-se</v-btn>
+        <v-btn color="green" round large outline @click="goLogin()" class="sizebtn">Login</v-btn>
       </v-flex>
       <v-flex xs12 class="mt-4">
         <h3 class="font-weight-light">
@@ -34,28 +19,15 @@
         </h3>
       </v-flex>
       <v-flex xs12 class="mt-3">
-        <h3 class="font-weight-light">Problemas com tarefas rotineiras e cansativas?</h3>
-        <h3
-          class="font-weight-light"
-        >Automatize o trabalho web com algoritmos de inteligência artificial.</h3>
-        <h3 class="font-weight-light">Ganhe eficiência e qualidade em suas operações, com:</h3>
-      </v-flex>
-      <v-flex xs12 class="mt-3">
-        <div>
-          <v-icon left color="success">done</v-icon>Controle total dos processos;
-        </div>
-        <div>
-          <v-icon left color="success">done</v-icon>Funcionamento em nuvem;
-        </div>
-        <div>
-          <v-icon left color="success">done</v-icon>Monitoramento 24Hs.
-        </div>
-      </v-flex>
-      <v-flex xs12 text-xs-center class="mt-5">
-        <v-btn color="primary" round large outline block @click="goNewUse()">Veja como funciona</v-btn>
-      </v-flex>
-      <v-flex xs12 text-xs-center>
-        <v-btn color="success" round large outline block @click="goNewUse()">Registre-se grátis</v-btn>
+        <h3 class="font-weight-light">
+          <v-icon left color="success">done</v-icon>Web crawlers;
+        </h3>
+        <h3 class="font-weight-light">
+          <v-icon left color="success">done</v-icon>Chat Bot;
+        </h3>
+        <h3 class="font-weight-light">
+          <v-icon left color="success">done</v-icon>Soluções para captcha.
+        </h3>
       </v-flex>
     </v-flex>
   </v-layout>
@@ -67,7 +39,15 @@ export default {
   methods: {
     goNewUse() {
       router.push({ name: "Create" });
+    },
+    goLogin() {
+      router.push({ name: "Login" });
     }
   }
 };
 </script>
+<style scoped>
+.sizebtn {
+  width: 40%;
+}
+</style>>

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
 export default {
@@ -54,18 +54,16 @@ export default {
   mounted() {
     EventBus.$on("dialogGeneric", event => {
       this.dialogGeneric = event;
+      if (this.data.type == "success") {
+        this.img = require("@/assets/img/hawinsoft-success.png");
+      }
+      if (this.data.type == "information") {
+        this.img = require("@/assets/img/hawinsoft-information.png");
+      }
+      if (this.data.type == "error") {
+        this.img = require("@/assets/img/hawinsoft-error.png");
+      }
     });
-  },
-  created() {
-    if (this.data.type == "success") {
-      this.img = require("@/assets/img/hawinsoft-success.png");
-    }
-    if (this.data.type == "information") {
-      this.img = require("@/assets/img/hawinsoft-information.png");
-    }
-    if (this.data.type == "error") {
-      this.img = require("@/assets/img/hawinsoft-error.png");
-    }
   },
   data() {
     return {

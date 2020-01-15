@@ -1,9 +1,7 @@
 <template>
   <v-content>
-    <v-toolbar app dark clipped-left color="primary">
-      <v-toolbar-side-icon @click.stop="drawer = !drawer">
-        <v-img :src="require('@/assets/img/hawinsoft-white.png')" contain height="30"></v-img>
-      </v-toolbar-side-icon>
+    <v-toolbar app dark clipped-left color="primary" v-if="this.auth.auth">
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title @click.stop="drawer = !drawer" class="headline text-uppercase" exact>
         <span class="font-weight-light">HAWINSOFT</span>
       </v-toolbar-title>
@@ -14,13 +12,18 @@
     <!--navigation-->
     <v-navigation-drawer v-if="this.auth.auth" v-model="drawer" fixed app clipped>
       <v-list dense v-if="this.auth.auth">
+        <v-list-tile-content text-xs-center>
+          <v-list-tile>Versão 1.0</v-list-tile>
+        </v-list-tile-content>
+
+        <v-divider></v-divider>
         <v-list-tile
           v-for="item in itemsMenuAuth"
           :key="item.index"
           @click="goPath(item.path, item.idRpa)"
         >
           <v-list-tile-action>
-            <v-icon color="primary">{{item.icon}}</v-icon>
+            <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{item.title}}</v-list-tile-title>
@@ -30,9 +33,9 @@
     </v-navigation-drawer>
     <!--footer-->
     <v-footer color="#3c8dbc" class="pa-3 white--text" app>
-      <span>Plataforma Hawinsoft</span>
+      <span>Copyright &copy; Hawinsoft</span>
       <v-spacer></v-spacer>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>2019 - {{ new Date().getFullYear() }}</span>
     </v-footer>
     <!--content-->
     <loader :loader="this.loading" />
@@ -72,23 +75,23 @@ export default {
         },
         {
           icon: "memory",
-          title: "(RPA) Automação de processos",
+          title: "Robotic process automation",
           path: "Rpa"
         },
         {
-          icon: "desktop_windows",
-          title: "Laboratório de teste",
-          path: "Test"
+          icon: "settings_applications",
+          title: "API's",
+          path: "Report"
+        },
+        {
+          icon: "filter",
+          title: "Uncaptcha",
+          path: "Report"
         },
         {
           icon: "bug_report",
           title: "Reportar problema",
           path: "Report"
-        },
-        {
-          icon: "payment",
-          title: "Forma de pagamento",
-          path: "Payment"
         },
         {
           icon: "mail",

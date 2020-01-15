@@ -1,6 +1,8 @@
 <template>
   <v-container grid-list-md>
-    <h1 class="title font-weight-light">PÁGINA INICIAL</h1>
+    <h1 class="title font-weight-light">
+      <v-icon>home</v-icon>Página inicial
+    </h1>
     <card-generic :data="cards" />
   </v-container>
 </template>
@@ -15,22 +17,40 @@ export default {
     return {
       cards: [
         {
+          banner: require("@/assets/img/hawinsoft-id.png"),
+          title: "Administração",
+          path: "Admin",
+          enabled: true,
+          hoveText: "",
+          hoveTextColor: "",
+          hoveColor: "blue-grey lighten-5"
+        },
+        {
           banner: require("@/assets/img/hawinsoft-robot.png"),
-          title: "Automação de processos",
+          title: "RPA",
           path: "Rpa",
           enabled: true,
-          hoveText: "Ativado",
+          hoveText: "",
           hoveTextColor: "green--text",
           hoveColor: "grey lighten-4"
         },
         {
-          banner: require("@/assets/img/lab-test-hawinsoft.png"),
-          title: "Laboratório de teste",
-          path: "Test",
-          enabled: false,
-          hoveText: "Desativado",
-          hoveTextColor: "red--text",
-          hoveColor: "grey lighten-5"
+          banner: require("@/assets/img/hawinsoft-api.png"),
+          title: "API's",
+          path: "Api",
+          enabled: true,
+          hoveText: "",
+          hoveTextColor: "",
+          hoveColor: "blue-grey lighten-5"
+        },
+        {
+          banner: require("@/assets/img/hawinsoft-uncaptcha.png"),
+          title: "Uncaptcha",
+          path: "Uncaptcha",
+          enabled: true,
+          hoveText: "",
+          hoveTextColor: "",
+          hoveColor: "blue-grey lighten-5"
         },
         {
           banner: require("@/assets/img/hawinsoft-bug.png"),
@@ -42,9 +62,9 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          banner: require("@/assets/img/money-hawinsoft.png"),
-          title: "Forma de pagamento",
-          path: "Payment",
+          banner: require("@/assets/img/hawinsoft-mensagens.png"),
+          title: "Mensagens",
+          path: "Message",
           enabled: true,
           hoveText: "",
           hoveTextColor: "",

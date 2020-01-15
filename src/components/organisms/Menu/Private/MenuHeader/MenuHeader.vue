@@ -2,16 +2,6 @@
   <v-menu bottom left>
     <template v-slot:activator="{ on }">
       <div v-show="showMenuPrivate">
-        <!--message-->
-        <v-btn dark icon @click="goMessage()">
-          <v-badge rigth color="red lighten-1">
-            <template v-slot:badge>
-              <span>0</span>
-            </template>
-            <v-icon>mail</v-icon>
-          </v-badge>
-        </v-btn>
-        <!--person-->
         <v-btn dark icon v-on="on">
           <v-icon>person_pin</v-icon>
         </v-btn>
@@ -22,7 +12,7 @@
     </template>
     <v-list v-if="showMenuPrivate">
       <div class="text-xs-center">
-        <v-icon color="primary" size="80">person_pin</v-icon>
+        <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="60"></v-img>
       </div>
       <v-list-tile :style="{ cursor: 'pointer'}">
         <v-list-tile-title>{{this.auth.email}}</v-list-tile-title>
@@ -30,7 +20,7 @@
       <v-divider light></v-divider>
       <v-list-tile :style="{ cursor: 'pointer'}">
         <v-list-tile-title @click="logout()">
-          <v-icon color="primary">exit_to_app</v-icon>Sair
+          <v-icon>exit_to_app</v-icon>Sair
         </v-list-tile-title>
       </v-list-tile>
     </v-list>
