@@ -4,5 +4,6 @@ export default {
     rpa_import: {
         auth: '',
         message: ''
-    }
+    },
+    rpa_browser_remote: {},
 }

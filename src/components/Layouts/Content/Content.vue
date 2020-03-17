@@ -23,10 +23,10 @@
           @click="goPath(item.path, item.idRpa)"
         >
           <v-list-tile-action>
-            <v-icon>{{item.icon}}</v-icon>
+            <v-icon :color="item.colorIcon">{{item.icon}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{item.title}}</v-list-tile-title>
+            <v-list-tile-title :class="item.classColorText">{{item.title}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -69,33 +69,52 @@ export default {
       drawer: null,
       itemsMenuAuth: [
         {
+          icon: "payment",
+          colorIcon: "success",
+          title: "Inserir créditos",
+          classColorText: "success--text",
+          path: "Payment"
+        },
+        {
           icon: "home",
+          colorIcon: "",
           title: "Página inicial",
+          classColorText: "",
           path: "Home"
         },
         {
           icon: "memory",
+          colorIcon: "",
           title: "Robotic process automation",
+          classColorText: "",
           path: "Rpa"
         },
         {
           icon: "settings_applications",
+          colorIcon: "",
           title: "API's",
-          path: "Report"
+          classColorText: "",
+          path: "Api"
         },
-        {
+        /*{
           icon: "filter",
+          colorIcon: "",
           title: "Uncaptcha",
-          path: "Report"
-        },
+          classColorText: "",
+          path: "Uncaptcha"
+        },*/
         {
           icon: "bug_report",
+          colorIcon: "",
           title: "Reportar problema",
+          classColorText: "",
           path: "Report"
         },
         {
           icon: "mail",
+          colorIcon: "",
           title: "Mensagem",
+          classColorText: "",
           path: "Message"
         }
       ]

@@ -5,37 +5,49 @@
       <v-icon>memory</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
-      <v-flex xs12 sm4 text-xs-center>
-        <v-card height="380">
+      <v-flex xs12 sm6>
+        <v-card>
           <v-card-text>
             <v-flex xs12>
-              <v-img :src="require('@/assets/img/hawinsoft-bot.png')" contain height="180"></v-img>
+              <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="100"></v-img>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 text-xs-center>
               <h1 class="title font-weight-light" color="grey--text">{{this.pageTitle}}</h1>
             </v-flex>
+            <!--Time line-->
+            <v-flex>
+              <v-card height="260" class="scroll-y elevation-0">
+                <v-card-text>
+                  <v-flex xs12>
+                    <h3 class="text-truncate font-weight-light">https://www.google.com/</h3>
+                  </v-flex>
+                  <time-line :data="listSteps" />
+                </v-card-text>
+              </v-card>
+            </v-flex>
             <v-flex xs12>
-              <!--button upload-->
-              <upload-button
-                color="success"
-                flat
-                round
-                block
-                large
-                @file-update="fileImport"
-                title="Importar"
-                accept=".txt"
-              ></upload-button>
-              <v-btn color="success" large flat outline round @click="playRpa()">Iniciar</v-btn>
-              <v-btn color="error" large flat outline round @click="stopRpa()">Parar</v-btn>
+              <v-btn color="success" block large outline round @click="playRpa()">Iniciar</v-btn>
+              <v-btn color="error" block large outline round @click="stopRpa()">Parar</v-btn>
             </v-flex>
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs12 sm4>
-        <v-card height="380">
+      <v-flex xs12 sm6>
+        <v-card>
           <v-card-text>
             <v-layout row wrap>
+              <v-flex>
+                <!--button upload-->
+                <upload-button
+                  color="success"
+                  round
+                  block
+                  large
+                  @file-update="fileImport"
+                  title="Importar"
+                  accept=".txt"
+                ></upload-button>
+              </v-flex>
               <v-flex xs12>
                 <v-textarea outline label="Visualizar" v-model="preview"></v-textarea>
               </v-flex>
@@ -57,30 +69,64 @@
               <v-flex xs2>
                 <h3 class="font-weight-light">{{this.qtdTotal}}</h3>
               </v-flex>
-              <v-flex xs12 text-xs-center>
-                <v-btn
-                  class="mt-3"
-                  color="success"
-                  large
-                  flat
-                  outline
-                  round
-                  @click="confirmImport()"
-                >Confirmar importação</v-btn>
-              </v-flex>
             </v-layout>
+            <v-flex xs12 text-xs-center>
+              <v-btn
+                class="mt-3"
+                color="success"
+                block
+                large
+                flat
+                outline
+                round
+                @click="confirmImport()"
+              >Confirmar importação</v-btn>
+            </v-flex>
+            <v-flex xs12 mt-5 text-xs-center>
+              <!--MENU CONTROL-->
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-fab-transition>
+                    <v-btn color="primary" fab outline bottom @click="goPanel()" v-on="on">
+                      <v-icon>view_module</v-icon>
+                    </v-btn>
+                  </v-fab-transition>
+                </template>
+                <span>Painel</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-fab-transition>
+                    <v-btn color="primary" fab outline bottom @click="goPanel()" v-on="on">
+                      <v-icon>arrow_downward</v-icon>
+                    </v-btn>
+                  </v-fab-transition>
+                </template>
+                <span>Exportar API</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-fab-transition>
+                    <v-btn color="primary" fab outline bottom @click="ResultsRpa()" v-on="on">
+                      <v-icon>bar_chart</v-icon>
+                    </v-btn>
+                  </v-fab-transition>
+                </template>
+                <span>Resultados</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-fab-transition>
+                    <v-btn color="error" fab outline bottom @click="ResultsRpa()" v-on="on">
+                      <v-icon>delete</v-icon>
+                    </v-btn>
+                  </v-fab-transition>
+                </template>
+                <span>Excluir</span>
+              </v-tooltip>
+            </v-flex>
           </v-card-text>
         </v-card>
-      </v-flex>
-      <v-flex xs12 sm4>
-        <v-card height="380" class="scroll-y">
-          <v-card-text>
-            <time-line :data="listSteps" />
-          </v-card-text>
-        </v-card>
-      </v-flex>
-      <v-flex xs12 sm4 text-xs-center class="mt-4">
-        <v-btn class="sizeBtnResult" color="primary" large flat outline round @click="ResultsRpa()">ver Resultados</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -131,10 +177,39 @@ export default {
         {
           idStep: "1",
           eventBot: "input",
-          dataBot: "input teste"
+          dataBot: "input teste",
+          btEdit: true
         },
-        { idStep: "2", eventBot: "click", dataBot: "" },
-        { idStep: "3", eventBot: "getText", dataBot: "" }
+        {
+          idStep: "2",
+          eventBot: "click",
+          dataBot: "",
+          btEdit: true
+        },
+        {
+          idStep: "3",
+          eventBot: "getText",
+          dataBot: "",
+          btEdit: true
+        },
+        {
+          idStep: "3",
+          eventBot: "getText",
+          dataBot: "",
+          btEdit: true
+        },
+        {
+          idStep: "3",
+          eventBot: "getText",
+          dataBot: "",
+          btEdit: true
+        },
+        {
+          idStep: "3",
+          eventBot: "getText",
+          dataBot: "",
+          btEdit: true
+        }
       ],
       data: [],
       dataImport: {
@@ -149,14 +224,52 @@ export default {
       count: 0,
       qtdSuccess: 0,
       qtdTotal: 0,
-      qtdError: 0
+      qtdError: 0,
+
+      data_teste_browser_remote: {
+        Url: "http://www.buscacep.correios.com.br/sistemas/buscacep/",
+        Steps: [
+          {
+            Selector: "#Geral>div>div>span:nth-child(3)>label>input",
+            BotEvent: "input",
+            WaitForNavigation: "false",
+            ValueSelector: "53300300",
+            FullPathPNG: "null"
+          },
+          {
+            Selector: "#Geral>div>div>div.btnform>input",
+            BotEvent: "click",
+            WaitForNavigation: "false",
+            ValueSelector: "null",
+            FullPathPNG: "null"
+          },
+          {
+            Selector:
+              "body>div.back>div.tabs>div:nth-child(2)>div>div>div.column2>div.content>div.ctrlcontent>table",
+            BotEvent: "getText",
+            WaitForNavigation: "false",
+            ValueSelector: "null",
+            FullPathPNG: "null"
+          }
+        ]
+      }
     };
   },
   methods: {
+    ...mapActions("rpa", ["browserRemote"]),
     playRpa() {
-      this.dataDialog.type = "information";
+      this.browserRemote(this.data_teste_browser_remote)
+        .then(res => {
+          // eslint-disable-next-line no-console
+          console.log("browserRemote -> res", res);
+        })
+        .catch(err => {
+          // eslint-disable-next-line no-console
+          console.log("err", err);
+        });
+      /*this.dataDialog.type = "information";
       this.dataDialog.title = "Robô iniciado";
-      EventBus.$emit("dialogGeneric", true);
+      EventBus.$emit("dialogGeneric", true);*/
     },
     stopRpa() {
       this.dataDialog.type = "success";
@@ -165,6 +278,9 @@ export default {
     },
     ResultsRpa() {
       router.push({ name: "RpaResults" });
+    },
+    goPanel() {
+      router.push({ name: "Rpa" });
     },
     ...mapActions("rpa", ["importDataRpa"]),
     fileImport(file) {

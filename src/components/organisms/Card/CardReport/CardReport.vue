@@ -1,34 +1,41 @@
 <template>
   <v-layout justify-center wrap>
-    <v-flex xs6 class="mt-3">
-      <v-card-text>
-        <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field
-            v-model="subject"
-            :counter="30"
-            :rules="subjectRules"
-            label="Assunto"
-            required
-          ></v-text-field>
+    <v-flex xs12 sm6 class="mt-3">
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-text-field
+          v-model="subject"
+          :counter="30"
+          :rules="subjectRules"
+          label="Assunto"
+          required
+        ></v-text-field>
 
-          <v-textarea
-            v-model="descrition"
-            label="Descrição do problema"
-            :rules="descritionRules"
-            :counter="300"
-          ></v-textarea>
-        </v-form>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn :disabled="!valid" color="success" large flat outline round @click="submit()">
-          <v-icon left>done</v-icon>Enviar
-        </v-btn>
-      </v-card-actions>
-      <div class="py-4">
-        <p class="text-xs-center">OU</p>
-        <h3 class="text-xs-center" style="color:blue">suporte@hawinsoft.com.br</h3>
-      </div>
+        <v-textarea
+          v-model="descrition"
+          label="Descrição do problema"
+          :rules="descritionRules"
+          :counter="300"
+        ></v-textarea>
+      </v-form>
+
+      <v-flex xs12 text-xs-center class="mt-5">
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          block
+          large
+          flat
+          outline
+          round
+          @click="submit()"
+        >Enviar</v-btn>
+      </v-flex>
+    </v-flex>
+    <v-flex xs12 sm6 class="mt-3" text-xs-center>
+      <p class="text-xs-center">
+        <v-icon>email</v-icon>
+      </p>
+      <h2 class="font-weight-light primary--text">suporte@hawinsoft.com.br</h2>
     </v-flex>
     <!-- snackbar-->
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="y === 'top'" :color="snackcolor">

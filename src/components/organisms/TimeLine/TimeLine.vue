@@ -6,12 +6,24 @@
           <strong>Event:</strong>
           <div class="caption ellipsis">{{item.eventBot}}</div>
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs4 v-if="item.SelectorBot == null">
           <strong>Data:</strong>
           <div class="caption ellipsis">{{item.dataBot}}</div>
         </v-flex>
+        <v-flex xs8 v-if="item.SelectorBot != null">
+          <strong>Selector:</strong>
+          <div class="caption ellipsis">{{item.SelectorBot}}</div>
+        </v-flex>
         <v-flex>
-          <v-btn color="success" small flat outline round @click="openEdit(item.idStep)">Editar</v-btn>
+          <v-btn
+            v-if="item.btEdit"
+            color="success"
+            small
+            flat
+            outline
+            round
+            @click="openEdit(item.idStep)"
+          >Editar</v-btn>
         </v-flex>
       </v-layout>
     </v-timeline-item>

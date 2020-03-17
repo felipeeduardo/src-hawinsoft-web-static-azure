@@ -7,13 +7,17 @@ import PageCreateUser from '@/components/Page/Public/User/Create'
 import PageHome from '@/components/Page/Private/Home'
 import PageMessage from '@/components/Page/Private/Message'
 import PageHandler from '@/components/Page/Private/Handler'
+import PageApi from '@/components/Page/Private/Api'
+import PageAdmin from '@/components/Page/Private/Admin'
+import PageAUncaptcha from '@/components/Page/Private/Uncaptcha'
 import PageRpa from '@/components/Page/Private/Rpa'
+import pageRpaCreate from '@/components/Page/Private/RpaCreate'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
 import PageRpaResults from '@/components/Page/Private/RpaResults'
 import PageReport from '@/components/Page/Private/Report'
-import PageUserRpa from '@/components/Page/Private/User/UserRpa'
 import PageSuccess from '@/components/Page/Public/Success'
 import NotFound from '@/components/Page/Private/NotFound'
+import PagePayment from '@/components/Page/Private/Payment'
 //import UnderConstruction from '@/components/Page/Private/UnderConstruction'
 
 Vue.use(Router)
@@ -25,16 +29,6 @@ const ifAuthenticated = (to, from, next) => {
         return
     }
     next('/login')
-}
-
-const ifAuthenticatedBasic = (to, from, next) => {
-    const verify = sessionStorage.getItem("hawinsoft");
-    const profile = sessionStorage.getItem("hawinsoft_profile");
-    if (verify == 'true' && profile != 3) {
-        next()
-        return
-    }
-    next('/error')
 }
 
 export default new Router({
@@ -89,10 +83,10 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/rpauser/:Rid',
-            name: 'RpaNewUser',
-            component: PageUserRpa,
-            beforeEnter: ifAuthenticatedBasic
+            path: '/newrpa',
+            name: 'RpaCreate',
+            component: pageRpaCreate,
+            beforeEnter: ifAuthenticated
         },
         {
             path: '/rparesult/:Rid',
@@ -111,6 +105,30 @@ export default new Router({
             path: '/report/:Pid',
             name: 'Report',
             component: PageReport,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/api',
+            name: 'Api',
+            component: PageApi,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/uncaptcha',
+            name: 'Uncaptcha',
+            component: PageAUncaptcha,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/admin',
+            name: 'Admin',
+            component: PageAdmin,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/payment',
+            name: 'Payment',
+            component: PagePayment,
             beforeEnter: ifAuthenticated
         }
     ]

@@ -1,68 +1,53 @@
 <template>
   <v-container>
     <v-layout justify-center wrap>
-      <v-flex xs12 sm5>
-        <v-card-text>
-          <v-img
-            class="mb-3"
-            height="150px"
-            contain
-            :src="require('@/assets/img/hawinsoft-id.png')"
-          ></v-img>
-          <v-flex xs12 class="mt-2 text-center" text-xs-center>
-            <h1 class="font-weight-light">HAWINSOFT</h1>
-          </v-flex>
-          <v-form ref="form" v-model="valid" lazy-validation>
-            <v-text-field
-              prepend-icon="mail"
-              name="email"
-              label="Email"
-              type="text"
-              :rules="isEmailValid"
-              v-model="form.email"
-            ></v-text-field>
-            <v-text-field
-              prepend-icon="lock"
-              name="password"
-              label="Senha"
-              id="password"
-              type="password"
-              required
-              maxlength="8"
-              :counter="8"
-              v-model="form.password"
-              :rules="isPasswordValid"
-            ></v-text-field>
-          </v-form>
-          <v-flex xs12 mt-1>
-            <span class="font-weight-light">Esqueci a minha senha</span>
-          </v-flex>
-          <v-flex xs12 mt-3>
-            <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
-          </v-flex>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            large
-            flat
-            outline
-            round
-            class="sizebtn"
-            color="primary"
-            @click="goNewUse()"
-          >Registre-se</v-btn>
-          <v-spacer></v-spacer>
+      <v-flex xs12 sm6>
+        <v-flex xs12 class="mt-2 text-center" text-xs-center>
+          <h1 class="font-weight-light primary--text">HAWINSOFT</h1>
+          <h2 class="font-weight">
+            Web scraping
+            <v-icon color="success">sync_alt</v-icon>Browser remote
+          </h2>
+        </v-flex>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            prepend-icon="mail"
+            name="email"
+            label="Email"
+            type="text"
+            :rules="isEmailValid"
+            v-model="form.email"
+          ></v-text-field>
+          <v-text-field
+            prepend-icon="lock"
+            name="password"
+            label="Senha"
+            id="password"
+            type="password"
+            required
+            maxlength="8"
+            :counter="8"
+            v-model="form.password"
+            :rules="isPasswordValid"
+          ></v-text-field>
+        </v-form>
+        <v-flex xs12 mt-3>
+          <span class="font-weight-light">Esqueci a minha senha</span>
+        </v-flex>
+        <v-flex xs12 mt-3>
+          <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
+        </v-flex>
+        <v-flex xs12 mt-3>
           <v-btn
             :disabled="!valid"
             color="success"
-            class="sizebtn"
+            block
             large
-            flat
             outline
             round
             @click="validate()"
           >Entrar</v-btn>
-        </v-card-actions>
+        </v-flex>
       </v-flex>
     </v-layout>
     <!-- snackbar-->
@@ -118,29 +103,27 @@ export default {
     onExpired: function() {
       this.$refs.recaptcha.reset();
     },
-    goNewUse() {
-      router.push({ name: "Create" });
-    },
     validate() {
       if (this.$refs.form.validate()) {
         if (this.recaptcha) {
-        this.logIn(this.form)
-          .then(res => {
-            if (res.data.auth) {
-              this.snackbar = false;
-              sessionStorage.hawinsoft = res.data.auth;
-              sessionStorage.hawinsoft_profile = res.data.id_user_profile;
-              EventBus.$emit("showMenuPrivate", true);
-              router.push({ name: "Home" });
-            } else {
-              this.snackbar = true;
-              this.snacktext = "Usuário ou senha inválido!";
-              this.snackcolor = "error";
-            }
-          })
-          .catch(err => {
-            console.log("err", err);
-          });
+          this.logIn(this.form)
+            .then(res => {
+              if (res.data.auth) {
+                this.snackbar = false;
+                sessionStorage.hawinsoft = res.data.auth;
+                sessionStorage.hawinsoft_profile = res.data.id_user_profile;
+                EventBus.$emit("showMenuPrivate", true);
+                router.push({ name: "Home" });
+              } else {
+                this.snackbar = true;
+                this.snacktext = "Usuário ou senha inválido!";
+                this.snackcolor = "error";
+              }
+            })
+            .catch(err => {
+              // eslint-disable-next-line no-console
+              console.log("err", err);
+            });
         }
       } else {
         this.snackbar = true;
@@ -155,8 +138,5 @@ export default {
 .card-bord-top {
   border-top-style: solid;
   border-top-color: #357ca5;
-}
-.sizebtn {
-  width: 45%;
 }
 </style>

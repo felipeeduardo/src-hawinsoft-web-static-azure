@@ -18,6 +18,12 @@ const mutations = {
     },
     [types.RPA_IMPORT_ERROR](state, rpa_import) {
         state.rpa_import = rpa_import
+    },
+    [types.RPA_BROWSER_REMOTE_SUCCESS](state, rpa_browser_remote) {
+        state.rpa_browser_remote = rpa_browser_remote
+    },
+    [types.RPA_BROWSER_REMOTE_ERROR](state, rpa_browser_remote) {
+        state.rpa_browser_remote = rpa_browser_remote
     }
 }
 

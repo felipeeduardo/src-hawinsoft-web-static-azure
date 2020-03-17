@@ -2,6 +2,9 @@
   <v-menu bottom left>
     <template v-slot:activator="{ on }">
       <div v-show="showMenuPrivate">
+        <v-btn dark icon @click="goPayment()">
+          <v-icon>payment</v-icon>
+        </v-btn>
         <v-btn dark icon v-on="on">
           <v-icon>person_pin</v-icon>
         </v-btn>
@@ -18,6 +21,11 @@
         <v-list-tile-title>{{this.auth.email}}</v-list-tile-title>
       </v-list-tile>
       <v-divider light></v-divider>
+      <v-list-tile :style="{ cursor: 'pointer'}">
+        <v-list-tile-title @click="goPayment()">
+          <v-icon>payment</v-icon>Inserir créditos
+        </v-list-tile-title>
+      </v-list-tile>
       <v-list-tile :style="{ cursor: 'pointer'}">
         <v-list-tile-title @click="logout()">
           <v-icon>exit_to_app</v-icon>Sair
@@ -57,11 +65,16 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logOut"]),
+    ...mapActions("payment", ["getSessionIdPageSeguro"]),
     goLogin() {
       router.push({ name: "Login" });
     },
     goMessage() {
       router.push({ name: "Message" });
+    },
+    goPayment() {
+      this.getSessionIdPageSeguro();
+      router.push({ name: "Payment" });
     },
     logout() {
       this.showMenuPrivate = false;

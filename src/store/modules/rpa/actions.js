@@ -1,5 +1,6 @@
 import * as rpa_result from '@/services/modules/rpa_result'
 import * as rpa_import from '@/services/modules/rpa_import'
+import * as rpa_browser_remote from '@/services/modules/rpa_browser_remote'
 import * as types from './mutation-types'
 
 export const resultRpaUser = ({ commit }, data) => {
@@ -46,6 +47,17 @@ export const importDataRpa = ({ commit }, data) => {
             }
         }).catch(err => {
             commit(types.RPA_IMPORT_ERROR, err)
+            return Promise.reject(err)
+        })
+}
+
+export const browserRemote = ({ commit }, data) => {
+    return rpa_browser_remote.runBrowserRemote(data)
+        .then(result => {
+            commit(types.RPA_RESULT_SUCCESS, result.data)
+            return Promise.resolve(result)
+        }).catch(err => {
+            commit(types.RPA_RESULT_ERROR, err)
             return Promise.reject(err)
         })
 }

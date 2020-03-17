@@ -27,7 +27,7 @@ export default {
         },
         {
           banner: require("@/assets/img/hawinsoft-robot.png"),
-          title: "RPA",
+          title: "RPA's",
           path: "Rpa",
           enabled: true,
           hoveText: "",
@@ -43,7 +43,7 @@ export default {
           hoveTextColor: "",
           hoveColor: "blue-grey lighten-5"
         },
-        {
+        /*{
           banner: require("@/assets/img/hawinsoft-uncaptcha.png"),
           title: "Uncaptcha",
           path: "Uncaptcha",
@@ -51,7 +51,7 @@ export default {
           hoveText: "",
           hoveTextColor: "",
           hoveColor: "blue-grey lighten-5"
-        },
+        },*/
         {
           banner: require("@/assets/img/hawinsoft-bug.png"),
           title: "Reportar problema",

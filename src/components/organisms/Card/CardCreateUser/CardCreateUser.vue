@@ -1,78 +1,74 @@
 <template>
   <v-container>
     <v-layout justify-center wrap>
-      <v-flex xs12 sm5>
-        <v-card-text>
-          <v-img
-            class="mb-3"
-            height="150px"
-            contain
-            :src="require('@/assets/img/hawinsoft-id.png')"
-          ></v-img>
-          <v-flex xs12 class="mt-2 text-center" text-xs-center>
-            <h1 class="font-weight-light">HAWINSOFT</h1>
+      <v-flex xs12 sm6>
+        <v-flex xs12 class="mt-2 text-center" text-xs-center>
+          <h1 class="font-weight-light primary--text">HAWINSOFT</h1>
+          <h2 class="font-weight">
+            Web scraping
+            <v-icon color="success">sync_alt</v-icon>Browser remote
+          </h2>
+        </v-flex>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            prepend-icon="mail"
+            name="email"
+            label="Email"
+            type="text"
+            required
+            :rules="isEmailValid"
+            v-model="form.email"
+          ></v-text-field>
+          <v-text-field
+            prepend-icon="lock"
+            name="password"
+            label="Senha"
+            id="password"
+            type="password"
+            required
+            maxlength="8"
+            :counter="8"
+            v-model="form.password"
+            :rules="isPasswordValid"
+          ></v-text-field>
+          <v-text-field
+            prepend-icon="lock"
+            name="confirmpassword"
+            label="Confirmação de senha"
+            id="confirmpassword"
+            type="password"
+            required
+            maxlength="8"
+            :counter="8"
+            v-model="form.confirmpassword"
+            :rules="isConfirmPasswordValid"
+          ></v-text-field>
+          <v-text-field
+            prepend-icon="business"
+            name="company"
+            label="Empresa ou projeto"
+            type="text"
+            required
+            v-model="form.company"
+            :rules="isCompanyValid"
+          ></v-text-field>
+          <!--<v-checkbox v-model="checkbox" :rules="isCheck" label="você concorda?" required></v-checkbox>-->
+          <v-flex xs12 mt-3>
+            <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
           </v-flex>
-          <v-form ref="form" v-model="valid" lazy-validation>
-            <v-text-field
-              prepend-icon="mail"
-              name="email"
-              label="Email"
-              type="text"
-              required
-              :rules="isEmailValid"
-              v-model="form.email"
-            ></v-text-field>
-            <v-text-field
-              prepend-icon="lock"
-              name="password"
-              label="Senha"
-              id="password"
-              type="password"
-              required
-              maxlength="8"
-              :counter="8"
-              v-model="form.password"
-              :rules="isPasswordValid"
-            ></v-text-field>
-            <v-text-field
-              prepend-icon="lock"
-              name="confirmpassword"
-              label="Confirmação de senha"
-              id="confirmpassword"
-              type="password"
-              required
-              maxlength="8"
-              :counter="8"
-              v-model="form.confirmpassword"
-              :rules="isConfirmPasswordValid"
-            ></v-text-field>
-            <v-text-field
-              prepend-icon="business"
-              name="company"
-              label="Empresa ou projeto"
-              type="text"
-              required
-              v-model="form.company"
-              :rules="isCompanyValid"
-            ></v-text-field>
-            <!--<v-checkbox v-model="checkbox" :rules="isCheck" label="você concorda?" required></v-checkbox>-->
-            <v-flex xs12 mt-3>
-              <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
-            </v-flex>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
+        </v-form>
+        <v-flex xs12 mt-3>
           <v-btn
             :disabled="!valid"
             color="success"
             large
+            block
             flat
             outline
             round
             @click="validate"
           >Registrar</v-btn>
-        </v-card-actions>
+        </v-flex>
         <!-- snackbar-->
         <v-snackbar v-model="snackbar" :timeout="timeout" :top="y === 'top'" :color="snackcolor">
           {{ snacktext }}
