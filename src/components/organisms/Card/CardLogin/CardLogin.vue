@@ -6,7 +6,7 @@
           <h1 class="font-weight-light primary--text">HAWINSOFT</h1>
           <h2 class="font-weight">
             Web scraping
-            <v-icon color="success">sync_alt</v-icon>Browser remote
+            <v-icon color="success" class="mr-1">sync_alt</v-icon>Browser remote
           </h2>
         </v-flex>
         <v-form ref="form" v-model="valid" lazy-validation>
@@ -105,7 +105,7 @@ export default {
     },
     validate() {
       if (this.$refs.form.validate()) {
-        if (this.recaptcha) {
+        //if (this.recaptcha) {
           this.logIn(this.form)
             .then(res => {
               if (res.data.auth) {
@@ -124,7 +124,7 @@ export default {
               // eslint-disable-next-line no-console
               console.log("err", err);
             });
-        }
+        //}
       } else {
         this.snackbar = true;
         this.snacktext = "Recaptcha inválido!";

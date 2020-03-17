@@ -18,6 +18,7 @@ import PageReport from '@/components/Page/Private/Report'
 import PageSuccess from '@/components/Page/Public/Success'
 import NotFound from '@/components/Page/Private/NotFound'
 import PagePayment from '@/components/Page/Private/Payment'
+import PageAccessDenied from '@/components/Page/Private/AccessDenied'
 //import UnderConstruction from '@/components/Page/Private/UnderConstruction'
 
 Vue.use(Router)
@@ -30,7 +31,18 @@ const ifAuthenticated = (to, from, next) => {
     }
     next('/login')
 }
-
+//ADMIN PROFILE 1
+const ifAuthenticatedAuthorized = (to, from, next) => {
+    const verify = sessionStorage.getItem("hawinsoft");
+    const profile = sessionStorage.getItem("hawinsoft_profile");
+    if (verify == 'true') {
+        if (profile == 1) {
+            next()
+            return
+        }
+    }
+    next('/accessdenied')
+}
 export default new Router({
     routes: [
         {
@@ -123,12 +135,18 @@ export default new Router({
             path: '/admin',
             name: 'Admin',
             component: PageAdmin,
-            beforeEnter: ifAuthenticated
+            beforeEnter: ifAuthenticatedAuthorized
         },
         {
             path: '/payment',
             name: 'Payment',
             component: PagePayment,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/accessdenied',
+            name: 'AccessDenied',
+            component: PageAccessDenied,
             beforeEnter: ifAuthenticated
         }
     ]
