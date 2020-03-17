@@ -1,13 +1,25 @@
 <template>
   <v-container grid-list-md>
     <h1 class="title font-weight-light">
-      <v-icon>memory</v-icon>Robotic process automation
+      <v-icon class="mr-1">memory</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6 text-xs-center>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card height="530">
             <v-card-text>
+              <v-flex xs12>
+                <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="80"></v-img>
+              </v-flex>
+              <v-flex xs12 text-xs-center>
+                <h3 class="font-weight-light">
+                  Utilize o Devtools do Chrome para auxiliar na
+                  <b>
+                    captura do
+                    Selector
+                  </b>
+                </h3>
+              </v-flex>
               <v-flex xs12>
                 <v-text-field
                   :disabled="this.addurl"
@@ -39,7 +51,6 @@
                 ></v-select>
               </v-flex>
               <v-flex xs12 text-xs-center>
-                {{this.newStep.waitForNavigation}}
                 <v-switch
                   :disabled="this.newStep.eventRpa != `click`"
                   color="primary"
@@ -47,12 +58,12 @@
                   :label="`Aguardar Navegação`"
                 ></v-switch>
               </v-flex>
-              <v-flex xs12 class="mt-4">
+              <v-flex xs12>
                 <v-btn
                   required
                   :v-if="!this.addurl"
                   :disabled="!valid"
-                  class="sizeBtnAdd"
+                  block
                   color="success"
                   large
                   flat
@@ -69,9 +80,7 @@
         <v-card height="530" class="scroll-y">
           <v-card-text v-show="!this.showTimeline">
             <v-flex xs12 text-xs-center>
-              <h3
-                class="font-weight-light"
-              >Utilize o Devtools do Chrome para auxiliar na captura do Selector</h3>
+              <h3 class="font-weight-light">Exemplo de captura do Selector</h3>
             </v-flex>
             <v-flex xs12>
               <v-img
@@ -88,15 +97,7 @@
             </v-flex>
             <time-line :data="listSteps" />
             <v-flex xs12 text-xs-center>
-              <v-btn
-                class="sizeBtnAdd"
-                color="success"
-                large
-                flat
-                outline
-                round
-                @click="saveStep()"
-              >Salvar</v-btn>
+              <v-btn block color="success" large flat outline round @click="saveStep()">Salvar RPA</v-btn>
             </v-flex>
           </v-card-text>
         </v-card>

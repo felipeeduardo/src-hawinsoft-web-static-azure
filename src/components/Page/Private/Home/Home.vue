@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <h1 class="title font-weight-light">
-      <v-icon>home</v-icon>Página inicial
+      <v-icon class="mr-1">home</v-icon>Página inicial
     </h1>
     <card-generic :data="this.auth.id_user_profile == 1? cardsAdmin:cards" />
   </v-container>

@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <h1 class="title font-weight-light">
-      <v-icon>mail</v-icon>Mensagem
+      <v-icon class="mr-1">mail</v-icon>Mensagem
     </h1>
     <v-layout justify-center wrap>
       <v-flex xs12 class="mt-3">

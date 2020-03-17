@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <h1 class="title font-weight-light">
-      <v-icon>bug_report</v-icon>Reportar problema
+      <v-icon class="mr-1">bug_report</v-icon>Reportar problema
     </h1>
     <card-report />
   </v-container>
