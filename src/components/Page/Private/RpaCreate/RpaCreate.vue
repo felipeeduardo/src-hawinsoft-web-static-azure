@@ -1,19 +1,29 @@
 <template>
   <v-container grid-list-md>
+    <dialog-generic :data="dataDialog" />
     <h1 class="title font-weight-light">
       <v-icon class="mr-1">memory</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6 text-xs-center>
         <v-form ref="form" v-model="valid" lazy-validation>
-          <v-card height="530">
+          <v-card height="530" class="elevation-0">
             <v-card-text>
               <v-flex xs12>
-                <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="80"></v-img>
+                <v-text-field
+                  :disabled="this.addName"
+                  v-model="nameBot"
+                  prepend-icon="insert_emoticon"
+                  label="Nome"
+                  required
+                  maxlength="20"
+                  :counter="20"
+                  :rules="isNameValid"
+                ></v-text-field>
               </v-flex>
               <v-flex xs12 text-xs-center>
                 <h3 class="font-weight-light">
-                  Utilize o Devtools do Chrome para auxiliar na
+                  <span class="red--text">*</span> Utilize o Devtools do Chrome para auxiliar na
                   <b>
                     captura do
                     Selector
@@ -77,7 +87,7 @@
         </v-form>
       </v-flex>
       <v-flex xs12 sm6>
-        <v-card height="530" class="scroll-y">
+        <v-card height="530" class="scroll-y elevation-0">
           <v-card-text v-show="!this.showTimeline">
             <v-flex xs12 text-xs-center>
               <h3 class="font-weight-light">Exemplo de captura do Selector</h3>
@@ -108,16 +118,22 @@
 
 <script>
 import router from "@/router";
+import { mapActions, mapState } from "vuex";
+import { EventBus } from "@/services/event-bus.js";
+import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
 import TimeLine from "@/components/organisms/TimeLine";
 export default {
   components: {
-    TimeLine
+    TimeLine,
+    DialogGeneric
   },
   data() {
     return {
       url: "",
+      nameBot: "",
       valid: true,
       addurl: false,
+      addName: false,
       showTimeline: false,
       countStepInput: 0,
       newStep: {
@@ -126,12 +142,22 @@ export default {
         valueSelectorRpa: "",
         waitForNavigation: false
       },
-      states: ["input", "click", "select", "getText", "getHtml", "screenshot"],
+      dataDialog: {
+        // success | information | error
+        type: "information",
+        title: "Sessão expirada!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290"
+      },
+      states: [],
       listSteps: [],
       saveBot: {
-        urlBot: null,
-        steps: []
+        Url: null,
+        Steps: []
       },
+      isNameValid: [v => !!v || "Nome é obrigatório"],
       isUrlValid: [
         v => !!v || "Url é obrigatório",
         () => this.isUrl(this.url) || "Url inválido"
@@ -140,7 +166,29 @@ export default {
       isEventValid: [v => !!v || "Event é obrigatório"]
     };
   },
+  created() {
+    const data = {
+      token: this.auth.token
+    };
+    this.RpaEvents(data)
+      .then(res => {
+        if (res.data != "") {
+          res.data.forEach(element => {
+            this.states.push(element.name);
+          });
+        }
+      })
+      .catch(() => {
+        //erro 500 -> auth expired
+        EventBus.$emit("dialogGeneric", true);
+      });
+  },
+  computed: {
+    ...mapState("auth", ["auth"])
+  },
   methods: {
+    ...mapActions("rpa", ["RpaEvents"]),
+    ...mapActions("rpa", ["NewRpaUser"]),
     isUrl(urlInput) {
       var res = urlInput.match(
         /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
@@ -151,6 +199,7 @@ export default {
     addStep() {
       if (this.$refs.form.validate()) {
         this.addurl = true;
+        this.addName = true;
         this.showTimeline = true;
         if (
           this.newStep.eventRpa == "input" ||
@@ -159,35 +208,39 @@ export default {
           this.countStepInput += 1;
         }
         this.listSteps.push({
-          eventBot: this.newStep.eventRpa,
-          SelectorBot: this.newStep.selectorRpa,
+          BotEvent: this.newStep.eventRpa,
+          Selector: this.newStep.selectorRpa,
           waitForNavigation: this.newStep.waitForNavigation
         });
       }
     },
     saveStep() {
-      this.saveBot.urlBot = this.url;
+      //OBJECT CREATION
+      this.saveBot.Url = this.url;
       this.listSteps.forEach(element => {
-        this.saveBot.steps.push({
-          selectorBot: element.SelectorBot,
-          eventBot: element.eventBot,
+        this.saveBot.Steps.push({
+          Selector: element.Selector,
+          BotEvent: element.BotEvent,
           waitForNavigation: element.waitForNavigation,
-          valueInputBot: ""
+          ValueSelector: ""
         });
       });
-      //console.log(this.saveBot);
-      //inserir no banco
-      router.push({ name: "Rpa" });
+      const data = {
+        token: this.auth.token,
+        //body
+        name: this.nameBot,
+        steps: this.saveBot,
+        id_user: this.auth.id
+      };
+      this.NewRpaUser(data)
+        .then(res => {
+          if (res.status == 201) router.push({ name: "Rpa" });
+        })
+        .catch(() => {
+          //erro 500 -> auth expired
+          EventBus.$emit("dialogGeneric", true);
+        });
     }
   }
 };
 </script>
-
-<style scoped>
-.sizeBtnSave {
-  width: 40%;
-}
-.sizeBtnAdd {
-  width: 55%;
-}
-</style>

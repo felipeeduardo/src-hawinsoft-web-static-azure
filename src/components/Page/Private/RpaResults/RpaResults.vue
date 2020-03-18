@@ -6,7 +6,7 @@
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12>
-        <v-card>
+        <v-card class="elevation-0">
           <div>
             <v-card-title>
               <h3 class="font-weight-light">{{this.cardTitle}}</h3>

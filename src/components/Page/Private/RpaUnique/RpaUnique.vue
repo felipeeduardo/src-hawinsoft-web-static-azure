@@ -6,7 +6,7 @@
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6>
-        <v-card>
+        <v-card class="elevation-0">
           <v-card-text>
             <v-flex xs12>
               <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="100"></v-img>
@@ -33,7 +33,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 sm6>
-        <v-card>
+        <v-card class="elevation-0">
           <v-card-text>
             <v-layout row wrap>
               <v-flex>

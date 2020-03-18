@@ -7,7 +7,7 @@
     <v-layout v-if="verifyUserRpa" justify-center wrap>
       <v-flex xs12 sm6 class="mt-3">
         <v-flex xs12 text-xs-center class="mt-3">
-          <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="250"></v-img>
+          <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="200"></v-img>
         </v-flex>
         <v-flex xs12 text-xs-center class="mt-3">
           <h2
@@ -16,15 +16,7 @@
           >Você não possui um RPA associado à sua conta.</h2>
         </v-flex>
         <v-flex xs12 text-xs-center class="mt-3">
-          <v-btn
-            class="sizeBtnNewRpa"
-            color="success"
-            large
-            flat
-            outline
-            round
-            @click="newRpa()"
-          >Criar RPA</v-btn>
+          <v-btn color="success" large flat outline round @click="newRpa()">Criar</v-btn>
         </v-flex>
       </v-flex>
     </v-layout>
@@ -82,12 +74,10 @@ export default {
     };
   },
   computed: {
-    ...mapState("auth", ["auth"]),
-    ...mapState("product", ["product"])
+    ...mapState("auth", ["auth"])
   },
   methods: {
-    ...mapActions("product", ["getProductsUser"]),
-    ...mapActions("auth", ["logOut"]),
+    ...mapActions("rpa", ["allRpaUser"]),
     goHome() {
       router.push({ name: "Home" });
     },
@@ -98,28 +88,26 @@ export default {
   created() {
     if (this.auth.auth) {
       const data = {
-        id: this.auth.id,
+        id_user: this.auth.id,
         token: this.auth.token
       };
-      this.getProductsUser(data)
+      this.allRpaUser(data)
         .then(res => {
           if (res.data != "") {
             res.data.forEach(element => {
-              if (element != "") {
-                const item = {
-                  idRpa: element.id_rpa_type,
-                  banner: require("@/assets/img/hawinsoft-robot.png"),
-                  title: element.name_rpa,
-                  path: "RpaUniue",
-                  enabled: element.active == 1 ? true : false,
-                  hoveText: element.active == 1 ? "Ativo" : "Inativo",
-                  hoveTextColor:
-                    element.active == 1 ? "green--text" : "red--text",
-                  hoveColor:
-                    element.active == 1 ? "grey lighten-5" : "red lighten-5"
-                };
-                this.cards.push(item);
-              }
+              const item = {
+                idRpa: element.id_rpa,
+                banner: require("@/assets/img/hawinsoft-robot.png"),
+                title: element.name,
+                path: "RpaUniue",
+                enabled: element.active == 1 ? true : false,
+                hoveText: element.active == 1 ? "Ativo" : "Inativo",
+                hoveTextColor:
+                  element.active == 1 ? "green--text" : "red--text",
+                hoveColor:
+                  element.active == 1 ? "grey lighten-5" : "red lighten-5"
+              };
+              this.cards.push(item);
             });
           } else {
             this.verifyUserRpa = true;
@@ -133,8 +121,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.sizeBtnNewRpa {
-  width: 50%;
-}
-</style>

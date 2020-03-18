@@ -5,7 +5,7 @@
     </h1>
     <v-layout justify-center wrap>
       <v-flex xs12 class="mt-3">
-        <v-expansion-panel>
+        <v-expansion-panel class="elevation-0">
           <!--popout-->
           <v-expansion-panel-content v-for="(message, i) in messages" :key="i" hide-actions>
             <template v-slot:header>
@@ -17,7 +17,7 @@
                 </v-flex>
 
                 <v-flex sm5 md3 hidden-xs-only>
-                  <strong v-html="message.name"></strong>
+                  <strong class="font-weight-light" v-html="message.name"></strong>
                 </v-flex>
 
                 <v-flex no-wrap xs5 sm3>

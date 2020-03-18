@@ -6,4 +6,7 @@ export default {
         message: ''
     },
     rpa_browser_remote: {},
+    rpa_user: {},
+    rpa_user_all: {},
+    rpa_events: {},
 }

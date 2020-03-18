@@ -23,12 +23,12 @@
       <v-divider light></v-divider>
       <v-list-tile :style="{ cursor: 'pointer'}">
         <v-list-tile-title @click="goPayment()">
-          <v-icon>payment</v-icon>Inserir créditos
+          <v-icon class="mr-1">payment</v-icon>Inserir créditos
         </v-list-tile-title>
       </v-list-tile>
       <v-list-tile :style="{ cursor: 'pointer'}">
         <v-list-tile-title @click="logout()">
-          <v-icon>exit_to_app</v-icon>Sair
+          <v-icon class="mr-1">exit_to_app</v-icon>Sair
         </v-list-tile-title>
       </v-list-tile>
     </v-list>

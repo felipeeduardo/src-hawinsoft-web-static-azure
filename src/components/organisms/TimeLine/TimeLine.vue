@@ -4,15 +4,15 @@
       <v-layout>
         <v-flex xs4>
           <strong>Event:</strong>
-          <div class="caption ellipsis">{{item.eventBot}}</div>
+          <div class="caption ellipsis">{{item.BotEvent}}</div>
         </v-flex>
-        <v-flex xs4 v-if="item.SelectorBot == null">
+        <v-flex xs4 v-if="item.Selector == null">
           <strong>Data:</strong>
           <div class="caption ellipsis">{{item.dataBot}}</div>
         </v-flex>
-        <v-flex xs8 v-if="item.SelectorBot != null">
+        <v-flex xs8 v-if="item.Selector != null">
           <strong>Selector:</strong>
-          <div class="caption ellipsis">{{item.SelectorBot}}</div>
+          <div class="caption ellipsis">{{item.Selector}}</div>
         </v-flex>
         <v-flex>
           <v-btn

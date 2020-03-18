@@ -24,6 +24,24 @@ const mutations = {
     },
     [types.RPA_BROWSER_REMOTE_ERROR](state, rpa_browser_remote) {
         state.rpa_browser_remote = rpa_browser_remote
+    },
+    [types.RPA_USER_SUCCESS](state, rpa_user) {
+        state.rpa_user = rpa_user
+    },
+    [types.RPA_USER_ERROR](state, rpa_user) {
+        state.rpa_user = rpa_user
+    },
+    [types.RPA_EVENTS_SUCCESS](state, rpa_events) {
+        state.rpa_events = rpa_events
+    },
+    [types.RPA_EVENTS_ERROR](state, rpa_events) {
+        state.rpa_events = rpa_events
+    },
+    [types.RPA_USER_ALL_SUCCESS](state, rpa_user_all) {
+        state.rpa_user_all = rpa_user_all
+    },
+    [types.RPA_USER_ALL_ERROR](state, rpa_user_all) {
+        state.rpa_user_all = rpa_user_all
     }
 }
 

@@ -1,35 +1,41 @@
 <template>
   <v-layout justify-center wrap>
     <v-flex xs12 sm6 class="mt-3">
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="subject"
-          :counter="30"
-          :rules="subjectRules"
-          label="Assunto"
-          required
-        ></v-text-field>
+      <v-card class="elevation-0">
+        <v-card-text>
+          <v-flex xs12 class="mt-3">
+            <v-form ref="form" v-model="valid" lazy-validation>
+              <v-text-field
+                v-model="subject"
+                :counter="30"
+                :rules="subjectRules"
+                label="Assunto"
+                required
+              ></v-text-field>
 
-        <v-textarea
-          v-model="descrition"
-          label="Descrição do problema"
-          :rules="descritionRules"
-          :counter="300"
-        ></v-textarea>
-      </v-form>
+              <v-textarea
+                v-model="descrition"
+                label="Descrição do problema"
+                :rules="descritionRules"
+                :counter="300"
+              ></v-textarea>
+            </v-form>
 
-      <v-flex xs12 text-xs-center class="mt-5">
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          block
-          large
-          flat
-          outline
-          round
-          @click="submit()"
-        >Enviar</v-btn>
-      </v-flex>
+            <v-flex xs12 text-xs-center class="mt-5">
+              <v-btn
+                :disabled="!valid"
+                color="success"
+                block
+                large
+                flat
+                outline
+                round
+                @click="submit()"
+              >Enviar</v-btn>
+            </v-flex>
+          </v-flex>
+        </v-card-text>
+      </v-card>
     </v-flex>
     <v-flex xs12 sm6 class="mt-3" text-xs-center>
       <p class="text-xs-center">
