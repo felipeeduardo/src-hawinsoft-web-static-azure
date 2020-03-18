@@ -33,3 +33,21 @@ export const getAllRpaUser = (data) => {
             return Promise.reject(error)
         })
 }
+
+export const deleteRpaUser = (data) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        'x-access-token': data.token,
+    };
+    const body = {
+        "id_user": data.id_user,
+        "id_rpa": data.id_rpa
+    }
+    return http.post('rpauserdelete', body, { headers })
+        .then(res => {
+            return Promise.resolve(res)
+        })
+        .catch(error => {
+            return Promise.reject(error)
+        })
+}

@@ -15,6 +15,7 @@
           <v-divider light></v-divider>
           <v-card-text>
             <p class="title font-weight-light text-md-center">{{item.title}}</p>
+            <span class="sub-title font-weight-light text-md-center">{{item.subtitle}}</span>
           </v-card-text>
 
           <v-expand-transition>

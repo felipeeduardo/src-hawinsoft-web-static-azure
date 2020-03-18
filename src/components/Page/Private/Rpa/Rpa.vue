@@ -77,6 +77,16 @@ export default {
     ...mapState("auth", ["auth"])
   },
   methods: {
+    formatDateDb(date) {
+      var data = new Date(date),
+        dia = data
+          .getDate()
+          .toString()
+          .padStart(2, "0"),
+        mes = (data.getMonth() + 1).toString().padStart(2, "0"), //+1 pois no getMonth Janeiro começa com zero.
+        ano = data.getFullYear();
+      return dia + "/" + mes + "/" + ano;
+    },
     ...mapActions("rpa", ["allRpaUser"]),
     goHome() {
       router.push({ name: "Home" });
@@ -99,6 +109,7 @@ export default {
                 idRpa: element.id_rpa,
                 banner: require("@/assets/img/hawinsoft-robot.png"),
                 title: element.name,
+                subtitle: "Criado: " + this.formatDateDb(element.created),
                 path: "RpaUniue",
                 enabled: element.active == 1 ? true : false,
                 hoveText: element.active == 1 ? "Ativo" : "Inativo",

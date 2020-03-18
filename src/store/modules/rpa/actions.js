@@ -37,6 +37,22 @@ export const allRpaUser = ({ commit }, data) => {
         })
 }
 
+export const deleteRpaUser = ({ commit }, data) => {
+    return rpa_user.deleteRpaUser(data)
+        .then(result => {
+            if (result.data.auth) {
+                commit(types.RPA_USER_DELETE_SUCCESS, result.data)
+                return Promise.resolve(result)
+            } else {
+                commit(types.RPA_USER_DELETE_SUCCESS, result.data)
+                return Promise.resolve(result)
+            }
+        }).catch(err => {
+            commit(types.RPA_USER_DELETE_ERROR, err)
+            return Promise.reject(err)
+        })
+}
+
 export const NewRpaUser = ({ commit }, data) => {
     return rpa_user.addNewRpaUser(data)
         .then(result => {

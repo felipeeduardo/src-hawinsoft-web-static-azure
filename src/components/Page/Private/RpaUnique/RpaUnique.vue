@@ -117,7 +117,7 @@
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
                   <v-fab-transition>
-                    <v-btn color="error" fab outline bottom @click="ResultsRpa()" v-on="on">
+                    <v-btn color="error" fab outline bottom @click="deleteRpa()" v-on="on">
                       <v-icon>delete</v-icon>
                     </v-btn>
                   </v-fab-transition>
@@ -150,7 +150,7 @@ export default {
     ...mapState("auth", ["auth"])
   },
   created() {
-    const selected = this.product.filter(
+    /*const selected = this.product.filter(
       rpa => rpa.id_rpa_type == this.$route.params.Rid
     );
     this.pageTitle = selected[0].name_rpa;
@@ -160,17 +160,17 @@ export default {
       this.cards[0].path = "";
       this.cards[0].hoveText = "Desabled";
       this.cards[0].hoveTextColor = "red--text";
-    }
+    }*/
   },
   data() {
     return {
       dataDialog: {
         // success | information | error
-        type: "",
-        title: "",
-        textButton: "OK",
-        iconButton: "check",
-        sessionExpired: false,
+        type: "information",
+        title: "Sessão expirada!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
         size: "290"
       },
       listSteps: [
@@ -256,7 +256,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("rpa", ["browserRemote"]),
+    ...mapActions("rpa", ["browserRemote", "deleteRpaUser"]),
     playRpa() {
       this.browserRemote(this.data_teste_browser_remote)
         .then(res => {
@@ -281,6 +281,21 @@ export default {
     },
     goPanel() {
       router.push({ name: "Rpa" });
+    },
+    deleteRpa() {
+      const data = {
+        id_user: this.auth.id,
+        id_rpa: this.$route.params.Rid,
+        token: this.auth.token
+      };
+      this.deleteRpaUser(data)
+        .then(res => {
+          if (res.status == 201) router.push({ name: "Rpa" });
+        })
+        .catch(() => {
+          //erro 500 -> auth expired
+          EventBus.$emit("dialogGeneric", true);
+        });
     },
     ...mapActions("rpa", ["importDataRpa"]),
     fileImport(file) {
@@ -347,8 +362,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.sizeBtnResult {
-  width: 95%;
-}
-</style>

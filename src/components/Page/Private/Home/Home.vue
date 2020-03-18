@@ -23,6 +23,7 @@ export default {
         {
           banner: require("@/assets/img/hawinsoft-robot.png"),
           title: "RPA's",
+          subtitle:"Robotic process automation",
           path: "Rpa",
           enabled: true,
           hoveText: "",
@@ -32,6 +33,7 @@ export default {
         {
           banner: require("@/assets/img/hawinsoft-api.png"),
           title: "API's",
+          subtitle:"Rest API - RPA",
           path: "Api",
           enabled: true,
           hoveText: "",
@@ -41,6 +43,7 @@ export default {
         {
           banner: require("@/assets/img/hawinsoft-bug.png"),
           title: "Reportar problema",
+          subtitle:"Relatar problemas no RPA",
           path: "Report",
           enabled: true,
           hoveText: "",
@@ -50,6 +53,7 @@ export default {
         {
           banner: require("@/assets/img/hawinsoft-mensagens.png"),
           title: "Mensagens",
+          subtitle:"Automáticas",
           path: "Message",
           enabled: true,
           hoveText: "",
