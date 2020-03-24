@@ -5,7 +5,7 @@ export const getResultRpa = (data) => {
         'Content-Type': 'application/json',
         'x-access-token': data.token,
     };
-    return http.get('rpa/result/' + data.id_user + '/' + data.id_rpa_type, { headers })
+    return http.get('rpa/result/' + data.id_user + '/' + data.id_rpa, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -19,7 +19,7 @@ export const getResultRpaSelected = (data) => {
         'Content-Type': 'application/json',
         'x-access-token': data.token,
     };
-    return http.get('rpa/result/' + data.id_user + '/' + data.id_rpa_type + '/' + data.date_selected, { headers })
+    return http.get('rpa/result/' + data.id_user + '/' + data.id_rpa + '/' + data.date_selected, { headers })
         .then(res => {
             return Promise.resolve(res)
         })

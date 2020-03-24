@@ -34,6 +34,20 @@ export const getAllRpaUser = (data) => {
         })
 }
 
+export const getRpaUserUnique = (data) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        'x-access-token': data.token,
+    };
+    return http.get('rpa_unique/' + data.id_user + '/' + data.id_rpa, { headers })
+        .then(res => {
+            return Promise.resolve(res)
+        })
+        .catch(error => {
+            return Promise.reject(error)
+        })
+}
+
 export const deleteRpaUser = (data) => {
     const headers = {
         'Content-Type': 'application/json',

@@ -4,7 +4,7 @@
       <v-hover>
         <v-card
           slot-scope="{ hover }"
-          class="elevation-3 text-md-center title-hover text-truncate"
+          class="elevation-1 text-md-center title-hover text-truncate"
           :style="{ cursor: 'pointer'}"
           @click="goPath(item.path, item.idRpa)"
         >

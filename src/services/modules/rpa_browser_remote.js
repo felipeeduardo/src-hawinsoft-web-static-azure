@@ -1,21 +1,11 @@
-import { httpBrowserRemote } from '../configBrowserRemote'
+import { http } from '../config'
 
-export const runBrowserRemote = (data_steps) => {
-    /*const headers = {
-        'Content-Type': 'application/json'
-    };*/
-
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        data: {
-            data_steps
-        }
-    }
-
-    return httpBrowserRemote.get('HawinsoftBrowser', { config })
+export const getRpaBrowserRemote = (data) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        'x-access-token': data.token,
+    };
+    return http.get('rpa_browser_remote/' + data.id_user + '/' + data.id_rpa, { headers })
         .then(res => {
             return Promise.resolve(res)
         })

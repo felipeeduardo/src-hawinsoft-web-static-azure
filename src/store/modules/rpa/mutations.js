@@ -48,6 +48,12 @@ const mutations = {
     },
     [types.RPA_USER_DELETE_ERROR](state, rpa_user_delete) {
         state.rpa_user_delete = rpa_user_delete
+    },
+    [types.RPA_USER_UNIQUE_SUCCESS](state, rpa_user_unique) {
+        state.rpa_user_unique = rpa_user_unique
+    },
+    [types.RPA_USER_UNIQUE_ERROR](state, rpa_user_unique) {
+        state.rpa_user_unique = rpa_user_unique
     }
 }
 

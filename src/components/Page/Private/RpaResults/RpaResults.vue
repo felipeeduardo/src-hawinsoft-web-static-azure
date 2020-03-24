@@ -5,6 +5,20 @@
       <v-icon class="mr-1">memory</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
+      <v-flex xs12 sm6>
+        <v-card class="elevation-0">
+          <v-card-text>
+            <GChart type="BarChart" :data="chartData" :options="chartOptions" />
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm6>
+        <v-card class="elevation-0">
+          <v-card-text>
+            <GChart type="PieChart" :data="chartData" :options="chartOptions" />
+          </v-card-text>
+        </v-card>
+      </v-flex>
       <v-flex xs12>
         <v-card class="elevation-0">
           <div>
@@ -40,23 +54,20 @@
 import { mapActions, mapState } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
+import { GChart } from "vue-google-charts";
 export default {
   components: {
-    DialogGeneric
+    DialogGeneric,
+    GChart
   },
   computed: {
-    ...mapState("product", ["product"]),
     ...mapState("auth", ["auth"])
   },
   created() {
-    const selected = this.product.filter(
-      rpa => rpa.id_rpa_type == this.$route.params.Rid
-    );
-    this.cardTitle = selected[0].name_rpa;
     const data = {
       token: this.auth.token,
       id_user: this.auth.id,
-      id_rpa_type: this.$route.params.Rid
+      id_rpa: this.$route.params.Rid
     };
     this.resultRpaUser(data)
       .then(res => {
@@ -114,6 +125,17 @@ export default {
   },
   data() {
     return {
+      chartData: [
+        ["Year", "Sales", "Expenses"],
+        ["2014", 1000, 400],
+        ["2015", 1170, 460]
+      ],
+      chartOptions: {
+        chart: {
+          title: "Company Performance",
+          subtitle: "Sales, Expenses, and Profit: 2014-2017"
+        }
+      },
       cardTitle: "",
       data: {
         // success | information | error

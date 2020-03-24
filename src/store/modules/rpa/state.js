@@ -7,6 +7,7 @@ export default {
     },
     rpa_browser_remote: {},
     rpa_user: {},
+    rpa_user_unique: {},
     rpa_user_all: {},
     rpa_user_delete: {},
     rpa_events: {},
