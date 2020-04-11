@@ -6,40 +6,10 @@
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12>
-        <v-card class="elevation-0" min-height="350">
-          <v-card-title>
-            <h3 class="font-weight-light">{{this.cardTitle}}</h3>
-          </v-card-title>
+        <v-card class="elevation-0">
           <v-card-text>
             <GChart type="BarChart" :data="chartData" :options="chartOptions" />
           </v-card-text>
-        </v-card>
-      </v-flex>
-      <v-flex xs12>
-        <v-card class="elevation-0">
-          <div>
-            <v-card-title>
-              <h3 class="font-weight-light">{{this.cardTitle}}</h3>
-            </v-card-title>
-            <v-card-text>
-              <v-data-table :headers="headers" :items="results">
-                <template v-slot:items="props">
-                  <td class="text-xs-left">{{ props.item.qtd }}</td>
-                  <td class="text-xs-left">{{ props.item.date }}</td>
-                  <td class="text-xs-right" style="width:5%;">
-                    <v-btn
-                      flat
-                      icon
-                      color="primary"
-                      @click="goDownload(props.item.date,'csv', 'Result '+props.item.date+'.csv')"
-                    >
-                      <v-icon>arrow_downward</v-icon>
-                    </v-btn>
-                  </td>
-                </template>
-              </v-data-table>
-            </v-card-text>
-          </div>
         </v-card>
       </v-flex>
     </v-layout>
@@ -65,15 +35,22 @@ export default {
       id_user: this.auth.id,
       id_rpa: this.$route.params.Rid
     };
-    this.resultRpaUser(data)
+    this.resultRpaUserChart(data)
       .then(res => {
         res.data.forEach(element => {
           if (element != "") {
-            const item = {
-              qtd: element.qtd,
-              date: element.date_result.replace("T00:00:00.000Z", "")
-            };
-            this.results.push(item);
+            this.chartOptions.title = element.name;
+            this.cardTitle = element.name;
+            this.chartData = [
+              [
+                "RPA",
+                "Sucesso",
+                { role: "annotation" },
+                "Falha",
+                { role: "annotation" }
+              ],
+              ["", element.success, element.success, element.fail, element.fail]
+            ];
           }
         });
       })
@@ -81,68 +58,12 @@ export default {
         //erro 500 -> auth expired
         EventBus.$emit("dialogGeneric", true);
       });
-    this.resultRpaUserChart(data).then(res => {
-      res.data.forEach(element => {
-        if (element != "") {
-          this.cardTitle = element.name;
-          this.chartData = [
-            [
-              "RPA",
-              "Sucesso",
-              { role: "annotation" },
-              "Falha",
-              { role: "annotation" }
-            ],
-            ["", element.success, element.success, element.fail, element.fail]
-          ];
-        }
-      });
-    });
   },
   methods: {
-    ...mapActions("rpa", [
-      "resultRpaUser",
-      "resultRpaUserChart",
-      "resultRpaUserSelected"
-    ]),
-    goDownload(selected, fileType, fileName) {
-      const data = {
-        token: this.auth.token,
-        id_user: this.auth.id,
-        id_rpa_type: this.$route.params.Rid,
-        date_selected: selected
-      };
-      this.resultRpaUserSelected(data)
-        .then(res => {
-          let resultRpa = "";
-          res.data.forEach(element => {
-            if (element != "") {
-              resultRpa += element.result + "\r\n";
-            }
-          });
-          var blob = new Blob([resultRpa], { type: fileType });
-          var a = document.createElement("a");
-          a.download = this.cardTitle + " - " + fileName;
-          a.href = URL.createObjectURL(blob);
-          a.dataset.downloadurl = [fileType, a.download, a.href].join(":");
-          a.style.display = "none";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          setTimeout(function() {
-            URL.revokeObjectURL(a.href);
-          }, 1500);
-        })
-        .catch(() => {
-          //erro 500 -> auth expired
-          EventBus.$emit("dialogGeneric", true);
-        });
-    }
+    ...mapActions("rpa", ["resultRpaUserChart"])
   },
   data() {
     return {
-      chartSuccess: 0,
-      chartFail: 1,
       chartData: [
         [
           "RPA",
@@ -154,9 +75,13 @@ export default {
         ["", 0, "0", 0, "0"]
       ],
       chartOptions: {
-        height: 350,
+        title: "",
+        height: 390,
         vAxis: {
           title: "MÉTRICAS RPA"
+        },
+        hAxis: {
+          format: "####"
         },
         legend: { position: "top", maxLines: 3 },
         annotations: {
@@ -175,27 +100,7 @@ export default {
         iconButton: "keyboard_backspace",
         sessionExpired: true,
         size: "290"
-      },
-      headers: [
-        {
-          text: "Quantidade",
-          align: "left",
-          sortable: true,
-          value: "name"
-        },
-        {
-          text: "Data",
-          align: "left",
-          value: "dates"
-        },
-        {
-          text: "",
-          sortable: false,
-          align: "",
-          value: ""
-        }
-      ],
-      results: []
+      }
     };
   }
 };
