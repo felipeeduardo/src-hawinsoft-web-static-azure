@@ -7,6 +7,12 @@ const mutations = {
     [types.RPA_RESULT_ERROR](state, rpa_result) {
         state.rpa_result = rpa_result
     },
+    [types.RPA_RESULT_CHART_SUCCESS](state, rpa_resultChart) {
+        state.rpa_result = rpa_resultChart
+    },
+    [types.RPA_RESULT_CHART_ERROR](state, rpa_resultChart) {
+        state.rpa_result = rpa_resultChart
+    },
     [types.RPA_RESULT_SELECTED_SUCCESS](state, rpa_result_selected) {
         state.rpa_result = rpa_result_selected
     },

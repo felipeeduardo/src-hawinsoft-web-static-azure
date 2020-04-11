@@ -117,6 +117,22 @@ export const resultRpaUser = ({ commit }, data) => {
         })
 }
 
+export const resultRpaUserChart = ({ commit }, data) => {
+    return rpa_result.getResultRpaChart(data)
+        .then(result => {
+            if (result.data.auth) {
+                commit(types.RPA_RESULT_CHART_SUCCESS, result.data)
+                return Promise.resolve(result)
+            } else {
+                commit(types.RPA_RESULT_CHART_SUCCESS, result.data)
+                return Promise.resolve(result)
+            }
+        }).catch(err => {
+            commit(types.RPA_RESULT_CHART_ERROR, err)
+            return Promise.reject(err)
+        })
+}
+
 export const resultRpaUserSelected = ({ commit }, data) => {
     return rpa_result.getResultRpaSelected(data)
         .then(result => {

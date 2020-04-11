@@ -5,17 +5,13 @@
       <v-icon class="mr-1">memory</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
-      <v-flex xs12 sm6>
-        <v-card class="elevation-0">
+      <v-flex xs12>
+        <v-card class="elevation-0" min-height="350">
+          <v-card-title>
+            <h3 class="font-weight-light">{{this.cardTitle}}</h3>
+          </v-card-title>
           <v-card-text>
             <GChart type="BarChart" :data="chartData" :options="chartOptions" />
-          </v-card-text>
-        </v-card>
-      </v-flex>
-      <v-flex xs12 sm6>
-        <v-card class="elevation-0">
-          <v-card-text>
-            <GChart type="PieChart" :data="chartData" :options="chartOptions" />
           </v-card-text>
         </v-card>
       </v-flex>
@@ -85,10 +81,30 @@ export default {
         //erro 500 -> auth expired
         EventBus.$emit("dialogGeneric", true);
       });
+    this.resultRpaUserChart(data).then(res => {
+      res.data.forEach(element => {
+        if (element != "") {
+          this.cardTitle = element.name;
+          this.chartData = [
+            [
+              "RPA",
+              "Sucesso",
+              { role: "annotation" },
+              "Falha",
+              { role: "annotation" }
+            ],
+            ["", element.success, element.success, element.fail, element.fail]
+          ];
+        }
+      });
+    });
   },
   methods: {
-    ...mapActions("rpa", ["resultRpaUser"]),
-    ...mapActions("rpa", ["resultRpaUserSelected"]),
+    ...mapActions("rpa", [
+      "resultRpaUser",
+      "resultRpaUserChart",
+      "resultRpaUserSelected"
+    ]),
     goDownload(selected, fileType, fileName) {
       const data = {
         token: this.auth.token,
@@ -125,16 +141,30 @@ export default {
   },
   data() {
     return {
+      chartSuccess: 0,
+      chartFail: 1,
       chartData: [
-        ["Year", "Sales", "Expenses"],
-        ["2014", 1000, 400],
-        ["2015", 1170, 460]
+        [
+          "RPA",
+          "Sucesso",
+          { role: "annotation" },
+          "Falha",
+          { role: "annotation" }
+        ],
+        ["", 0, "0", 0, "0"]
       ],
       chartOptions: {
-        chart: {
-          title: "Company Performance",
-          subtitle: "Sales, Expenses, and Profit: 2014-2017"
-        }
+        height: 350,
+        vAxis: {
+          title: "MÉTRICAS RPA"
+        },
+        legend: { position: "top", maxLines: 3 },
+        annotations: {
+          textStyle: {
+            fontSize: 15
+          }
+        },
+        colors: ["#43CD80", "#FF4500"]
       },
       cardTitle: "",
       data: {

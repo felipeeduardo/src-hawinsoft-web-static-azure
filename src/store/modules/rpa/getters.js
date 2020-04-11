@@ -1,4 +1,5 @@
 export const getResultsRpa = (state) => state.rpa_result
+export const getResultsRpaChart = (state) => state.rpa_resultChart
 export const getResultsRpaSelected = (state) => state.rpa_result_selected
 export const getBrowserRemote = (state) => state.rpa_browser_remote
 export const getRpaUser = (state) => state.rpa_user

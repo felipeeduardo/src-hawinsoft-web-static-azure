@@ -37,6 +37,7 @@
               <span class="font-weight-light ml-2">{{this.qtdTotal}}</span>
             </v-flex>
             <v-flex xs12 mt-3 text-xs-center>
+
               <!--MENU CONTROL-->
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
