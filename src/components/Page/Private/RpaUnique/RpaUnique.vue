@@ -36,60 +36,55 @@
               <span class="font-weight-light ml-3">Total:</span>
               <span class="font-weight-light ml-2">{{this.qtdTotal}}</span>
             </v-flex>
-            <v-flex xs12 mt-3 text-xs-center>
+            <v-layout justify-center wrap>
+              <v-flex xs12 sm6>
+                <!--MENU CONTROL-->
+                <v-list>
+                  <v-list-tile @click="confirmImport()">
+                    <v-list-tile-action>
+                      <v-icon color="primary">check</v-icon>
+                    </v-list-tile-action>
 
-              <!--MENU CONTROL-->
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-fab-transition>
-                    <v-btn round color="primary" outline @click="confirmImport()" v-on="on">
-                      <v-icon>check</v-icon>
-                    </v-btn>
-                  </v-fab-transition>
-                </template>
-                <span>Confirmar importação</span>
-              </v-tooltip>
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-fab-transition>
-                    <v-btn round color="success" outline @click="playRpa()" v-on="on">
-                      <v-icon>play_arrow</v-icon>
-                    </v-btn>
-                  </v-fab-transition>
-                </template>
-                <span>Iniciar</span>
-              </v-tooltip>
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-fab-transition>
-                    <v-btn round color="primary" outline @click="ResultsRpa()" v-on="on">
-                      <v-icon>bar_chart</v-icon>
-                    </v-btn>
-                  </v-fab-transition>
-                </template>
-                <span>Resultados</span>
-              </v-tooltip>
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-fab-transition>
-                    <v-btn round color="primary" outline @click="goPanel()" v-on="on">
-                      <v-icon>view_module</v-icon>
-                    </v-btn>
-                  </v-fab-transition>
-                </template>
-                <span>Painel</span>
-              </v-tooltip>
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-fab-transition>
-                    <v-btn round color="error" outline @click="deleteRpa()" v-on="on">
-                      <v-icon>delete</v-icon>
-                    </v-btn>
-                  </v-fab-transition>
-                </template>
-                <span>Excluir</span>
-              </v-tooltip>
-            </v-flex>
+                    <v-list-tile-content>
+                      <v-list-tile-title v-text="'Confirmar importação'"></v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+
+                  <v-list-tile @click="playRpa()">
+                    <v-list-tile-action>
+                      <v-icon color="success">play_arrow</v-icon>
+                    </v-list-tile-action>
+
+                    <v-list-tile-content>
+                      <v-list-tile-title v-text="'Iniciar'"></v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <v-list>
+                  <v-list-tile @click="ResultsRpa()">
+                    <v-list-tile-action>
+                      <v-icon color="primary">bar_chart</v-icon>
+                    </v-list-tile-action>
+
+                    <v-list-tile-content>
+                      <v-list-tile-title v-text="'Resultados'"></v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+
+                  <v-list-tile @click="deleteRpa()">
+                    <v-list-tile-action>
+                      <v-icon color="error">delete</v-icon>
+                    </v-list-tile-action>
+
+                    <v-list-tile-content>
+                      <v-list-tile-title v-text="'Excluir'"></v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+              </v-flex>
+            </v-layout>
             <v-flex xs12 mt-3>
               <json-viewer :value="this.steps" :expand-depth="3" copyable boxed sort></json-viewer>
             </v-flex>

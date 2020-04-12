@@ -7,8 +7,11 @@
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12>
         <v-card class="elevation-0">
+          <v-card-title>
+            <h1 class="title font-weight-light">{{this.cardTitle}}</h1>
+          </v-card-title>
           <v-card-text>
-            <GChart type="BarChart" :data="chartData" :options="chartOptions" />
+            <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
           </v-card-text>
         </v-card>
       </v-flex>
@@ -39,7 +42,6 @@ export default {
       .then(res => {
         res.data.forEach(element => {
           if (element != "") {
-            this.chartOptions.title = element.name;
             this.cardTitle = element.name;
             this.chartData = [
               [
@@ -76,9 +78,10 @@ export default {
       ],
       chartOptions: {
         title: "",
-        height: 390,
+        height: 400,
         vAxis: {
-          title: "MÉTRICAS RPA"
+          title: "MÉTRICAS RPA",
+          format: "####"
         },
         hAxis: {
           format: "####"

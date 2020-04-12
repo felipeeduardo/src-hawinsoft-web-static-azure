@@ -105,7 +105,7 @@ export default {
     },
     validate() {
       if (this.$refs.form.validate()) {
-        if (this.recaptcha) {
+        //if (this.recaptcha) {
           this.logIn(this.form)
             .then(res => {
               if (res.data.auth) {
@@ -124,7 +124,7 @@ export default {
               // eslint-disable-next-line no-console
               console.log("err", err);
             });
-        }
+        //}
       } else {
         this.snackbar = true;
         this.snacktext = "Recaptcha inválido!";
