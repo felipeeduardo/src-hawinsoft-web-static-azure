@@ -11,7 +11,14 @@
             <h1 class="title font-weight-light">{{this.cardTitle}}</h1>
           </v-card-title>
           <v-card-text>
-            <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
+            <GChart
+              :settings="{ packages: ['corechart', 'table', 'map'] }"
+              type="ColumnChart"
+              :data="chartData"
+              :options="chartOptions"
+              :events="chartEvents"
+              ref="gChart"
+            />
           </v-card-text>
         </v-card>
       </v-flex>
@@ -24,6 +31,7 @@ import { mapActions, mapState } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
 import { GChart } from "vue-google-charts";
+import router from "@/router";
 export default {
   components: {
     DialogGeneric,
@@ -42,17 +50,13 @@ export default {
       .then(res => {
         res.data.forEach(element => {
           if (element != "") {
-            this.cardTitle = element.name;
+            //this.cardTitle = element.name;
             this.chartData = [
-              [
-                "RPA",
-                "Sucesso",
-                { role: "annotation" },
-                "Falha",
-                { role: "annotation" }
-              ],
-              ["", element.success, element.success, element.fail, element.fail]
+              ["Bot", "Sucesso", "Falha"],
+              [element.name, element.success, element.fail]
             ];
+            this.chartOptions.title =
+              "Total de execuções: " + (element.success + element.fail);
           }
         });
       })
@@ -67,26 +71,13 @@ export default {
   data() {
     return {
       chartData: [
-        [
-          "RPA",
-          "Sucesso",
-          { role: "annotation" },
-          "Falha",
-          { role: "annotation" }
-        ],
-        ["", 0, "0", 0, "0"]
+        ["Bot", "Sucesso", "Falha"],
+        ["", 0, 0]
       ],
       chartOptions: {
         title: "",
-        height: 400,
-        vAxis: {
-          title: "MÉTRICAS RPA",
-          format: "####"
-        },
-        hAxis: {
-          format: "####"
-        },
-        legend: { position: "top", maxLines: 3 },
+        height: 380,
+        legend: { position: "top", maxLines: 2 },
         annotations: {
           textStyle: {
             fontSize: 15
@@ -94,7 +85,7 @@ export default {
         },
         colors: ["#43CD80", "#FF4500"]
       },
-      cardTitle: "",
+      cardTitle: "Métricas RPA",
       data: {
         // success | information | error
         type: "information",
@@ -103,6 +94,19 @@ export default {
         iconButton: "keyboard_backspace",
         sessionExpired: true,
         size: "290"
+      },
+      chartEvents: {
+        select: () => {
+          const chart = this.$refs.gChart.chartObject;
+          const selection = chart.getSelection();
+          if (selection[0].column == 1) {
+            router.push({ name: "RpaResultsSuccess" });
+          } else {
+            router.push({ name: "RpaResultsFail" });
+          }
+        },
+        onmouseover: () => {},
+        onmouseout: () => {}
       }
     };
   }

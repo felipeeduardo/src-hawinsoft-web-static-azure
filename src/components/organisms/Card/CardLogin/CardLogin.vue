@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <dialog-generic :data="dataDialog" />
     <v-layout justify-center wrap>
       <v-flex xs12 sm6>
         <v-flex xs12 class="mt-2 text-center" text-xs-center>
@@ -50,25 +51,31 @@
         </v-flex>
       </v-flex>
     </v-layout>
-    <!-- snackbar-->
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="y === 'top'" :color="snackcolor">
-      {{ snacktext }}
-      <v-btn flat @click="snackbar = false">Fechar</v-btn>
-    </v-snackbar>
   </v-container>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import router from "@/router";
+import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
 import VueRecaptcha from "vue-recaptcha";
 import { EventBus } from "@/services/event-bus.js";
 export default {
   components: {
-    VueRecaptcha
+    VueRecaptcha,
+    DialogGeneric
   },
   data() {
     return {
+      dataDialog: {
+        // success | information | error
+        type: "information",
+        title: "Sessão expirada!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290"
+      },
       showMenuPrivate: false,
       sitekey: "6LesJKQUAAAAAPuojWPcTSEYQbDBOzmQtMTS8j_g",
       valid: true,
@@ -78,11 +85,6 @@ export default {
         email: "",
         password: ""
       },
-      snackbar: false,
-      y: "top",
-      timeout: 6000,
-      snacktext: "",
-      snackcolor: "",
       isEmailValid: [
         v => !!v || "Email é obrigatório",
         v => this.reg.test(this.form.email) || "Email inválido"
@@ -106,29 +108,32 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         if (this.recaptcha) {
-          this.logIn(this.form)
-            .then(res => {
-              if (res.data.auth) {
-                this.snackbar = false;
-                sessionStorage.hawinsoft = res.data.auth;
-                sessionStorage.hawinsoft_profile = res.data.id_user_profile;
-                EventBus.$emit("showMenuPrivate", true);
-                router.push({ name: "Home" });
-              } else {
-                this.snackbar = true;
-                this.snacktext = "Usuário ou senha inválido!";
-                this.snackcolor = "error";
-              }
-            })
-            .catch(err => {
-              // eslint-disable-next-line no-console
-              console.log("err", err);
-            });
+        this.logIn(this.form)
+          .then(res => {
+            if (res.data.auth) {
+              sessionStorage.hawinsoft = res.data.auth;
+              sessionStorage.hawinsoft_profile = res.data.id_user_profile;
+              EventBus.$emit("showMenuPrivate", true);
+              router.push({ name: "Home" });
+            } else {
+              this.dataDialog.type = "error";
+              this.dataDialog.title = "Usuário ou senha inválido.";
+              this.dataDialog.textButton = "Ok, Entendi";
+              this.dataDialog.iconButton = "check";
+              EventBus.$emit("dialogGeneric", true);
+            }
+          })
+          .catch(err => {
+            // eslint-disable-next-line no-console
+            console.log("err", err);
+          });
+        } else {
+          this.dataDialog.type = "error";
+          this.dataDialog.title = "ReCaptcha inválido.";
+          this.dataDialog.textButton = "Ok, Entendi";
+          this.dataDialog.iconButton = "check";
+          EventBus.$emit("dialogGeneric", true);
         }
-      } else {
-        this.snackbar = true;
-        this.snacktext = "Recaptcha inválido!";
-        this.snackcolor = "error";
       }
     }
   }

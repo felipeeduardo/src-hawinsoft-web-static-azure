@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <dialog-generic :data="dataDialog" />
     <v-layout justify-center wrap>
       <v-flex xs12 sm6>
         <v-flex xs12 class="mt-2 text-center" text-xs-center>
@@ -53,10 +54,10 @@
             :rules="isCompanyValid"
           ></v-text-field>
           <!--<v-checkbox v-model="checkbox" :rules="isCheck" label="você concorda?" required></v-checkbox>-->
-          <v-flex xs12 mt-3>
-            <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
-          </v-flex>
         </v-form>
+        <v-flex xs12 mt-3>
+          <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
+        </v-flex>
         <v-flex xs12 mt-3>
           <v-btn
             :disabled="!valid"
@@ -66,32 +67,37 @@
             flat
             outline
             round
-            @click="validate"
+            @click="validateNew()"
           >Registrar</v-btn>
         </v-flex>
-        <!-- snackbar-->
-        <v-snackbar v-model="snackbar" :timeout="timeout" :top="y === 'top'" :color="snackcolor">
-          {{ snacktext }}
-          <v-btn flat @click="snackbar = false">Fechar</v-btn>
-        </v-snackbar>
-        <!--</div>
-        </v-card>-->
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
+import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
 import VueRecaptcha from "vue-recaptcha";
 import router from "@/router";
+import { EventBus } from "@/services/event-bus.js";
 //import mail from "@/services/mail"
 export default {
   components: {
-    VueRecaptcha
+    VueRecaptcha,
+    DialogGeneric
   },
   data() {
     return {
+      dataDialog: {
+        // success | information | error
+        type: "information",
+        title: "Sessão expirada!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290"
+      },
       valid: true,
       recaptcha: false,
       sitekey: "6LeZ5KEUAAAAACpusBSqlh7MWDGXuIp42Ogkg16z",
@@ -104,11 +110,6 @@ export default {
         company: ""
       },
       checkbox: false,
-      snackbar: false,
-      y: "top",
-      timeout: 6000,
-      snacktext: "",
-      snackcolor: "",
       isEmailValid: [
         v => !!v || "Email é obrigatório",
         v => this.reg.test(this.form.email) || "Email inválido"
@@ -138,32 +139,35 @@ export default {
       }
     },
     onExpired: function() {
-      console.log("Expired");
       this.$refs.recaptcha.reset();
     },
-    validate(event) {
+    validateNew() {
       if (this.$refs.form.validate()) {
         if (this.recaptcha) {
           this.newUser(this.form)
             .then(res => {
               if (res.data.message == "success") {
-                this.snackbar = false;
-
                 router.push({ name: "Success" });
               } else {
-                this.snackbar = true;
-                this.snacktext = "Erro !";
-                this.snackcolor = "error";
+                this.dataDialog.type = "error";
+                this.dataDialog.title = "Erro.";
+                this.dataDialog.textButton = "Ok, Entendi";
+                this.dataDialog.iconButton = "check";
+                this.dataDialog.sessionExpired = false;
+                EventBus.$emit("dialogGeneric", true);
               }
             })
             .catch(err => {
               console.log("err", err);
             });
+        } else {
+          this.dataDialog.type = "error";
+          this.dataDialog.title = "ReCaptcha inválido.";
+          this.dataDialog.textButton = "Ok, Entendi";
+          this.dataDialog.iconButton = "check";
+          this.dataDialog.sessionExpired = false;
+          EventBus.$emit("dialogGeneric", true);
         }
-      } else {
-        this.snackbar = true;
-        this.snacktext = "Recaptcha inválido!";
-        this.snackcolor = "error";
       }
     }
   }

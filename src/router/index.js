@@ -13,7 +13,11 @@ import PageAUncaptcha from '@/components/Page/Private/Uncaptcha'
 import PageRpa from '@/components/Page/Private/Rpa'
 import pageRpaCreate from '@/components/Page/Private/RpaCreate'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
+
 import PageRpaResults from '@/components/Page/Private/RpaResults'
+import PageRpaResultsSuccess from '@/components/Page/Private/RpaResults/Success'
+import PageRpaResultsFail from '@/components/Page/Private/RpaResults/Fail'
+
 import PageReport from '@/components/Page/Private/Report'
 import PageSuccess from '@/components/Page/Public/Success'
 import NotFound from '@/components/Page/Private/NotFound'
@@ -104,6 +108,18 @@ export default new Router({
             path: '/rparesult/:Rid',
             name: 'RpaResults',
             component: PageRpaResults,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/rparesultsuccess/:Rid',
+            name: 'RpaResultsSuccess',
+            component: PageRpaResultsSuccess,
+            beforeEnter: ifAuthenticated
+        },
+        {
+            path: '/rparesultfail/:Rid',
+            name: 'RpaResultsFail',
+            component: PageRpaResultsFail,
             beforeEnter: ifAuthenticated
         },
         {

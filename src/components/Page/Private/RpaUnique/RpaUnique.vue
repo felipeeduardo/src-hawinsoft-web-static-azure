@@ -9,16 +9,30 @@
         <v-card class="elevation-0">
           <v-card-text>
             <h1 class="title font-weight-light">{{this.pageTitle}}</h1>
-            <v-divider class="mt-3"></v-divider>
+
             <!--UPLOAD DATA-->
-            <v-flex xs12 mt-2 text-xs-center>
-              <span class="font-weight-light">
+            <v-flex xs12 mt-3 text-xs-center>
+              <v-layout justify-space-around>
+                <v-btn color="primary" block large round flat @click="confirmImport()">
+                  <v-icon large color="primary">cloud_upload</v-icon>
+                </v-btn>
+                <v-btn color="success" block large round flat @click="playRpa()">
+                  <v-icon large color="green darken-2">play_arrow</v-icon>
+                </v-btn>
+                <v-btn color="primary" block large round flat @click="ResultsRpa()">
+                  <v-icon large color="primary">bar_chart</v-icon>
+                </v-btn>
+                <v-btn color="error" block large round flat @click="deleteRpa()">
+                  <v-icon large color="error">delete</v-icon>
+                </v-btn>
+              </v-layout>
+              <!--<span class="font-weight-light">
                 *Sua importação terá apenas
                 <b>{{this.countInput}}</b> coluna(s) separado(s) por
                 <b>;</b> (ponto e vírgula)
-              </span>
+              </span>-->
             </v-flex>
-            <v-flex xs12 mt-1 text-xs-center>
+            <!--<v-flex xs12 mt-1 text-xs-center>
               <upload-button
                 round
                 outline
@@ -35,10 +49,9 @@
               <span class="font-weight-light ml-2">{{this.qtdError}}</span>
               <span class="font-weight-light ml-3">Total:</span>
               <span class="font-weight-light ml-2">{{this.qtdTotal}}</span>
-            </v-flex>
-            <v-layout justify-center wrap>
+            </v-flex>-->
+            <!--<v-layout justify-center wrap>
               <v-flex xs12 sm6>
-                <!--MENU CONTROL-->
                 <v-list>
                   <v-list-tile @click="confirmImport()">
                     <v-list-tile-action>
@@ -84,7 +97,7 @@
                   </v-list-tile>
                 </v-list>
               </v-flex>
-            </v-layout>
+            </v-layout>-->
             <v-flex xs12 mt-3>
               <json-viewer :value="this.steps" :expand-depth="3" copyable boxed sort></json-viewer>
             </v-flex>
@@ -99,13 +112,13 @@
 import { mapState, mapActions } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
 import router from "@/router";
-import UploadButton from "vuetify-upload-button";
+//import UploadButton from "vuetify-upload-button";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
 import JsonViewer from "vue-json-viewer";
 export default {
   components: {
     DialogGeneric,
-    UploadButton,
+    //UploadButton,
     JsonViewer
   },
   computed: {
