@@ -9,8 +9,6 @@
         <v-card class="elevation-0">
           <v-card-text>
             <h1 class="title font-weight-light">{{this.pageTitle}}</h1>
-
-            <!--UPLOAD DATA-->
             <v-flex xs12 mt-3 text-xs-center>
               <v-layout justify-space-around>
                 <v-btn color="primary" block large round flat @click="confirmImport()">

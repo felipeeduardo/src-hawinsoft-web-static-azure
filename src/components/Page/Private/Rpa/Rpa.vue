@@ -4,45 +4,7 @@
     <h1 class="title font-weight-light">
       <v-icon class="mr-1">memory</v-icon>Robotic process automation
     </h1>
-    <v-layout v-if="verifyUserRpa" justify-center wrap>
-      <v-flex xs12 sm6 class="mt-3">
-        <v-flex xs12 text-xs-center class="mt-3">
-          <v-img :src="require('@/assets/img/hawinsoft-robot.png')" contain height="200"></v-img>
-        </v-flex>
-        <v-flex xs12 text-xs-center class="mt-3">
-          <h2
-            class="font-weight-light"
-            color="grey--text"
-          >Você não possui um RPA associado à sua conta.</h2>
-        </v-flex>
-        <v-flex xs12 text-xs-center class="mt-3">
-          <v-btn color="success" large flat outline round @click="newRpa()">Criar</v-btn>
-        </v-flex>
-      </v-flex>
-    </v-layout>
-    <v-layout v-if="!verifyUserRpa">
-      <!--criar bot-->
-      <v-tooltip left>
-        <template v-slot:activator="{ on }">
-          <v-fab-transition>
-            <v-btn
-              absolute
-              outline
-              fab
-              top
-              right
-              color="success"
-              class="mt-5"
-              v-on="on"
-              @click="newRpa()"
-            >
-              <v-icon>add</v-icon>
-            </v-btn>
-          </v-fab-transition>
-        </template>
-        <span>Novo</span>
-      </v-tooltip>
-    </v-layout>
+    <card-generic v-if="verifyUserRpa" :data="newBot" />
     <card-generic v-if="!verifyUserRpa" :data="cards" />
   </v-container>
 </template>
@@ -61,7 +23,30 @@ export default {
   data() {
     return {
       verifyUserRpa: false,
-      cards: [],
+      newBot: [
+        {
+          banner: require("@/assets/img/hawinsoft-robot.png"),
+          title: "Novo",
+          subtitle: "Robotic process automation",
+          path: "RpaCreate",
+          enabled: true,
+          hoveText: "",
+          hoveTextColor: "green--text",
+          hoveColor: "grey lighten-4"
+        }
+      ],
+      cards: [
+        {
+          banner: require("@/assets/img/hawinsoft-new.png"),
+          title: "Novo",
+          subtitle: "Robotic process automation",
+          path: "RpaCreate",
+          enabled: true,
+          hoveText: "",
+          hoveTextColor: "green--text",
+          hoveColor: "grey lighten-4"
+        }
+      ],
       data: {
         // success | information | error
         type: "information",

@@ -4,7 +4,7 @@
       <v-hover>
         <v-card
           slot-scope="{ hover }"
-          class="elevation-1 text-md-center title-hover text-truncate"
+          class="elevation-1 title-hover text-truncate"
           :style="{ cursor: 'pointer'}"
           @click="goPath(item.path, item.idRpa)"
         >
@@ -14,10 +14,9 @@
           <div></div>
           <v-divider light></v-divider>
           <v-card-text>
-            <p class="title font-weight-light text-md-center">{{item.title}}</p>
-            <span class="sub-title font-weight-light text-md-center">{{item.subtitle}}</span>
+            <p class="title font-weight-light">{{item.title}}</p>
+            <p class="sub-title font-weight-light">{{item.subtitle}}</p>
           </v-card-text>
-
           <v-expand-transition>
             <div
               v-if="hover"
