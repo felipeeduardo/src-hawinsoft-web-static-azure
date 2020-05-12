@@ -7,9 +7,10 @@
             <span class="headline">Esqueci minha senha</span>
           </v-card-title>
           <v-card-text>
+            <h2 class="title font-weight-light">A redefinição de sua senha será enviada por email.</h2>
             <v-form ref="form" v-model="validForgot" lazy-validation>
               <v-text-field
-                class="mb-3"
+                class="mb-3 mt-3"
                 prepend-icon="mail"
                 name="email"
                 label="Email"

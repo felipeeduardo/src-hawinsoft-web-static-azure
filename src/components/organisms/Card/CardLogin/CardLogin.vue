@@ -41,7 +41,9 @@
             flat
             round
             @click="goForgotPassword()"
-          >Esqueci minha senha</v-btn>
+          >
+            <v-icon small left>lock</v-icon>Esqueci minha senha
+          </v-btn>
         </v-flex>
         <v-flex xs12 mt-3>
           <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
@@ -124,36 +126,36 @@ export default {
     },
     validate() {
       if (this.$refs.form.validate()) {
-        //if (this.recaptcha) {
-        this.logIn(this.form)
-          .then(res => {
-            if (res.data.auth) {
-              sessionStorage.hawinsoft = res.data.auth;
-              sessionStorage.hawinsoft_profile = res.data.id_user_profile;
-              EventBus.$emit("showMenuPrivate", true);
-              router.push({ name: "Home" });
-            } else {
-              this.dataDialog.type = "error";
-              this.dataDialog.title = "Usuário ou senha inválido.";
+        if (this.recaptcha) {
+          this.logIn(this.form)
+            .then(res => {
+              if (res.data.auth) {
+                sessionStorage.hawinsoft = res.data.auth;
+                sessionStorage.hawinsoft_profile = res.data.id_user_profile;
+                EventBus.$emit("showMenuPrivate", true);
+                router.push({ name: "Home" });
+              } else {
+                this.dataDialog.type = "error";
+                this.dataDialog.title = "Usuário ou senha inválido.";
+                this.dataDialog.textButton = "Ok, Entendi";
+                this.dataDialog.iconButton = "check";
+                EventBus.$emit("dialogGeneric", true);
+              }
+            })
+            .catch(() => {
+              this.dataDialog.type = "information";
+              this.dataDialog.title = "Serviço temporariamente indisponível.";
               this.dataDialog.textButton = "Ok, Entendi";
               this.dataDialog.iconButton = "check";
               EventBus.$emit("dialogGeneric", true);
-            }
-          })
-          .catch(() => {
-            this.dataDialog.type = "information";
-            this.dataDialog.title = "Serviço temporariamente indisponível.";
-            this.dataDialog.textButton = "Ok, Entendi";
-            this.dataDialog.iconButton = "check";
-            EventBus.$emit("dialogGeneric", true);
-          });
-        /*} else {
+            });
+        } else {
           this.dataDialog.type = "error";
           this.dataDialog.title = "ReCaptcha inválido.";
           this.dataDialog.textButton = "Ok, Entendi";
           this.dataDialog.iconButton = "check";
           EventBus.$emit("dialogGeneric", true);
-        }*/
+        }
       }
     }
   }

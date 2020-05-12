@@ -109,7 +109,7 @@ export default {
             .catch(() => {
               //erro 500 -> auth expired
               this.alertShowError = true;
-              this.message = "Sua sessão foi expirada.";
+              this.message = "Erro em sua requisição.";
             });
         });
       } else {
