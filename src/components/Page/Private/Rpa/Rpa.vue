@@ -25,7 +25,7 @@ export default {
       verifyUserRpa: false,
       newBot: [
         {
-          banner: require("@/assets/img/hawinsoft-robot.png"),
+          banner: require("@/assets/img/hawinsoft-new.png"),
           title: "Novo",
           subtitle: "Robotic process automation",
           path: "RpaCreate",

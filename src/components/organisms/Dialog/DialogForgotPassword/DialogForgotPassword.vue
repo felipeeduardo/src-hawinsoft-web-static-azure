@@ -1,0 +1,86 @@
+<template>
+  <v-layout row justify-center>
+    <div>
+      <v-dialog v-model="dialogForgotPw" persistent :max-width="this.data.size">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Esqueci minha senha</span>
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="form" v-model="validForgot" lazy-validation>
+              <v-text-field
+                class="mb-3"
+                prepend-icon="mail"
+                name="email"
+                label="Email"
+                type="text"
+                :rules="isEmailValidForgot"
+                v-model="form.emailForgot"
+              ></v-text-field>
+            </v-form>
+            <v-flex xs12>
+              <v-alert :value="alertShowError" type="error">{{this.message}}</v-alert>
+              <v-alert :value="alertShowSuccess" type="success">{{this.message}}</v-alert>
+            </v-flex>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="error" flat @click="close()">Cancelar</v-btn>
+            <v-btn :disabled="!validForgot" color="success" flat @click="sendForgotPw()">Confirmar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+  </v-layout>
+</template>
+
+<script>
+import { EventBus } from "@/services/event-bus.js";
+export default {
+  props: {
+    data: {
+      type: Object,
+      default: null
+    }
+  },
+  methods: {
+    close() {
+      this.dialogForgotPw = false;
+    },
+    sendForgotPw() {
+      if (this.$refs.form.validate()) {
+        console.log(this.form.emailForgot);
+
+        this.alertShowSuccess = true;
+        this.message = "Sucesso";
+      }
+    }
+  },
+  mounted() {
+    EventBus.$on("dialogForgotPw", event => {
+      this.dialogForgotPw = event;
+    });
+  },
+  data() {
+    return {
+      alertShowError: false,
+      alertShowSuccess: false,
+      message: "",
+      dialogForgotPw: false,
+      validForgot: true,
+      reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+      form: {
+        emailForgot: ""
+      },
+      isEmailValidForgot: [
+        v => !!v || "Email é obrigatório",
+        v => this.reg.test(this.form.emailForgot) || "Email inválido"
+      ]
+    };
+  }
+};
+</script>
+
+<style>
+</style>

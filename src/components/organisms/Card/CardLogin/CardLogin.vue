@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <dialog-generic :data="dataDialog" />
+    <dialog-forgotpw :data="dataDialogForgotPw" />
     <v-layout justify-center wrap>
       <v-flex xs12 sm6>
         <v-flex xs12 class="mt-2 text-center" text-xs-center>
@@ -32,13 +33,20 @@
             :rules="isPasswordValid"
           ></v-text-field>
         </v-form>
-        <v-flex xs12 mt-3>
-          <span class="font-weight-light">Esqueci a minha senha</span>
+        <v-flex xs12 mt-2>
+          <v-btn
+            class="font-weight-light"
+            color="primary"
+            small
+            flat
+            round
+            @click="goForgotPassword()"
+          >Esqueci minha senha</v-btn>
         </v-flex>
         <v-flex xs12 mt-3>
           <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
         </v-flex>
-        <v-flex xs12 mt-3>
+        <v-flex xs12 mt-4>
           <v-btn
             :disabled="!valid"
             color="success"
@@ -58,15 +66,21 @@
 import { mapActions } from "vuex";
 import router from "@/router";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
+import DialogForgotpw from "@/components/organisms/Dialog/DialogForgotPassword";
 import VueRecaptcha from "vue-recaptcha";
 import { EventBus } from "@/services/event-bus.js";
 export default {
   components: {
     VueRecaptcha,
-    DialogGeneric
+    DialogGeneric,
+    DialogForgotpw
   },
   data() {
     return {
+      dataDialogForgotPw: {
+        size: "500",
+        countInput: 0
+      },
       dataDialog: {
         // success | information | error
         type: "information",
@@ -97,6 +111,9 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logIn"]),
+    goForgotPassword() {
+      EventBus.$emit("dialogForgotPw", true);
+    },
     onVerify: function(recaptchaToken) {
       if (recaptchaToken) {
         this.recaptcha = true;
@@ -107,7 +124,7 @@ export default {
     },
     validate() {
       if (this.$refs.form.validate()) {
-        if (this.recaptcha) {
+        //if (this.recaptcha) {
         this.logIn(this.form)
           .then(res => {
             if (res.data.auth) {
@@ -123,17 +140,20 @@ export default {
               EventBus.$emit("dialogGeneric", true);
             }
           })
-          .catch(err => {
-            // eslint-disable-next-line no-console
-            console.log("err", err);
+          .catch(() => {
+            this.dataDialog.type = "information";
+            this.dataDialog.title = "Serviço temporariamente indisponível.";
+            this.dataDialog.textButton = "Ok, Entendi";
+            this.dataDialog.iconButton = "check";
+            EventBus.$emit("dialogGeneric", true);
           });
-        } else {
+        /*} else {
           this.dataDialog.type = "error";
           this.dataDialog.title = "ReCaptcha inválido.";
           this.dataDialog.textButton = "Ok, Entendi";
           this.dataDialog.iconButton = "check";
           EventBus.$emit("dialogGeneric", true);
-        }
+        }*/
       }
     }
   }

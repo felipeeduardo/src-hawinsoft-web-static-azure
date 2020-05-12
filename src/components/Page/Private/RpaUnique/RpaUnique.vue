@@ -1,104 +1,51 @@
 <template>
   <v-container grid-list-md>
     <dialog-generic :data="dataDialog" />
+    <dialog-import :data="dataDialogImport" />
     <h1 class="title font-weight-light">
       <v-icon class="mr-1">memory</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
+      <v-flex xs12 sm6>
+        <v-card class="elevation-0 heightCard">
+          <v-card-title>
+            <h1 class="title">{{this.botName}}</h1>
+          </v-card-title>
+          <v-card-text>
+            <v-layout justify-space-around ma-1>
+              <v-btn color="primary" block medium round flat @click="uploadBacklogBot()">
+                <v-icon medium color="primary">cloud_upload</v-icon>
+              </v-btn>
+              <v-btn color="success" block medium round flat @click="playRpa()">
+                <v-icon medium color="green darken-2">play_arrow</v-icon>
+              </v-btn>
+              <v-btn color="primary" block medium round flat @click="ResultsRpa()">
+                <v-icon medium color="primary">bar_chart</v-icon>
+              </v-btn>
+              <v-btn color="error" block medium round flat @click="deleteRpa()">
+                <v-icon medium color="error">delete</v-icon>
+              </v-btn>
+            </v-layout>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm6>
+        <v-card class="elevation-0 heightCard">
+          <v-card-title>
+            <h1 class="title font-weight-light">Backlog</h1>
+          </v-card-title>
+          <v-card-text>
+            <h1 class="text-xs-center ma-2">123</h1>
+          </v-card-text>
+        </v-card>
+      </v-flex>
       <v-flex xs12>
         <v-card class="elevation-0">
+          <v-card-title>
+            <h1 class="title font-weight-light">JSON</h1>
+          </v-card-title>
           <v-card-text>
-            <h1 class="title font-weight-light">{{this.pageTitle}}</h1>
-            <v-flex xs12 mt-3 text-xs-center>
-              <v-layout justify-space-around>
-                <v-btn color="primary" block large round flat @click="confirmImport()">
-                  <v-icon large color="primary">cloud_upload</v-icon>
-                </v-btn>
-                <v-btn color="success" block large round flat @click="playRpa()">
-                  <v-icon large color="green darken-2">play_arrow</v-icon>
-                </v-btn>
-                <v-btn color="primary" block large round flat @click="ResultsRpa()">
-                  <v-icon large color="primary">bar_chart</v-icon>
-                </v-btn>
-                <v-btn color="error" block large round flat @click="deleteRpa()">
-                  <v-icon large color="error">delete</v-icon>
-                </v-btn>
-              </v-layout>
-              <!--<span class="font-weight-light">
-                *Sua importação terá apenas
-                <b>{{this.countInput}}</b> coluna(s) separado(s) por
-                <b>;</b> (ponto e vírgula)
-              </span>-->
-            </v-flex>
-            <!--<v-flex xs12 mt-1 text-xs-center>
-              <upload-button
-                round
-                outline
-                color="primary"
-                @file-update="fileImport"
-                title="Importar"
-                accept=".txt"
-              ></upload-button>
-            </v-flex>
-            <v-flex xs12 text-xs-center>
-              <span class="font-weight-light">Sucesso:</span>
-              <span class="font-weight-light ml-2">{{this.qtdSuccess}}</span>
-              <span class="font-weight-light ml-3">Erro:</span>
-              <span class="font-weight-light ml-2">{{this.qtdError}}</span>
-              <span class="font-weight-light ml-3">Total:</span>
-              <span class="font-weight-light ml-2">{{this.qtdTotal}}</span>
-            </v-flex>-->
-            <!--<v-layout justify-center wrap>
-              <v-flex xs12 sm6>
-                <v-list>
-                  <v-list-tile @click="confirmImport()">
-                    <v-list-tile-action>
-                      <v-icon color="primary">check</v-icon>
-                    </v-list-tile-action>
-
-                    <v-list-tile-content>
-                      <v-list-tile-title v-text="'Confirmar importação'"></v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-
-                  <v-list-tile @click="playRpa()">
-                    <v-list-tile-action>
-                      <v-icon color="success">play_arrow</v-icon>
-                    </v-list-tile-action>
-
-                    <v-list-tile-content>
-                      <v-list-tile-title v-text="'Iniciar'"></v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-              </v-flex>
-              <v-flex xs12 sm6>
-                <v-list>
-                  <v-list-tile @click="ResultsRpa()">
-                    <v-list-tile-action>
-                      <v-icon color="primary">bar_chart</v-icon>
-                    </v-list-tile-action>
-
-                    <v-list-tile-content>
-                      <v-list-tile-title v-text="'Resultados'"></v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-
-                  <v-list-tile @click="deleteRpa()">
-                    <v-list-tile-action>
-                      <v-icon color="error">delete</v-icon>
-                    </v-list-tile-action>
-
-                    <v-list-tile-content>
-                      <v-list-tile-title v-text="'Excluir'"></v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-              </v-flex>
-            </v-layout>-->
-            <v-flex xs12 mt-3>
-              <json-viewer :value="this.steps" :expand-depth="3" copyable boxed sort></json-viewer>
-            </v-flex>
+            <json-viewer :value="this.steps" :expand-depth="2" copyable></json-viewer>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -110,17 +57,16 @@
 import { mapState, mapActions } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
 import router from "@/router";
-//import UploadButton from "vuetify-upload-button";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
+import DialogImport from "@/components/organisms/Dialog/DialogImportData";
 import JsonViewer from "vue-json-viewer";
 export default {
   components: {
     DialogGeneric,
-    //UploadButton,
+    DialogImport,
     JsonViewer
   },
   computed: {
-    ...mapState("product", ["product"]),
     ...mapState("auth", ["auth"])
   },
   created() {
@@ -132,10 +78,10 @@ export default {
     this.UniqueRpaUser(data)
       .then(res => {
         res.data.forEach(element => {
-          this.pageTitle = element.name;
+          this.botName = element.name;
           this.steps = JSON.parse(element.steps);
           this.steps.Steps.forEach(el => {
-            if (el.BotEvent == "input") this.countInput++;
+            if (el.BotEvent == "input") this.dataDialogImport.countInput++;
           });
         });
       })
@@ -147,6 +93,10 @@ export default {
   data() {
     return {
       steps: {},
+      dataDialogImport: {
+        size: "500",
+        countInput: 0
+      },
       dataDialog: {
         // success | information | error
         type: "information",
@@ -156,20 +106,9 @@ export default {
         sessionExpired: true,
         size: "290"
       },
-      data: [],
-      dataImport: {
-        token: "",
-        id_user: "",
-        id_rpa_type: "",
-        import_data: ""
-      },
-      pageTitle: "",
-      preview: "",
+      botName: "",
       countInput: 0,
-      count: 0,
-      qtdSuccess: 0,
-      qtdTotal: 0,
-      qtdError: 0
+      count: 0
     };
   },
   methods: {
@@ -178,6 +117,9 @@ export default {
       "UniqueRpaUser",
       "deleteRpaUser"
     ]),
+    uploadBacklogBot() {
+      EventBus.$emit("dialogImport", true);
+    },
     playRpa() {
       const data = {
         id_user: this.auth.id,
@@ -214,69 +156,12 @@ export default {
           //erro 500 -> auth expired
           EventBus.$emit("dialogGeneric", true);
         });
-    },
-    ...mapActions("rpa", ["importDataRpa"]),
-    fileImport(file) {
-      const reader = new FileReader();
-      const read = new Promise((resolve, reject) => {
-        reader.onload = event => resolve(event.target.result);
-        reader.onerror = error => reject(error);
-        reader.readAsText(file);
-      });
-      read.then(res => {
-        res.split(";").forEach(element => {
-          let line = element.replace("\n", "").replace("\r", "");
-          if (line != "") {
-            this.qtdTotal++;
-            if (this.qtdTotal <= 300) {
-              if (line.length == 11) {
-                this.qtdSuccess++;
-              } else {
-                this.qtdError++;
-              }
-              this.data.push(line);
-              this.preview += line + "\n";
-            }
-          }
-        });
-      });
-    },
-    confirmImport() {
-      if (this.data != "") {
-        this.data.forEach(element => {
-          this.dataImport.token = this.auth.token;
-          this.dataImport.id_user = this.auth.id;
-          this.dataImport.id_rpa_type = this.$route.params.Rid;
-          this.dataImport.import_data = element + ";";
-          this.importDataRpa(this.dataImport)
-            .then(res => {
-              if (res.status == 201) {
-                this.count++;
-                if (this.qtdSuccess == this.count) {
-                  this.dataDialog.type = "success";
-                  this.dataDialog.title = "Importado com sucesso";
-                  this.dataDialog.textButton = "OK";
-                  this.dataDialog.iconButton = "check";
-                  this.dataDialog.sessionExpired = false;
-
-                  EventBus.$emit("dialogGeneric", true);
-                }
-              }
-            })
-            .catch(() => {
-              //erro 500 -> auth expired
-              EventBus.$emit("dialogGeneric", true);
-            });
-        });
-      } else {
-        //arquivo vazio
-        this.dataDialog.type = "error";
-        this.dataDialog.title = "Dados para importação invalido.";
-        this.dataDialog.textButton = "Ok, Entendi";
-        this.dataDialog.iconButton = "check";
-        EventBus.$emit("dialogGeneric", true);
-      }
     }
   }
 };
 </script>
+<style scoped>
+.heightCard {
+  height: 160px;
+}
+</style>
