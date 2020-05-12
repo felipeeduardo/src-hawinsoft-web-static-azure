@@ -33,7 +33,7 @@
     </v-navigation-drawer>
     <!--footer-->
     <v-footer color="#3c8dbc" class="pa-3 white--text" app>
-      <span>Copyright &copy; Hawinsoft</span>
+      <span>&copy; Hawinsoft - Versão 1.0</span>
       <v-spacer></v-spacer>
       <span>2019 - {{ new Date().getFullYear() }}</span>
     </v-footer>

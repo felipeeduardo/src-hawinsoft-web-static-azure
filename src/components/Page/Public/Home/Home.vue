@@ -3,7 +3,7 @@
     <!--text-->
     <v-flex xs12 sm5>
       <v-flex xs12 class="mt-3">
-        <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="200"></v-img>
+        <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="190"></v-img>
       </v-flex>
       <v-flex xs12 class="mt-2 text-center" text-xs-center>
         <h1 class="font-weight-light primary--text">HAWINSOFT</h1>
@@ -26,9 +26,6 @@
       <v-flex xs12 text-xs-center class="mt-2">
         <v-btn color="primary" round large outline @click="goNewUse()" class="sizebtn">Cadastre-se</v-btn>
         <v-btn color="green" round large outline @click="goLogin()" class="sizebtn">Login</v-btn>
-      </v-flex>
-      <v-flex xs12 class="mt-2 text-center" text-xs-center>
-        <h4 class="font-weight-light">Versão 1.0</h4>
       </v-flex>
     </v-flex>
   </v-layout>
