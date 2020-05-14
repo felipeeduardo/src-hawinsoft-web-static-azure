@@ -19,6 +19,9 @@
               finalizados com
               <b>; (ponto e vírgula)</b>
             </h3>
+            <v-flex xs12 mt-3>
+              <h3>Upload limite: 30 linhas por backlog (.txt).</h3>
+            </v-flex>
             <v-flex xs12 mb-4 mt-4 text-xs-center>
               <upload-button
                 round
@@ -34,8 +37,8 @@
               <v-textarea readonly outline label="Preview" v-model="this.preview"></v-textarea>
             </v-flex>
             <v-flex xs12>
-              <v-alert :value="alertShowError" type="error">{{this.message}}</v-alert>
-              <v-alert :value="alertShowSuccess" type="success">{{this.message}}</v-alert>
+              <v-alert :value="alertShowSuccess" outline type="success">{{this.messageSuccess}}</v-alert>
+              <v-alert :value="alertShowError" outline type="error">{{this.messageErr}}</v-alert>
             </v-flex>
           </v-card-text>
           <v-divider></v-divider>
@@ -88,7 +91,7 @@ export default {
           let row = element.replace("\n", "").replace("\r", "");
           if (row != "") {
             this.qtdRow++;
-            if (this.qtdRow <= 10) {
+            if (this.qtdRow <= 30) {
               this.dataPreview.push(row);
               this.preview += row + "\n";
             }
@@ -99,33 +102,46 @@ export default {
     confirmImport() {
       if (this.dataPreview != "") {
         this.dataPreview.forEach(element => {
+          this.qtdRowPipe = 0;
           this.dataUploadBacklog.token = this.auth.token;
           this.dataUploadBacklog.id_user = this.auth.id;
           this.dataUploadBacklog.id_rpa = this.$route.params.Rid;
           this.dataUploadBacklog.backlog_data = element;
+          //qtd columns
           element.split("|").forEach(() => {
             this.qtdRowPipe++;
           });
+          //verify
           if (this.qtdRowPipe == this.data.countInput) {
+            this.qtdUploadSuccess++;
             this.uploadBacklog(this.dataUploadBacklog)
               .then(res => {
                 if (res.status == 201) {
                   this.count++;
                   this.alertShowSuccess = true;
                   this.btConfirm = true;
-                  this.message = "Backlog importado com sucesso.";
+                  this.messageSuccess =
+                    "Backlog com " +
+                    this.qtdUploadSuccess +
+                    " item(s) válido importado.";
                 }
               })
               .catch(() => {
                 //erro 500 -> auth expired
                 this.alertShowError = true;
-                this.message = "Erro em sua requisição.";
+                this.messageErr = "Erro em sua requisição.";
               });
+          } else {
+            this.qtdUploadErr++;
+            this.alertShowError = true;
+            this.messageErr =
+              this.qtdUploadErr +
+              " linha(s) com quantidade de colunas inválidas.";
           }
         });
       } else {
         this.alertShowError = true;
-        this.message = "Backlog vazio.";
+        this.messageErr = "Backlog vazio.";
       }
     }
   },
@@ -140,11 +156,14 @@ export default {
       alertShowSuccess: false,
       dialogImport: false,
       btConfirm: false,
+      qtdUploadSuccess: 0,
+      qtdUploadErr: 0,
       qtdRow: 0,
       qtdRowPipe: 0,
       preview: "",
       dataPreview: [],
-      message: "",
+      messageSuccess: "",
+      messageErr: "",
       dataUploadBacklog: {
         token: "",
         id_user: "",

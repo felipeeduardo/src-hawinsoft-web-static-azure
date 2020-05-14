@@ -9,8 +9,8 @@
           <v-card-text>
             <h2 class="title font-weight-light mb-3">Tem certeza que deseja excluir ?</h2>
             <v-flex xs12>
-              <v-alert :value="alertShowError" type="error">{{this.message}}</v-alert>
-              <v-alert :value="alertShowSuccess" type="success">{{this.message}}</v-alert>
+              <v-alert :value="alertShowError" outline type="error">{{this.message}}</v-alert>
+              <v-alert :value="alertShowSuccess" outline type="success">{{this.message}}</v-alert>
             </v-flex>
           </v-card-text>
           <v-divider></v-divider>

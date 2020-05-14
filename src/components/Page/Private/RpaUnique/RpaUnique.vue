@@ -163,7 +163,7 @@ export default {
         countInput: 0
       },
       dataDialogImport: {
-        size: "500",
+        size: "550",
         countInput: 0
       },
       dataDialog: {

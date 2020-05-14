@@ -20,8 +20,8 @@
               ></v-text-field>
             </v-form>
             <v-flex xs12>
-              <v-alert :value="alertShowError" type="error">{{this.message}}</v-alert>
-              <v-alert :value="alertShowSuccess" type="success">{{this.message}}</v-alert>
+              <v-alert :value="alertShowError" outline type="error">{{this.message}}</v-alert>
+              <v-alert :value="alertShowSuccess" outline type="success">{{this.message}}</v-alert>
             </v-flex>
           </v-card-text>
           <v-divider></v-divider>
