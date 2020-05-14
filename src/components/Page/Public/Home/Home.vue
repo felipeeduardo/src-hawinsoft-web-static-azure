@@ -23,6 +23,7 @@
           class="font-weight-light"
         >Pensamos em como melhorar rotinas de trabalho, criando algoritmos inteligentes de acordo com sua necessidade.</h3>
       </v-flex>
+      <divider></divider>
       <v-flex xs12 text-xs-center class="mt-2">
         <v-btn color="primary" round large outline @click="goNewUse()" class="sizebtn">Cadastre-se</v-btn>
         <v-btn color="green" round large outline @click="goLogin()" class="sizebtn">Login</v-btn>

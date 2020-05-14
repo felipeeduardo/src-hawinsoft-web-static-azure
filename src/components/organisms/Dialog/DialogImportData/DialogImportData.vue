@@ -42,7 +42,12 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="error" flat @click="close()">Cancelar</v-btn>
-            <v-btn color="success" flat @click="confirmImport()">Confirmar, {{this.qtdRow}} item(s)</v-btn>
+            <v-btn
+              :disabled="btConfirm"
+              color="success"
+              flat
+              @click="confirmImport()"
+            >Confirmar, {{this.qtdRow}} item(s)</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -67,7 +72,7 @@ export default {
     ...mapState("auth", ["auth"])
   },
   methods: {
-    ...mapActions("rpa", ["importDataRpa"]),
+    ...mapActions("rpa", ["uploadBacklog"]),
     close() {
       this.dialogImport = false;
     },
@@ -94,23 +99,29 @@ export default {
     confirmImport() {
       if (this.dataPreview != "") {
         this.dataPreview.forEach(element => {
-          this.dataImport.token = this.auth.token;
-          this.dataImport.id_user = this.auth.id;
-          this.dataImport.id_rpa_type = this.$route.params.Rid;
-          this.dataImport.import_data = element + ";";
-          this.importDataRpa(this.dataImport)
-            .then(res => {
-              if (res.status == 201) {
-                this.count++;
-                this.alertShowSuccess = true;
-                this.message = "Importado com sucesso.";
-              }
-            })
-            .catch(() => {
-              //erro 500 -> auth expired
-              this.alertShowError = true;
-              this.message = "Erro em sua requisição.";
-            });
+          this.dataUploadBacklog.token = this.auth.token;
+          this.dataUploadBacklog.id_user = this.auth.id;
+          this.dataUploadBacklog.id_rpa = this.$route.params.Rid;
+          this.dataUploadBacklog.backlog_data = element;
+          element.split("|").forEach(() => {
+            this.qtdRowPipe++;
+          });
+          if (this.qtdRowPipe == this.data.countInput) {
+            this.uploadBacklog(this.dataUploadBacklog)
+              .then(res => {
+                if (res.status == 201) {
+                  this.count++;
+                  this.alertShowSuccess = true;
+                  this.btConfirm = true;
+                  this.message = "Backlog importado com sucesso.";
+                }
+              })
+              .catch(() => {
+                //erro 500 -> auth expired
+                this.alertShowError = true;
+                this.message = "Erro em sua requisição.";
+              });
+          }
         });
       } else {
         this.alertShowError = true;
@@ -128,15 +139,17 @@ export default {
       alertShowError: false,
       alertShowSuccess: false,
       dialogImport: false,
+      btConfirm: false,
       qtdRow: 0,
+      qtdRowPipe: 0,
       preview: "",
       dataPreview: [],
       message: "",
-      dataImport: {
+      dataUploadBacklog: {
         token: "",
         id_user: "",
-        id_rpa_type: "",
-        import_data: ""
+        id_rpa: "",
+        backlog_data: ""
       }
     };
   }

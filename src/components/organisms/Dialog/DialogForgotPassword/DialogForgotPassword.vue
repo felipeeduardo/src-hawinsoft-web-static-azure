@@ -51,8 +51,6 @@ export default {
     },
     sendForgotPw() {
       if (this.$refs.form.validate()) {
-        console.log(this.form.emailForgot);
-
         this.alertShowSuccess = true;
         this.message = "Sucesso";
       }
