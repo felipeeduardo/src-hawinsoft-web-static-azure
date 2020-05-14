@@ -7,3 +7,5 @@ export const getRpaUserUnique = (state) => state.rpa_user_unique
 export const getRpaUserAll = (state) => state.rpa_user_all
 export const getRpaUserDelete = (state) => state.rpa_user_delete
 export const getRpaEvents = (state) => state.rpa_events
+export const getRpaBacklogProcessed = (state) => state.rpa_backlog_processed
+export const getRpaTimerMedio = (state) => state.rpa_timer_medio_min

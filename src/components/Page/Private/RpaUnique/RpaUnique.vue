@@ -36,7 +36,7 @@
             <h1 class="title font-weight-light">Backlog</h1>
           </v-card-title>
           <v-card-text>
-            <h1 class="text-xs-center ma-2">123</h1>
+            <h1 class="text-xs-center ma-2">{{this.qtdBacklog}}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -46,7 +46,7 @@
             <h1 class="title font-weight-light">Processados</h1>
           </v-card-title>
           <v-card-text>
-            <h1 class="text-xs-center ma-2">{{this.totalExec}}</h1>
+            <h1 class="text-xs-center ma-2">{{this.qtdBacklogProcessed}}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -56,7 +56,7 @@
             <h1 class="title font-weight-light">Tempo Médio</h1>
           </v-card-title>
           <v-card-text>
-            <h1 class="text-xs-center ma-2">{{this.totalExec}}</h1>
+            <h1 class="text-xs-center ma-2">{{this.timerMedium}}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -133,8 +133,8 @@ export default {
         //erro 500 -> auth expired
         EventBus.$emit("dialogGeneric", true);
       });
-
-    this.resultRpaUserChart(data)
+    //CHARTS
+    this.ResultRpaUserChart(data)
       .then(res => {
         res.data.forEach(element => {
           if (element != "") {
@@ -150,10 +150,40 @@ export default {
         //erro 500 -> auth expired
         EventBus.$emit("dialogGeneric", true);
       });
+    //CARDS
+    this.GetbacklogAndProcessed(data)
+      .then(res => {
+        res.data.forEach(el => {
+          if (el != "") {
+            this.qtdBacklog = el.backlog == null ? 0 : el.backlog;
+            this.qtdBacklogProcessed = el.done == null ? 0 : el.done;
+          }
+        });
+      })
+      .catch(() => {
+        //erro 500 -> auth expired
+        EventBus.$emit("dialogGeneric", true);
+      });
+    //TIMER RESULT
+    this.GetRpaTimerMedio(data)
+      .then(res => {
+        res.data.forEach(el => {
+          if (el != "") {
+            this.timerMedium = el.timer_medio == null ? 0 : el.timer_medio;
+          }
+        });
+      })
+      .catch(() => {
+        //erro 500 -> auth expired
+        EventBus.$emit("dialogGeneric", true);
+      });
   },
   data() {
     return {
       steps: {},
+      qtdBacklog: 0,
+      qtdBacklogProcessed: 0,
+      timerMedium: 0,
       dataDialogRemoveRpa: {
         id_user: "",
         id_rpa: "",
@@ -215,8 +245,9 @@ export default {
     ...mapActions("rpa", [
       "RpaBrowserRemore",
       "UniqueRpaUser",
-      "deleteRpaUser",
-      "resultRpaUserChart"
+      "ResultRpaUserChart",
+      "GetbacklogAndProcessed",
+      "GetRpaTimerMedio"
     ]),
     uploadBacklogBot() {
       EventBus.$emit("dialogImport", true);

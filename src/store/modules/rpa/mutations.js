@@ -60,6 +60,18 @@ const mutations = {
     },
     [types.RPA_USER_UNIQUE_ERROR](state, rpa_user_unique) {
         state.rpa_user_unique = rpa_user_unique
+    },
+    [types.RPA_BACKLOG_PROCESSED_SUCCESS](state, rpa_backlog_processed) {
+        state.rpa_backlog_processed = rpa_backlog_processed
+    },
+    [types.RPA_BACKLOG_PROCESSED_ERROR](state, rpa_backlog_processed) {
+        state.rpa_backlog_processed = rpa_backlog_processed
+    },
+    [types.RPA_TIMER_MEDIO_MIN_SUCCESS](state, rpa_timer_medio_min) {
+        state.rpa_timer_medio_min = rpa_timer_medio_min
+    },
+    [types.RPA_TIMER_MEDIO_MIN_ERROR](state, rpa_timer_medio_min) {
+        state.rpa_timer_medio_min = rpa_timer_medio_min
     }
 }
 

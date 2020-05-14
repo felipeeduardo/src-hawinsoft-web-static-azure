@@ -117,7 +117,7 @@ export const resultRpaUser = ({ commit }, data) => {
         })
 }
 
-export const resultRpaUserChart = ({ commit }, data) => {
+export const ResultRpaUserChart = ({ commit }, data) => {
     return rpa_result.getResultRpaChart(data)
         .then(result => {
             if (result.data.auth) {
@@ -161,6 +161,38 @@ export const uploadBacklog = ({ commit }, data) => {
             }
         }).catch(err => {
             commit(types.RPA_UPLOAD_BACKLOG_ERROR, err)
+            return Promise.reject(err)
+        })
+}
+
+export const GetbacklogAndProcessed = ({ commit }, data) => {
+    return rpa_backlog.getbacklogAndProcessed(data)
+        .then(result => {
+            if (result.data.auth) {
+                commit(types.RPA_BACKLOG_PROCESSED_SUCCESS, result.data)
+                return Promise.resolve(result)
+            } else {
+                commit(types.RPA_BACKLOG_PROCESSED_SUCCESS, result.data)
+                return Promise.resolve(result)
+            }
+        }).catch(err => {
+            commit(types.RPA_BACKLOG_PROCESSED_ERROR, err)
+            return Promise.reject(err)
+        })
+}
+
+export const GetRpaTimerMedio = ({ commit }, data) => {
+    return rpa_result.getResultTimerMedioMin(data)
+        .then(result => {
+            if (result.data.auth) {
+                commit(types.RPA_TIMER_MEDIO_MIN_SUCCESS, result.data)
+                return Promise.resolve(result)
+            } else {
+                commit(types.RPA_TIMER_MEDIO_MIN_SUCCESS, result.data)
+                return Promise.resolve(result)
+            }
+        }).catch(err => {
+            commit(types.RPA_TIMER_MEDIO_MIN_ERROR, err)
             return Promise.reject(err)
         })
 }

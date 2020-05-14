@@ -12,4 +12,6 @@ export default {
     rpa_user_all: {},
     rpa_user_delete: {},
     rpa_events: {},
+    rpa_backlog_processed: {},
+    rpa_timer_medio_min: {},
 }
