@@ -29,7 +29,8 @@ export default {
           title: "Novo",
           subtitle: "Robotic process automation",
           path: "RpaCreate",
-          enabled: true,
+          chip: false,
+          enabled: false,
           hoveText: "",
           hoveTextColor: "green--text",
           hoveColor: "grey lighten-4"
@@ -41,7 +42,8 @@ export default {
           title: "Novo",
           subtitle: "Robotic process automation",
           path: "RpaCreate",
-          enabled: true,
+          chip: false,
+          enabled: false,
           hoveText: "",
           hoveTextColor: "green--text",
           hoveColor: "grey lighten-4"
@@ -96,12 +98,11 @@ export default {
                 title: element.name,
                 subtitle: "Criado: " + this.formatDateDb(element.created),
                 path: "RpaUniue",
+                chip: true,
                 enabled: element.active == 1 ? true : false,
-                hoveText: element.active == 1 ? "Ativo" : "Inativo",
-                hoveTextColor:
-                  element.active == 1 ? "green--text" : "red--text",
-                hoveColor:
-                  element.active == 1 ? "grey lighten-5" : "red lighten-5"
+                hoveText:"",
+                hoveTextColor:"",
+                hoveColor: "grey lighten-4"
               };
               this.cards.push(item);
             });

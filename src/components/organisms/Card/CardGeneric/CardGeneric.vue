@@ -6,7 +6,7 @@
           slot-scope="{ hover }"
           class="elevation-1 title-hover text-truncate"
           :style="{ cursor: 'pointer'}"
-          @click="goPath(item.path, item.idRpa)"
+          @click="item.enabled? goPath(item.path, item.idRpa):''"
         >
           <div class="py-4 card-bord-top">
             <v-img height="130px" contain :src="item.banner"></v-img>
@@ -17,6 +17,14 @@
             <p class="title font-weight-light">{{item.title}}</p>
             <p class="sub-title font-weight-light">{{item.subtitle}}</p>
           </v-card-text>
+          <v-card-actions>
+            <p v-if="item.chip" class="font-weight-light" color="success-text">
+              <span v-if="item.enabled" class="green--text">Ativo</span>
+              <span v-if="!item.enabled" class="red--text">Inativo</span>
+            </p>
+            <v-spacer></v-spacer>
+            <v-icon>keyboard_arrow_right</v-icon>
+          </v-card-actions>
           <v-expand-transition>
             <div
               v-if="hover"

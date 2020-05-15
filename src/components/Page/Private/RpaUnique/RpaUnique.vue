@@ -13,20 +13,24 @@
             <h1 class="title">{{this.botName}}</h1>
           </v-card-title>
           <v-card-text>
-            <v-layout justify-space-around ma-1>
-              <v-btn color="primary" block medium round flat @click="uploadBacklogBot()">
-                <v-icon medium color="primary">cloud_upload</v-icon>
-              </v-btn>
-              <v-btn color="success" block medium round flat @click="playRpa()">
+            <v-bottom-nav :value="true" top color="transparent" class="elevation-0">
+              <v-btn @click="playRpa()">
+                <span class="green--text">Iniciar</span>
                 <v-icon medium color="green darken-2">play_arrow</v-icon>
               </v-btn>
-              <!--<v-btn color="primary" block medium round flat @click="ResultsRpa()">
-                <v-icon medium color="primary">bar_chart</v-icon>
-              </v-btn>-->
-              <v-btn color="error" block medium round flat @click="deleteRpa()">
+              <v-btn>
+                <span class="error--text">Parar</span>
+                <v-icon medium color="error">stop</v-icon>
+              </v-btn>
+              <v-btn @click="uploadBacklogBot()">
+                <span class="primary--text">Backlog</span>
+                <v-icon medium color="primary">cloud_upload</v-icon>
+              </v-btn>
+              <v-btn @click="deleteRpa()">
+                <span class="error--text">Excluir</span>
                 <v-icon medium color="error">delete</v-icon>
               </v-btn>
-            </v-layout>
+            </v-bottom-nav>
           </v-card-text>
         </v-card>
       </v-flex>
