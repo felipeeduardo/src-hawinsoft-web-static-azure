@@ -1,33 +1,29 @@
 <template>
   <v-layout justify-center wrap class="py-1 px-2">
-    <!--text-->
-    <v-flex xs12 sm5>
-      <v-flex xs12 class="mt-3">
-        <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="190"></v-img>
-      </v-flex>
-      <v-flex xs12 class="mt-2 text-center" text-xs-center>
-        <h1 class="font-weight-light primary--text">HAWINSOFT</h1>
+    <v-flex xs12 class="mt-3" text-xs-center>
+      <v-flex class="mt-2">
         <h2 class="font-weight">
           Web scraping
           <v-icon color="success" class="mr-1">sync_alt</v-icon>Browser remote
         </h2>
       </v-flex>
-      <v-flex xs12 class="mt-2">
-        <v-img :src="require('@/assets/img/hawinsoft-fluxo-bot.png')" contain max-height="120"></v-img>
-      </v-flex>
-      <v-flex xs12 class="mt-1 text-center" text-xs-center>
+      <v-flex class="mt-2 primary--text">
         <h2 class="font-weight-light">Crie bots utilizando o Chromium em nuvem.</h2>
       </v-flex>
-      <v-flex xs12 class="mt-1" text-xs-center>
+      <v-flex class="mt-2">
         <h3
           class="font-weight-light"
         >Pensamos em como melhorar rotinas de trabalho, criando algoritmos inteligentes de acordo com sua necessidade.</h3>
       </v-flex>
-      <divider></divider>
-      <v-flex xs12 text-xs-center class="mt-2">
-        <v-btn color="primary" round large outline @click="goNewUse()" class="sizebtn">Cadastre-se</v-btn>
-        <v-btn color="green" round large outline @click="goLogin()" class="sizebtn">Login</v-btn>
+      <v-flex class="mt-2">
+        <v-btn v-for="icon in icons" :key="icon" class="mx-3" dark icon>
+          <v-icon color="primary" size="24px">{{ icon }}</v-icon>
+        </v-btn>
       </v-flex>
+      <v-flex class="mt-3">
+        <v-btn color="primary" flat outline>Sobre o projeto</v-btn>
+      </v-flex>
+      <v-img :src="require('@/assets/img/hawinsoft-home.jpg')" contain max-height="430"></v-img>
     </v-flex>
   </v-layout>
 </template>
@@ -35,18 +31,21 @@
 <script>
 import router from "@/router";
 export default {
+  data() {
+    return {
+      icons: [
+        "fab fa-facebook",
+        "fab fa-twitter",
+        "fab fa-google-plus",
+        "fab fa-linkedin",
+        "fab fa-instagram"
+      ]
+    };
+  },
   methods: {
-    goNewUse() {
-      router.push({ name: "Create" });
-    },
     goLogin() {
       router.push({ name: "Login" });
     }
   }
 };
 </script>
-<style scoped>
-.sizebtn {
-  width: 40%;
-}
-</style>>

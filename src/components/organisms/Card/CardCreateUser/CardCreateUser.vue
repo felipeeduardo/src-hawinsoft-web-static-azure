@@ -3,73 +3,66 @@
     <dialog-generic :data="dataDialog" />
     <v-layout justify-center wrap>
       <v-flex xs12 sm6>
-        <v-flex xs12 class="mt-2 text-center" text-xs-center>
-          <h1 class="font-weight-light primary--text">HAWINSOFT</h1>
-          <h2 class="font-weight">
-            Web scraping
-            <v-icon color="success" class="mr-1">sync_alt</v-icon>Browser remote
-          </h2>
-        </v-flex>
-        <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field
-            prepend-icon="mail"
-            name="email"
-            label="Email"
-            type="text"
-            required
-            :rules="isEmailValid"
-            v-model="form.email"
-          ></v-text-field>
-          <v-text-field
-            prepend-icon="lock"
-            name="password"
-            label="Senha"
-            id="password"
-            type="password"
-            required
-            maxlength="8"
-            :counter="8"
-            v-model="form.password"
-            :rules="isPasswordValid"
-          ></v-text-field>
-          <v-text-field
-            prepend-icon="lock"
-            name="confirmpassword"
-            label="Confirmação de senha"
-            id="confirmpassword"
-            type="password"
-            required
-            maxlength="8"
-            :counter="8"
-            v-model="form.confirmpassword"
-            :rules="isConfirmPasswordValid"
-          ></v-text-field>
-          <v-text-field
-            prepend-icon="business"
-            name="company"
-            label="Empresa ou projeto"
-            type="text"
-            required
-            v-model="form.company"
-            :rules="isCompanyValid"
-          ></v-text-field>
-          <!--<v-checkbox v-model="checkbox" :rules="isCheck" label="você concorda?" required></v-checkbox>-->
-        </v-form>
-        <v-flex xs12 mt-3>
-          <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
-        </v-flex>
-        <v-flex xs12 mt-3>
-          <v-btn
-            :disabled="!valid"
-            color="success"
-            large
-            block
-            flat
-            outline
-            round
-            @click="validateNew()"
-          >Registrar</v-btn>
-        </v-flex>
+        <v-img :src="require('@/assets/img/hawinsoft-register.jpg')" contain max-height="600"></v-img>
+      </v-flex>
+      <v-flex xs12 sm6>
+        <v-card class="elevation-0 pt-3">
+          <v-card-text>
+            <v-form ref="form" v-model="valid" lazy-validation>
+              <v-text-field
+                prepend-icon="fas fa-envelope"
+                name="email"
+                label="Email"
+                type="text"
+                required
+                :rules="isEmailValid"
+                v-model="form.email"
+              ></v-text-field>
+              <v-text-field
+                prepend-icon="fas fa-lock"
+                name="password"
+                label="Senha"
+                id="password"
+                type="password"
+                required
+                maxlength="8"
+                :counter="8"
+                v-model="form.password"
+                :rules="isPasswordValid"
+              ></v-text-field>
+              <v-text-field
+                prepend-icon="fas fa-lock"
+                name="confirmpassword"
+                label="Confirmação de senha"
+                id="confirmpassword"
+                type="password"
+                required
+                maxlength="8"
+                :counter="8"
+                v-model="form.confirmpassword"
+                :rules="isConfirmPasswordValid"
+              ></v-text-field>
+              <v-text-field
+                prepend-icon="fas fa-building"
+                name="company"
+                label="Empresa ou projeto"
+                type="text"
+                required
+                v-model="form.company"
+                :rules="isCompanyValid"
+              ></v-text-field>
+              <!--<v-checkbox v-model="checkbox" :rules="isCheck" label="você concorda?" required></v-checkbox>-->
+            </v-form>
+            <v-flex xs12 mt-3>
+              <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
+            </v-flex>
+          </v-card-text>
+          <v-divider light></v-divider>
+          <v-card-actions class="pa-3">
+            <v-spacer></v-spacer>
+            <v-btn :disabled="!valid" color="success" flat outline @click="validateNew()">Registrar</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>

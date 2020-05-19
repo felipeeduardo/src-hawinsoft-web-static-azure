@@ -2,7 +2,7 @@
   <v-container grid-list-md>
     <dialog-generic :data="data" />
     <h1 class="title font-weight-light">
-      <v-icon class="mr-1">memory</v-icon>Robotic process automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6>

@@ -8,18 +8,28 @@ export const http = axios.create({
 
 //IMTERCEPTORS
 http.interceptors.request.use(config => {
-    store.commit(types.SET_LOADING, true);
+    var load_play_rpa = config.url;
+    var set_play_rpa = load_play_rpa.substring(0, 18)
+    //LOAD PLAY RPA
+    if (set_play_rpa == "rpa_browser_remote") {
+        store.commit(types.SET_LOADING_PLAY_RPA, true);
+    } else {
+        store.commit(types.SET_LOADING, true);
+    }
     return config;
 }, error => {
     store.commit(types.SET_LOADING, false);
+    store.commit(types.SET_LOADING_PLAY_RPA, false);
     return Promise.reject(error);
 });
 
 http.interceptors.response.use(response => {
     store.commit(types.SET_LOADING, false);
+    store.commit(types.SET_LOADING_PLAY_RPA, false);
     return response;
 }, error => {
     store.commit(types.SET_LOADING, false);
+    store.commit(types.SET_LOADING_PLAY_RPA, false);
     return Promise.reject(error);
 });
 

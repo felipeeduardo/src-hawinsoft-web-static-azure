@@ -2,20 +2,19 @@
   <v-menu bottom left>
     <template v-slot:activator="{ on }">
       <div v-show="showMenuPrivate">
-        <v-btn dark icon @click="goPayment()">
-          <v-icon>payment</v-icon>
-        </v-btn>
         <v-btn dark icon v-on="on">
-          <v-icon>person_pin</v-icon>
+          <v-icon size="20">fas fa-user</v-icon>
         </v-btn>
       </div>
       <div v-show="!showMenuPrivate">
-        <v-btn outline @click="goLogin()">LOG IN</v-btn>
+        <v-btn outline @click="goLogin()">
+          <v-icon left size="20">fas fa-sign-in-alt</v-icon>Entrar
+        </v-btn>
       </div>
     </template>
     <v-list v-if="showMenuPrivate">
       <div class="text-xs-center">
-        <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="60"></v-img>
+        <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="65"></v-img>
       </div>
       <v-list-tile :style="{ cursor: 'pointer'}">
         <v-list-tile-title>{{this.auth.email}}</v-list-tile-title>
@@ -23,12 +22,12 @@
       <v-divider light></v-divider>
       <v-list-tile :style="{ cursor: 'pointer'}">
         <v-list-tile-title @click="goPayment()">
-          <v-icon class="mr-1">payment</v-icon>Inserir créditos
+          <v-icon class="mr-2" size="15">fas fa-credit-card</v-icon>Inserir créditos
         </v-list-tile-title>
       </v-list-tile>
       <v-list-tile :style="{ cursor: 'pointer'}">
         <v-list-tile-title @click="logout()">
-          <v-icon class="mr-1">exit_to_app</v-icon>Sair
+          <v-icon class="mr-2" size="15">fas fa-sign-out-alt</v-icon>Sair
         </v-list-tile-title>
       </v-list-tile>
     </v-list>

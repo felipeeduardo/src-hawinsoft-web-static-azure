@@ -4,11 +4,11 @@
     <dialog-import :data="dataDialogImport" />
     <dialog-remove :data="dataDialogRemoveRpa" />
     <h1 class="title font-weight-light">
-      <v-icon class="mr-1">memory</v-icon>Robotic process automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6>
-        <v-card class="elevation-0 heightCard">
+        <v-card class="elevation-0 grey lighten-5 heightCard">
           <v-card-title>
             <h1 class="title">{{this.botName}}</h1>
           </v-card-title>
@@ -65,7 +65,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 sm6>
-        <v-card class="elevation-0" :min-height="390">
+        <v-card class="elevation-0 grey lighten-5" :min-height="390">
           <v-card-title>
             <h1 class="title font-weight-light">JSON</h1>
           </v-card-title>
@@ -75,7 +75,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 sm6>
-        <v-card class="elevation-0">
+        <v-card class="elevation-0 grey lighten-5">
           <v-card-text>
             <GChart
               :settings="{ packages: ['corechart', 'table', 'map'] }"

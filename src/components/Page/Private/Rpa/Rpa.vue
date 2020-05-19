@@ -2,7 +2,7 @@
   <v-container grid-list-md>
     <dialog-generic :data="data" />
     <h1 class="title font-weight-light">
-      <v-icon class="mr-1">memory</v-icon>Robotic process automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
     </h1>
     <card-generic v-if="verifyUserRpa" :data="newBot" />
     <card-generic v-if="!verifyUserRpa" :data="cards" />
@@ -30,7 +30,7 @@ export default {
           subtitle: "Robotic process automation",
           path: "RpaCreate",
           chip: false,
-          enabled: false,
+          enabled: true,
           hoveText: "",
           hoveTextColor: "green--text",
           hoveColor: "grey lighten-4"
@@ -43,7 +43,7 @@ export default {
           subtitle: "Robotic process automation",
           path: "RpaCreate",
           chip: false,
-          enabled: false,
+          enabled: true,
           hoveText: "",
           hoveTextColor: "green--text",
           hoveColor: "grey lighten-4"
@@ -100,8 +100,8 @@ export default {
                 path: "RpaUniue",
                 chip: true,
                 enabled: element.active == 1 ? true : false,
-                hoveText:"",
-                hoveTextColor:"",
+                hoveText: "",
+                hoveTextColor: "",
                 hoveColor: "grey lighten-4"
               };
               this.cards.push(item);

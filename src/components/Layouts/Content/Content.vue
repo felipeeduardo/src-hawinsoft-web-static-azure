@@ -1,7 +1,7 @@
 <template>
-  <v-content>
-    <v-toolbar app dark clipped-left color="primary" v-if="this.auth.auth">
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+  <v-content class="white">
+    <v-toolbar app dark clipped-left color="primary">
+      <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="this.auth.auth"></v-toolbar-side-icon>
       <v-toolbar-title @click.stop="drawer = !drawer" class="headline text-uppercase" exact>
         <span class="font-weight-light">HAWINSOFT</span>
       </v-toolbar-title>
@@ -12,11 +12,6 @@
     <!--navigation-->
     <v-navigation-drawer v-if="this.auth.auth" v-model="drawer" fixed app clipped>
       <v-list dense v-if="this.auth.auth">
-        <v-list-tile-content text-xs-center>
-          <v-list-tile>Versão 1.0</v-list-tile>
-        </v-list-tile-content>
-
-        <v-divider></v-divider>
         <v-list-tile
           v-for="item in itemsMenuAuth"
           :key="item.index"
@@ -32,12 +27,11 @@
       </v-list>
     </v-navigation-drawer>
     <!--footer-->
-    <v-footer color="#3c8dbc" class="pa-3 white--text" app>
+    <!--<v-footer color="#3c8dbc" class="pa-3 white--text" app>
       <span>&copy; Hawinsoft - Versão 1.0</span>
       <v-spacer></v-spacer>
       <span>2019 - {{ new Date().getFullYear() }}</span>
-    </v-footer>
-    <!--content-->
+    </v-footer>-->
     <loader :loader="this.loading" />
     <router-view></router-view>
   </v-content>
@@ -66,52 +60,44 @@ export default {
   },
   data() {
     return {
+      icons: [
+        "fab fa-facebook",
+        "fab fa-google-plus",
+        "fab fa-linkedin",
+        "fab fa-instagram"
+      ],
       drawer: null,
       itemsMenuAuth: [
         {
-          icon: "payment",
-          colorIcon: "success",
-          title: "Inserir créditos",
-          classColorText: "success--text",
-          path: "Payment"
-        },
-        {
-          icon: "home",
+          icon: "fas fa-home",
           colorIcon: "",
           title: "Página inicial",
           classColorText: "",
           path: "Home"
         },
         {
-          icon: "memory",
+          icon: "fas fa-robot",
           colorIcon: "",
           title: "Robotic process automation",
           classColorText: "",
           path: "Rpa"
         },
         {
-          icon: "settings_applications",
+          icon: "fas fa-cogs",
           colorIcon: "",
           title: "API's",
           classColorText: "",
           path: "Api"
         },
-        /*{
-          icon: "filter",
-          colorIcon: "",
-          title: "Uncaptcha",
-          classColorText: "",
-          path: "Uncaptcha"
-        },*/
         {
-          icon: "bug_report",
+          icon: "fas fa-bug",
           colorIcon: "",
           title: "Reportar problema",
           classColorText: "",
           path: "Report"
         },
         {
-          icon: "mail",
+          icon: "fas fa-envelope",
           colorIcon: "",
           title: "Mensagem",
           classColorText: "",

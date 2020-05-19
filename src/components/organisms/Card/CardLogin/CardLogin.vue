@@ -4,61 +4,55 @@
     <dialog-forgotpw :data="dataDialogForgotPw" />
     <v-layout justify-center wrap>
       <v-flex xs12 sm6>
-        <v-flex xs12 class="mt-2 text-center" text-xs-center>
-          <h1 class="font-weight-light primary--text">HAWINSOFT</h1>
-          <h2 class="font-weight">
-            Web scraping
-            <v-icon color="success" class="mr-1">sync_alt</v-icon>Browser remote
-          </h2>
-        </v-flex>
-        <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field
-            prepend-icon="mail"
-            name="email"
-            label="Email"
-            type="text"
-            :rules="isEmailValid"
-            v-model="form.email"
-          ></v-text-field>
-          <v-text-field
-            prepend-icon="lock"
-            name="password"
-            label="Senha"
-            id="password"
-            type="password"
-            required
-            maxlength="8"
-            :counter="8"
-            v-model="form.password"
-            :rules="isPasswordValid"
-          ></v-text-field>
-        </v-form>
-        <v-flex xs12 mt-2>
-          <v-btn
-            class="font-weight-light"
-            color="primary"
-            small
-            flat
-            round
-            @click="goForgotPassword()"
-          >
-            <v-icon small left>lock</v-icon>Esqueci minha senha
-          </v-btn>
-        </v-flex>
-        <v-flex xs12 mt-3>
-          <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
-        </v-flex>
-        <v-flex xs12 mt-4>
-          <v-btn
-            :disabled="!valid"
-            color="success"
-            block
-            large
-            outline
-            round
-            @click="validate()"
-          >Entrar</v-btn>
-        </v-flex>
+        <v-img :src="require('@/assets/img/hawinsoft-login.jpg')" contain max-height="600"></v-img>
+      </v-flex>
+      <v-flex xs12 sm6>
+        <v-card class="elevation-0 pt-3">
+          <v-card-text>
+            <v-form ref="form" v-model="valid" lazy-validation>
+              <v-text-field
+                prepend-icon="fas fa-envelope"
+                name="email"
+                label="Email"
+                type="text"
+                :rules="isEmailValid"
+                v-model="form.email"
+              ></v-text-field>
+              <v-text-field
+                prepend-icon="fas fa-lock"
+                name="password"
+                label="Senha"
+                id="password"
+                type="password"
+                required
+                maxlength="8"
+                :counter="8"
+                v-model="form.password"
+                :rules="isPasswordValid"
+              ></v-text-field>
+            </v-form>
+            <v-flex xs12 mt-2>
+              <v-btn
+                class="font-weight-light"
+                color="blue darken-4"
+                small
+                flat
+                @click="goForgotPassword()"
+              >
+                <v-icon small left>fas fa-lock</v-icon>Esqueci minha senha
+              </v-btn>
+            </v-flex>
+            <v-flex xs12 mt-3>
+              <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
+            </v-flex>
+          </v-card-text>
+          <v-divider light></v-divider>
+          <v-card-actions class="pa-3">
+            <v-spacer></v-spacer>
+            <v-btn color="primary" outline @click="goNewUse()">Cadastre-se</v-btn>
+            <v-btn :disabled="!valid" color="success" outline @click="validate()">Entrar</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -113,6 +107,9 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logIn"]),
+    goNewUse() {
+      router.push({ name: "Create" });
+    },
     goForgotPassword() {
       EventBus.$emit("dialogForgotPw", true);
     },
@@ -161,9 +158,3 @@ export default {
   }
 };
 </script>
-<style>
-.card-bord-top {
-  border-top-style: solid;
-  border-top-color: #357ca5;
-}
-</style>

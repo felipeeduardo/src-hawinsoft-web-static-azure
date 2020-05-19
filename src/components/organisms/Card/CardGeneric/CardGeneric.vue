@@ -4,26 +4,26 @@
       <v-hover>
         <v-card
           slot-scope="{ hover }"
-          class="elevation-1 title-hover text-truncate"
+          class="elevation-2 grey lighten-5 title-hover text-truncate"
           :style="{ cursor: 'pointer'}"
           @click="item.enabled? goPath(item.path, item.idRpa):''"
         >
           <div class="py-4 card-bord-top">
-            <v-img height="130px" contain :src="item.banner"></v-img>
+            <v-img height="100px" contain :src="item.banner"></v-img>
           </div>
           <div></div>
           <v-divider light></v-divider>
           <v-card-text>
-            <p class="title font-weight-light">{{item.title}}</p>
+            <p class="title font-weight">{{item.title}}</p>
             <p class="sub-title font-weight-light">{{item.subtitle}}</p>
           </v-card-text>
           <v-card-actions>
-            <p v-if="item.chip" class="font-weight-light" color="success-text">
+            <h3 v-if="item.chip" class="font-weight-light" color="success-text">
               <span v-if="item.enabled" class="green--text">Ativo</span>
               <span v-if="!item.enabled" class="red--text">Inativo</span>
-            </p>
+            </h3>
             <v-spacer></v-spacer>
-            <v-icon>keyboard_arrow_right</v-icon>
+            <v-icon color="primary" size="15">fas fa-angle-double-right</v-icon>
           </v-card-actions>
           <v-expand-transition>
             <div
@@ -63,11 +63,11 @@ export default {
 </script>
 <style>
 .title-hover:hover {
-  color: #357ca5;
+  color: #2b468b;
 }
 .card-bord-top {
   border-top-style: solid;
-  border-top-color: #357ca5;
+  border-top-color: #2b468b;
 }
 .v-card--reveal {
   align-items: center;

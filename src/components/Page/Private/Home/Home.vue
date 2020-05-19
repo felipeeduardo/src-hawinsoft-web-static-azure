@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <h1 class="title font-weight-light">
-      <v-icon class="mr-1">home</v-icon>Página inicial
+      <v-icon class="ma-1" size="20">fas fa-home</v-icon>Página inicial
     </h1>
     <card-generic :data="this.auth.id_user_profile == 1? cardsAdmin:cards" />
   </v-container>
@@ -23,7 +23,7 @@ export default {
         {
           banner: require("@/assets/img/hawinsoft-robot.png"),
           title: "RPA's",
-          subtitle:"Robotic process automation",
+          subtitle:"Criação, monitoramento de métricas",
           path: "Rpa",
           enabled: true,
           hoveText: "",
@@ -33,7 +33,7 @@ export default {
         {
           banner: require("@/assets/img/hawinsoft-api.png"),
           title: "API's",
-          subtitle:"Rest API - RPA",
+          subtitle:"Integração através de Rest API",
           path: "Api",
           enabled: true,
           hoveText: "",
@@ -43,7 +43,7 @@ export default {
         {
           banner: require("@/assets/img/hawinsoft-bug.png"),
           title: "Reportar problema",
-          subtitle:"Relatar problemas no RPA",
+          subtitle:"Relate problemas para o suporte",
           path: "Report",
           enabled: true,
           hoveText: "",
@@ -53,7 +53,7 @@ export default {
         {
           banner: require("@/assets/img/hawinsoft-mensagens.png"),
           title: "Mensagens",
-          subtitle:"Automáticas",
+          subtitle:"Acompanhamento de informativos",
           path: "Message",
           enabled: true,
           hoveText: "",

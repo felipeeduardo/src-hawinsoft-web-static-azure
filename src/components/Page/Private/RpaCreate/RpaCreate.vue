@@ -2,12 +2,12 @@
   <v-container grid-list-md>
     <dialog-generic :data="dataDialog" />
     <h1 class="title font-weight-light">
-      <v-icon class="mr-1">memory</v-icon>Robotic process automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6 text-xs-center>
         <v-form ref="form" v-model="valid" lazy-validation>
-          <v-card height="530" class="elevation-0">
+          <v-card height="530" class="elevation-0 grey lighten-5">
             <v-card-text>
               <v-flex xs12>
                 <v-text-field
@@ -68,17 +68,14 @@
                   :label="`Aguardar Navegação`"
                 ></v-switch>
               </v-flex>
-              <v-flex xs12>
+              <v-flex xs12 text-xs-center>
                 <v-btn
                   required
                   :v-if="!this.addurl"
                   :disabled="!valid"
-                  block
                   color="success"
-                  large
                   flat
                   outline
-                  round
                   @click="addStep()"
                 >Adicionar</v-btn>
               </v-flex>
@@ -87,7 +84,7 @@
         </v-form>
       </v-flex>
       <v-flex xs12 sm6>
-        <v-card height="530" class="scroll-y elevation-0">
+        <v-card height="530" class="scroll-y elevation-0 grey lighten-5">
           <v-card-text v-show="!this.showTimeline">
             <v-flex xs12 text-xs-center>
               <h3 class="font-weight-light">Exemplo de captura do Selector</h3>
@@ -107,7 +104,7 @@
             </v-flex>
             <time-line :data="listSteps" />
             <v-flex xs12 text-xs-center>
-              <v-btn block color="success" large flat outline round @click="saveStep()">Salvar RPA</v-btn>
+              <v-btn color="success" flat outline @click="saveStep()">Salvar</v-btn>
             </v-flex>
           </v-card-text>
         </v-card>

@@ -11,7 +11,7 @@
             <v-form ref="form" v-model="validForgot" lazy-validation>
               <v-text-field
                 class="mb-3 mt-3"
-                prepend-icon="mail"
+                prepend-icon="fas fa-envelope"
                 name="email"
                 label="Email"
                 type="text"
