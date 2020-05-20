@@ -16,8 +16,8 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="error" flat @click="close()">Não</v-btn>
-            <v-btn color="success" flat @click="deleteRpa()">Sim</v-btn>
+            <v-btn color="error" outline @click="close()">Não</v-btn>
+            <v-btn color="success" outline @click="deleteRpa()">Sim</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

@@ -1,29 +1,26 @@
 <template>
   <v-layout row wrap class="mt-3">
-    <v-flex v-for="item in data" :key="item.index" d-flex xs12 sm3 md3 class="px-2 py-1">
+    <v-flex v-for="item in data" :key="item.index" d-flex xs12 sm6 md6 class="pa-1">
       <v-hover>
         <v-card
           slot-scope="{ hover }"
-          class="elevation-2 grey lighten-5 title-hover text-truncate"
+          class="elevation-0 grey lighten-5 title-hover text-truncate"
           :style="{ cursor: 'pointer'}"
           @click="item.enabled? goPath(item.path, item.idRpa):''"
         >
-          <div class="py-4 card-bord-top">
-            <v-img height="100px" contain :src="item.banner"></v-img>
-          </div>
-          <div></div>
-          <v-divider light></v-divider>
+          <div class="py-2 card-bord-top"></div>
           <v-card-text>
-            <p class="title font-weight">{{item.title}}</p>
+            <p class="headline font-weight-light">{{item.title}}</p>
             <p class="sub-title font-weight-light">{{item.subtitle}}</p>
           </v-card-text>
+          <v-divider light></v-divider>
           <v-card-actions>
             <h3 v-if="item.chip" class="font-weight-light" color="success-text">
               <span v-if="item.enabled" class="green--text">Ativo</span>
               <span v-if="!item.enabled" class="red--text">Inativo</span>
             </h3>
             <v-spacer></v-spacer>
-            <v-icon color="primary" size="15">fas fa-angle-double-right</v-icon>
+            <v-icon color="primary" size="15">fas fa-arrow-right</v-icon>
           </v-card-actions>
           <v-expand-transition>
             <div
@@ -41,6 +38,7 @@
 <script>
 import { mapState } from "vuex";
 import router from "@/router";
+import { EventBus } from "@/services/event-bus.js";
 export default {
   props: {
     data: {
@@ -48,15 +46,26 @@ export default {
       default: null
     }
   },
+  data() {
+    return {
+      dialogReport: false
+    };
+  },
   computed: {
     ...mapState("auth", ["auth"])
   },
   methods: {
     goPath(path, id) {
-      router.push({
-        name: `${path}`,
-        params: { Pid: this.auth.id, Rid: id }
-      });
+      if (path == "Message") {
+        EventBus.$emit("dialogMessage", true);
+      } else if (path == "Report") {
+        EventBus.$emit("dialogReport", true);
+      } else {
+        router.push({
+          name: `${path}`,
+          params: { Pid: this.auth.id, Rid: id }
+        });
+      }
     }
   }
 };

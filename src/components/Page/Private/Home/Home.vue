@@ -3,7 +3,14 @@
     <h1 class="title font-weight-light">
       <v-icon class="ma-1" size="20">fas fa-home</v-icon>Página inicial
     </h1>
-    <card-generic :data="this.auth.id_user_profile == 1? cardsAdmin:cards" />
+    <v-layout justify-center wrap>
+      <v-flex xs12 sm7>
+        <card-generic :data="this.auth.id_user_profile == 1? cardsAdmin:cards" />
+      </v-flex>
+      <v-flex xs12 sm5>
+        <v-img :src="require('@/assets/img/hawinsoft-mount.jpg')" contain max-height="500"></v-img>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -21,9 +28,8 @@ export default {
     return {
       cards: [
         {
-          banner: require("@/assets/img/hawinsoft-robot.png"),
-          title: "RPA's",
-          subtitle:"Criação, monitoramento de métricas",
+          title: "Painel de Bots",
+          subtitle: "Criação, monitoramento de métricas.",
           path: "Rpa",
           enabled: true,
           hoveText: "",
@@ -31,9 +37,8 @@ export default {
           hoveColor: "grey lighten-4"
         },
         {
-          banner: require("@/assets/img/hawinsoft-api.png"),
-          title: "API's",
-          subtitle:"Integração através de Rest API",
+          title: "Integrações",
+          subtitle: "Integração através de Rest API.",
           path: "Api",
           enabled: true,
           hoveText: "",
@@ -41,9 +46,8 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          banner: require("@/assets/img/hawinsoft-bug.png"),
           title: "Reportar problema",
-          subtitle:"Relate problemas para o suporte",
+          subtitle: "Relate problemas para o suporte.",
           path: "Report",
           enabled: true,
           hoveText: "",
@@ -51,9 +55,8 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          banner: require("@/assets/img/hawinsoft-mensagens.png"),
           title: "Mensagens",
-          subtitle:"Acompanhamento de informativos",
+          subtitle: "Acompanhamento de informativos.",
           path: "Message",
           enabled: true,
           hoveText: "",
@@ -63,7 +66,6 @@ export default {
       ],
       cardsAdmin: [
         {
-          banner: require("@/assets/img/hawinsoft-id.png"),
           title: "Administração",
           path: "Admin",
           enabled: true,
@@ -72,7 +74,6 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          banner: require("@/assets/img/hawinsoft-robot.png"),
           title: "RPA's",
           path: "Rpa",
           enabled: true,
@@ -81,7 +82,6 @@ export default {
           hoveColor: "grey lighten-4"
         },
         {
-          banner: require("@/assets/img/hawinsoft-api.png"),
           title: "API's",
           path: "Api",
           enabled: true,
@@ -90,7 +90,6 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          banner: require("@/assets/img/hawinsoft-bug.png"),
           title: "Reportar problema",
           path: "Report",
           enabled: true,
@@ -99,7 +98,6 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          banner: require("@/assets/img/hawinsoft-mensagens.png"),
           title: "Mensagens",
           path: "Message",
           enabled: true,

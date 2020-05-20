@@ -4,8 +4,15 @@
     <h1 class="title font-weight-light">
       <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
     </h1>
-    <card-generic v-if="verifyUserRpa" :data="newBot" />
-    <card-generic v-if="!verifyUserRpa" :data="cards" />
+    <v-layout justify-center wrap>
+      <v-flex xs12 sm7>
+        <card-generic v-if="verifyUserRpa" :data="newBot" />
+        <card-generic v-if="!verifyUserRpa" :data="cards" />
+      </v-flex>
+      <v-flex xs12 sm5>
+        <v-img :src="require('@/assets/img/hawinsoft-rpa-exe.jpg')" contain max-height="500"></v-img>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -25,7 +32,6 @@ export default {
       verifyUserRpa: false,
       newBot: [
         {
-          banner: require("@/assets/img/hawinsoft-new.png"),
           title: "Novo",
           subtitle: "Robotic process automation",
           path: "RpaCreate",
@@ -38,9 +44,8 @@ export default {
       ],
       cards: [
         {
-          banner: require("@/assets/img/hawinsoft-new.png"),
           title: "Novo",
-          subtitle: "Robotic process automation",
+          subtitle: "Crie um Web crawler",
           path: "RpaCreate",
           chip: false,
           enabled: true,
@@ -94,7 +99,6 @@ export default {
             res.data.forEach(element => {
               const item = {
                 idRpa: element.id_rpa,
-                banner: require("@/assets/img/hawinsoft-robot.png"),
                 title: element.name,
                 subtitle: "Criado: " + this.formatDateDb(element.created),
                 path: "RpaUniue",

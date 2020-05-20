@@ -33,25 +33,38 @@
       <span>2019 - {{ new Date().getFullYear() }}</span>
     </v-footer>-->
     <loader :loader="this.loading" />
+    <dialog-report :data="dataDialogReport" />
+    <dialog-message :data="dataDialogReport" />
     <router-view></router-view>
   </v-content>
 </template>
 <script>
 import router from "@/router";
+import { EventBus } from "@/services/event-bus.js";
 import MenuHeader from "@/components/organisms/Menu/Private/MenuHeader";
 import Loader from "@/components/organisms/Loader";
+import DialogReport from "@/components/organisms/Dialog/DialogReportProblem";
+import DialogMessage from "@/components/organisms/Dialog/DialogMessage";
 import { mapState } from "vuex";
 export default {
   components: {
     MenuHeader,
-    Loader
+    Loader,
+    DialogReport,
+    DialogMessage
   },
   methods: {
     goPath(path, id) {
-      router.push({
-        name: `${path}`,
-        params: { Pid: this.auth.id, Rid: id }
-      });
+      if (path == "Message") {
+        EventBus.$emit("dialogMessage", true);
+      } else if (path == "Report") {
+        EventBus.$emit("dialogReport", true);
+      } else {
+        router.push({
+          name: `${path}`,
+          params: { Pid: this.auth.id, Rid: id }
+        });
+      }
     }
   },
   computed: {
@@ -66,6 +79,13 @@ export default {
         "fab fa-linkedin",
         "fab fa-instagram"
       ],
+      dataDialogReport: {
+        size: "550",
+        countInput: 0
+      },
+      dataDialogMessage: {
+        size: "550"
+      },
       drawer: null,
       itemsMenuAuth: [
         {

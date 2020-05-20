@@ -24,7 +24,6 @@
             </v-flex>
             <v-flex xs12 mb-4 mt-4 text-xs-center>
               <upload-button
-                round
                 block
                 outline
                 color="primary"
@@ -44,11 +43,11 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="error" flat @click="close()">Cancelar</v-btn>
+            <v-btn color="error" outline @click="close()">Cancelar</v-btn>
             <v-btn
               :disabled="btConfirm"
               color="success"
-              flat
+              outline
               @click="confirmImport()"
             >Confirmar, {{this.qtdRow}} item(s)</v-btn>
           </v-card-actions>

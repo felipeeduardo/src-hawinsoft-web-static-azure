@@ -5,11 +5,9 @@ import PublicPageHome from '@/components/Page/Public/Home'
 import PageLogin from '@/components/Page/Public/User/Login'
 import PageCreateUser from '@/components/Page/Public/User/Create'
 import PageHome from '@/components/Page/Private/Home'
-import PageMessage from '@/components/Page/Private/Message'
 import PageHandler from '@/components/Page/Private/Handler'
 import PageApi from '@/components/Page/Private/Api'
 import PageAdmin from '@/components/Page/Private/Admin'
-import PageAUncaptcha from '@/components/Page/Private/Uncaptcha'
 import PageRpa from '@/components/Page/Private/Rpa'
 import pageRpaCreate from '@/components/Page/Private/RpaCreate'
 import PageRpaUnique from '@/components/Page/Private/RpaUnique'
@@ -18,7 +16,6 @@ import PageRpaResults from '@/components/Page/Private/RpaResults'
 import PageRpaResultsSuccess from '@/components/Page/Private/RpaResults/Success'
 import PageRpaResultsFail from '@/components/Page/Private/RpaResults/Fail'
 
-import PageReport from '@/components/Page/Private/Report'
 import PageSuccess from '@/components/Page/Public/Success'
 import NotFound from '@/components/Page/Private/NotFound'
 import PagePayment from '@/components/Page/Private/Payment'
@@ -81,12 +78,6 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/message',
-            name: 'Message',
-            component: PageMessage,
-            beforeEnter: ifAuthenticated
-        },
-        {
             path: '/error',
             name: 'ErrorHandler',
             component: PageHandler,
@@ -130,21 +121,9 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/report/:Pid',
-            name: 'Report',
-            component: PageReport,
-            beforeEnter: ifAuthenticated
-        },
-        {
             path: '/api',
             name: 'Api',
             component: PageApi,
-            beforeEnter: ifAuthenticated
-        },
-        {
-            path: '/uncaptcha',
-            name: 'Uncaptcha',
-            component: PageAUncaptcha,
             beforeEnter: ifAuthenticated
         },
         {
