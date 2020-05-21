@@ -1,6 +1,7 @@
 <template>
   <v-container grid-list-md>
     <dialog-generic :data="data" />
+    <dialog-inative :data="dataDialogInative" />
     <h1 class="title font-weight-light">
       <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
     </h1>
@@ -22,10 +23,12 @@ import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
 import CardGeneric from "@/components/organisms/Card/CardGeneric";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
+import DialogInative from "@/components/organisms/Dialog/DialogRpaInative";
 export default {
   components: {
     CardGeneric,
-    DialogGeneric
+    DialogGeneric,
+    DialogInative
   },
   data() {
     return {
@@ -62,6 +65,9 @@ export default {
         iconButton: "keyboard_backspace",
         sessionExpired: true,
         size: "290"
+      },
+      dataDialogInative: {
+        size: "400"
       }
     };
   },

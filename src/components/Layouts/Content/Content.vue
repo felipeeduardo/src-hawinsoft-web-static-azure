@@ -26,16 +26,12 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <!--footer-->
-    <!--<v-footer color="#3c8dbc" class="pa-3 white--text" app>
-      <span>&copy; Hawinsoft - Versão 1.0</span>
-      <v-spacer></v-spacer>
-      <span>2019 - {{ new Date().getFullYear() }}</span>
-    </v-footer>-->
+
     <loader :loader="this.loading" />
     <dialog-report :data="dataDialogReport" />
     <dialog-message :data="dataDialogReport" />
     <router-view></router-view>
+    <loader-play :loaderPlayerRpa="this.loading_play_rpa" />
   </v-content>
 </template>
 <script>
@@ -45,11 +41,13 @@ import MenuHeader from "@/components/organisms/Menu/Private/MenuHeader";
 import Loader from "@/components/organisms/Loader";
 import DialogReport from "@/components/organisms/Dialog/DialogReportProblem";
 import DialogMessage from "@/components/organisms/Dialog/DialogMessage";
+import LoaderPlay from "@/components/organisms/LoaderPlayRpa";
 import { mapState } from "vuex";
 export default {
   components: {
     MenuHeader,
     Loader,
+    LoaderPlay,
     DialogReport,
     DialogMessage
   },
@@ -69,7 +67,8 @@ export default {
   },
   computed: {
     ...mapState("auth", ["auth"]),
-    ...mapState(["loading"])
+    ...mapState(["loading"]),
+    ...mapState(["loading_play_rpa"])
   },
   data() {
     return {

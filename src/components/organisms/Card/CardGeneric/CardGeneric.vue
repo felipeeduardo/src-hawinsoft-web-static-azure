@@ -6,7 +6,7 @@
           slot-scope="{ hover }"
           class="elevation-0 grey lighten-5 title-hover text-truncate"
           :style="{ cursor: 'pointer'}"
-          @click="item.enabled? goPath(item.path, item.idRpa):''"
+          @click="item.enabled? goPath(item.path, item.idRpa):goInative()"
         >
           <div class="py-2 card-bord-top"></div>
           <v-card-text>
@@ -48,7 +48,8 @@ export default {
   },
   data() {
     return {
-      dialogReport: false
+      dialogReport: false,
+      dialogInative: false
     };
   },
   computed: {
@@ -66,6 +67,9 @@ export default {
           params: { Pid: this.auth.id, Rid: id }
         });
       }
+    },
+    goInative() {
+      EventBus.$emit("dialogInative", true);
     }
   }
 };
