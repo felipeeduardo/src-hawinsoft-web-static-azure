@@ -84,7 +84,7 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/rpa',
+            path: '/mypanel',
             name: 'Rpa',
             component: PageRpa,
             beforeEnter: ifAuthenticated

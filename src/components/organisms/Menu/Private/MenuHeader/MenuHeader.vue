@@ -12,23 +12,24 @@
         </v-btn>
       </div>
     </template>
-    <v-list v-if="showMenuPrivate">
-      <div class="text-xs-center">
+    <!--list menu private-->
+    <v-list dense v-if="this.auth.auth">
+      <div class="text-xs-center mt-2">
         <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="65"></v-img>
       </div>
-      <v-list-tile :style="{ cursor: 'pointer'}">
-        <v-list-tile-title>{{this.auth.email}}</v-list-tile-title>
+      <v-list-tile>
+        <v-list-tile-content>
+          <v-list-tile-title>{{this.auth.email}}</v-list-tile-title>
+        </v-list-tile-content>
       </v-list-tile>
       <v-divider light></v-divider>
-      <v-list-tile :style="{ cursor: 'pointer'}">
-        <v-list-tile-title @click="goPayment()">
-          <v-icon class="mr-2" size="15">fas fa-credit-card</v-icon>Inserir créditos
-        </v-list-tile-title>
-      </v-list-tile>
-      <v-list-tile :style="{ cursor: 'pointer'}">
-        <v-list-tile-title @click="logout()">
-          <v-icon class="mr-2" size="15">fas fa-sign-out-alt</v-icon>Sair
-        </v-list-tile-title>
+      <v-list-tile v-for="item in itemsMenuAuth" :key="item.index" @click="goPath(item.path)">
+        <v-list-tile-action>
+          <v-icon size="18" :color="item.colorIcon">{{item.icon}}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title :class="item.classColorText">{{item.title}}</v-list-tile-title>
+        </v-list-tile-content>
       </v-list-tile>
     </v-list>
   </v-menu>
@@ -41,7 +42,23 @@ import router from "@/router";
 export default {
   data() {
     return {
-      showMenuPrivate: false
+      showMenuPrivate: false,
+      itemsMenuAuth: [
+        {
+          icon: "fas fa-credit-card",
+          colorIcon: "",
+          title: "Inserir créditos",
+          classColorText: "",
+          path: "Home"
+        },
+        {
+          icon: "fas fa-sign-out-alt",
+          colorIcon: "",
+          title: "Sair",
+          classColorText: "",
+          path: "Public"
+        }
+      ]
     };
   },
   computed: {
@@ -68,19 +85,21 @@ export default {
     goLogin() {
       router.push({ name: "Login" });
     },
-    goMessage() {
-      router.push({ name: "Message" });
-    },
-    goPayment() {
-      this.getSessionIdPageSeguro();
-      router.push({ name: "Payment" });
-    },
     logout() {
       this.showMenuPrivate = false;
       sessionStorage.hawinsoft = false;
       sessionStorage.hawinsoft_profile = "";
       this.logOut();
       router.push({ name: "Public" });
+    },
+    goPath(path) {
+      if (path == "Public") {
+        this.showMenuPrivate = false;
+        sessionStorage.hawinsoft = false;
+        sessionStorage.hawinsoft_profile = "";
+        this.logOut();
+        router.push({ name: "Public" });
+      }
     }
   }
 };

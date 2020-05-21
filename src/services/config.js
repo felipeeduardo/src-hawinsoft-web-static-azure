@@ -24,8 +24,13 @@ http.interceptors.request.use(config => {
 });
 
 http.interceptors.response.use(response => {
-    store.commit(types.SET_LOADING, false);
-    store.commit(types.SET_LOADING_PLAY_RPA, false);
+    var load_play_rpa = response.config.url.replace(response.config.baseURL, "");
+    var set_play_rpa = load_play_rpa.substring(0, 18);
+    if (set_play_rpa == "rpa_browser_remote") {
+        store.commit(types.SET_LOADING_PLAY_RPA, false);
+    } else {
+        store.commit(types.SET_LOADING, false);
+    }
     return response;
 }, error => {
     store.commit(types.SET_LOADING, false);

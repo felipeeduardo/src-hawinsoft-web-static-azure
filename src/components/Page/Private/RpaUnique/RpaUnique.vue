@@ -143,8 +143,20 @@ export default {
         res.data.forEach(element => {
           if (element != "") {
             this.chartData = [
-              ["Bot", "Sucesso", "Falha"],
-              [element.name, element.success, element.fail]
+              [
+                "Bot",
+                "Sucesso",
+                { role: "annotation" },
+                "Falha",
+                { role: "annotation" }
+              ],
+              [
+                element.name,
+                element.success,
+                element.success,
+                element.fail,
+                element.fail
+              ]
             ];
             this.totalExec = element.success + element.fail;
           }

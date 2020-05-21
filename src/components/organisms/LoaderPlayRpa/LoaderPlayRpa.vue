@@ -10,7 +10,7 @@
       <v-progress-linear :indeterminate="true"></v-progress-linear>
     </v-flex>
     <v-flex xs12>
-      <h3 class="font-weight-light">Em execução...</h3>
+      <h3 class="font-weight-light">Bot em execução...</h3>
     </v-flex>
   </v-snackbar>
 </template>
