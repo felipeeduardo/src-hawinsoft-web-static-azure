@@ -3,9 +3,9 @@ import { http } from '../config'
 export const getAllRpaEvents = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('rpaevent', { headers })
+    return http.get('/v1/Events', { headers })
         .then(res => {
             return Promise.resolve(res)
         })

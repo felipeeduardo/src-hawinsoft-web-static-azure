@@ -69,13 +69,13 @@ export default {
   components: {
     VueRecaptcha,
     DialogGeneric,
-    DialogForgotpw
+    DialogForgotpw,
   },
   data() {
     return {
       dataDialogForgotPw: {
         size: "500",
-        countInput: 0
+        countInput: 0,
       },
       dataDialog: {
         // success | information | error
@@ -84,25 +84,24 @@ export default {
         textButton: "log in",
         iconButton: "keyboard_backspace",
         sessionExpired: true,
-        size: "290"
+        size: "290",
       },
-      showMenuPrivate: false,
       sitekey: "6LesJKQUAAAAAPuojWPcTSEYQbDBOzmQtMTS8j_g",
       valid: true,
       recaptcha: false,
       reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       form: {
         email: "",
-        password: ""
+        password: "",
       },
       isEmailValid: [
-        v => !!v || "Email é obrigatório",
-        v => this.reg.test(this.form.email) || "Email inválido"
+        (v) => !!v || "Email é obrigatório",
+        (v) => this.reg.test(this.form.email) || "Email inválido",
       ],
       isPasswordValid: [
-        v => !!v || "Senha é obrigatório",
-        v => v.length >= 8 || "A senha deve ter no máximo 8 caracteres"
-      ]
+        (v) => !!v || "Senha é obrigatório",
+        (v) => v.length >= 8 || "A senha deve ter no máximo 8 caracteres",
+      ],
     };
   },
   methods: {
@@ -113,38 +112,40 @@ export default {
     goForgotPassword() {
       EventBus.$emit("dialogForgotPw", true);
     },
-    onVerify: function(recaptchaToken) {
+    onVerify: function (recaptchaToken) {
       if (recaptchaToken) {
         this.recaptcha = true;
       }
     },
-    onExpired: function() {
+    onExpired: function () {
       this.$refs.recaptcha.reset();
     },
     validate() {
       if (this.$refs.form.validate()) {
         if (this.recaptcha) {
           this.logIn(this.form)
-            .then(res => {
-              if (res.data.auth) {
-                sessionStorage.hawinsoft = res.data.auth;
-                sessionStorage.hawinsoft_profile = res.data.id_user_profile;
-                EventBus.$emit("showMenuPrivate", true);
+            .then((res) => {
+              if (res.status == 200) {
+                sessionStorage.hawinsoft = res.data.user.active;
+                sessionStorage.hawinsoft_profile = res.data.user.id_user;
+                EventBus.$emit("checkSessionAuth", true);
                 router.push({ name: "Home" });
-              } else {
+              }
+            })
+            .catch((err) => {
+              if (err.response.status == 404) {
                 this.dataDialog.type = "error";
                 this.dataDialog.title = "Usuário ou senha inválido.";
                 this.dataDialog.textButton = "Ok, Entendi";
                 this.dataDialog.iconButton = "check";
                 EventBus.$emit("dialogGeneric", true);
+              } else {
+                this.dataDialog.type = "information";
+                this.dataDialog.title = "Serviço temporariamente indisponível.";
+                this.dataDialog.textButton = "Ok, Entendi";
+                this.dataDialog.iconButton = "check";
+                EventBus.$emit("dialogGeneric", true);
               }
-            })
-            .catch(() => {
-              this.dataDialog.type = "information";
-              this.dataDialog.title = "Serviço temporariamente indisponível.";
-              this.dataDialog.textButton = "Ok, Entendi";
-              this.dataDialog.iconButton = "check";
-              EventBus.$emit("dialogGeneric", true);
             });
         } else {
           this.dataDialog.type = "error";
@@ -154,7 +155,7 @@ export default {
           EventBus.$emit("dialogGeneric", true);
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>

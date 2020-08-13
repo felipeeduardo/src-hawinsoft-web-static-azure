@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <h1 class="title font-weight-light">
-      <v-icon class="mr-1">payment</v-icon>Inserir créditos
+      <v-icon class="ma-1" size="20">fas fa-credit-card</v-icon>Inserir créditos
     </h1>
   </v-container>
 </template>

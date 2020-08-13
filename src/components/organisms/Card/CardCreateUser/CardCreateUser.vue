@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <dialog-generic :data="dataDialog" />
+    <dialog-terms :data="dataDialogTerms" />
     <v-layout justify-center wrap>
       <v-flex xs12 sm6>
         <v-img :src="require('@/assets/img/hawinsoft-register.jpg')" contain max-height="600"></v-img>
@@ -53,6 +54,17 @@
               ></v-text-field>
               <!--<v-checkbox v-model="checkbox" :rules="isCheck" label="você concorda?" required></v-checkbox>-->
             </v-form>
+            <v-flex xs12 mt-2>
+              <v-btn
+                class="font-weight-light"
+                color="blue darken-4"
+                small
+                flat
+                @click="goForgotPassword()"
+              >
+                <v-icon small left>fas fa-file-contract</v-icon>Termos de uso
+              </v-btn>
+            </v-flex>
             <v-flex xs12 mt-3>
               <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
             </v-flex>
@@ -71,6 +83,7 @@
 <script>
 import { mapActions } from "vuex";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
+import DialogTerms from "@/components/organisms/Dialog/DialogTermsUser";
 import VueRecaptcha from "vue-recaptcha";
 import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
@@ -78,10 +91,14 @@ import { EventBus } from "@/services/event-bus.js";
 export default {
   components: {
     VueRecaptcha,
-    DialogGeneric
+    DialogGeneric,
+    DialogTerms,
   },
   data() {
     return {
+      dataDialogTerms: {
+        size: "500",
+      },
       dataDialog: {
         // success | information | error
         type: "information",
@@ -89,7 +106,7 @@ export default {
         textButton: "log in",
         iconButton: "keyboard_backspace",
         sessionExpired: true,
-        size: "290"
+        size: "290",
       },
       valid: true,
       recaptcha: false,
@@ -100,47 +117,64 @@ export default {
         email: "",
         password: "",
         confirmpassword: "",
-        company: ""
+        company: "",
       },
       checkbox: false,
       isEmailValid: [
-        v => !!v || "Email é obrigatório",
-        v => this.reg.test(this.form.email) || "Email inválido"
+        (v) => !!v || "Email é obrigatório",
+        (v) => this.reg.test(this.form.email) || "Email inválido",
       ],
       isPasswordValid: [
-        v => !!v || "Senha é obrigatório",
-        v => v.length >= 8 || "A senha deve ter no máximo 8 caracteres"
+        (v) => !!v || "Senha é obrigatório",
+        (v) => v.length >= 8 || "A senha deve ter no máximo 8 caracteres",
       ],
       isConfirmPasswordValid: [
-        v => !!v || "Confirmação de senha é obrigatório",
-        v =>
+        (v) => !!v || "Confirmação de senha é obrigatório",
+        (v) =>
           v.length >= 8 ||
           "A Confirmação de senha deve ter no máximo 8 caracteres",
-        v =>
+        (v) =>
           this.form.password === this.form.confirmpassword ||
-          "Senha e confirmação de senha divergente"
+          "Senha e confirmação de senha divergente",
       ],
-      isCompanyValid: [v => !!v || "Empresa ou projeto é obrigatório"],
-      isCheck: [v => !!v || "Você deve concordar em continuar"]
+      isCompanyValid: [(v) => !!v || "Empresa ou projeto é obrigatório"],
+      isCheck: [(v) => !!v || "Você deve concordar em continuar"],
     };
   },
   methods: {
     ...mapActions("user", ["newUser"]),
-    onVerify: function(recaptchaToken) {
+    onVerify: function (recaptchaToken) {
       if (recaptchaToken) {
         this.recaptcha = true;
       }
     },
-    onExpired: function() {
+    onExpired: function () {
       this.$refs.recaptcha.reset();
+    },
+    goForgotPassword() {
+      EventBus.$emit("dialogTermsUser", true);
     },
     validateNew() {
       if (this.$refs.form.validate()) {
         if (this.recaptcha) {
           this.newUser(this.form)
-            .then(res => {
-              if (res.data.message == "success") {
-                router.push({ name: "Success" });
+            .then((res) => {
+              if (res.status == 200) {
+                if (res.data.cod == 0) {
+                  this.dataDialog.type = "success";
+                  this.dataDialog.title = "Cadastro efetuado com sucesso.";
+                  this.dataDialog.textButton = "Ok, Entendi";
+                  this.dataDialog.iconButton = "check";
+                  this.dataDialog.sessionExpired = false;
+                  EventBus.$emit("dialogGeneric", true);
+                } else {
+                  this.dataDialog.type = "error";
+                  this.dataDialog.title = "Usuário já cadastrado.";
+                  this.dataDialog.textButton = "Ok, Entendi";
+                  this.dataDialog.iconButton = "check";
+                  this.dataDialog.sessionExpired = false;
+                  EventBus.$emit("dialogGeneric", true);
+                }
               } else {
                 this.dataDialog.type = "error";
                 this.dataDialog.title = "Erro.";
@@ -150,7 +184,7 @@ export default {
                 EventBus.$emit("dialogGeneric", true);
               }
             })
-            .catch(err => {
+            .catch((err) => {
               console.log("err", err);
             });
         } else {
@@ -162,8 +196,8 @@ export default {
           EventBus.$emit("dialogGeneric", true);
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

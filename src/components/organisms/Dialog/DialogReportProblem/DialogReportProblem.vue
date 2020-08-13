@@ -1,13 +1,15 @@
 <template>
   <v-layout row justify-center>
     <div>
-      <v-dialog v-model="dialogReport" persistent :max-width="this.data.size">
+      <v-dialog v-model="dialogReport" :max-width="this.data.size">
         <v-card>
-          <v-card-title>
-            <span class="headline">Reportar problema</span>
+          <v-card-title primary-title>
+            <div>
+              <div class="headline">Relatar problema</div>
+              <span>Descreva resumidamente seu problema.</span>
+            </div>
           </v-card-title>
           <v-card-text>
-            <h2 class="title font-weight-light">Descreva resumidamente seu problema.</h2>
             <v-form ref="form" v-model="validReport" lazy-validation>
               <v-flex xs12>
                 <v-text-field
@@ -27,10 +29,6 @@
                 ></v-textarea>
               </v-flex>
             </v-form>
-            <v-flex xs12 text-xs-center>
-              <h2 class="title font-weight-light mt-3">Ou</h2>
-              <h2 class="title font-weight-light ma-3 primary--text">suporte@hawinsoft.com.br</h2>
-            </v-flex>
             <v-flex xs12>
               <v-alert :value="alertShowError" outline type="error">{{this.message}}</v-alert>
               <v-alert :value="alertShowSuccess" outline type="success">{{this.message}}</v-alert>
@@ -39,7 +37,6 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="error" outline @click="close()">Cancelar</v-btn>
             <v-btn
               :disabled="!validReport"
               color="success"
@@ -54,27 +51,47 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
 export default {
   props: {
     data: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
+  },
+  computed: {
+    ...mapState("auth", ["auth"]),
   },
   methods: {
-    close() {
-      this.dialogReport = false;
-    },
+    ...mapActions("user", ["newReport"]),
     sendReportProblem() {
       if (this.$refs.form.validate()) {
-        this.alertShowSuccess = true;
-        this.message = "Sucesso";
+        const data = {
+          token: this.auth.token,
+          id_user: this.auth.user.id_user,
+          id_status_problem: 1,
+          subject: this.subject,
+          description: this.descrition,
+        };
+        this.newReport(data)
+          .then((res) => {
+            if (res.status == 204) {
+              this.alertShowSuccess = true;
+              this.message =
+                "Seu problema foi enviado com sucesso, em breve estaremos entrando em contato.";
+            }
+          })
+          .catch((err) => {
+            if (err.response.status == 401) {
+              EventBus.$emit("dialogGeneric", true);
+            }
+          });
       }
-    }
+    },
   },
   mounted() {
-    EventBus.$on("dialogReport", event => {
+    EventBus.$on("dialogReport", (event) => {
       this.dialogReport = event;
     });
   },
@@ -87,18 +104,19 @@ export default {
       validReport: true,
       subject: "",
       subjectRules: [
-        v => !!v || "Assunto é obrigatório",
-        v =>
-          (v && v.length <= 30) || "O assunto deve ter menos de 10 caracteres"
+        (v) => !!v || "Assunto é obrigatório",
+        (v) =>
+          (v && v.length <= 30) || "O assunto deve ter menos de 10 caracteres",
       ],
       descrition: "",
       descritionRules: [
-        v => !!v || "Descrição é obrigatório",
-        v =>
-          (v && v.length <= 300) || "Descrição deve ter menos de 300 caracteres"
-      ]
+        (v) => !!v || "Descrição é obrigatório",
+        (v) =>
+          (v && v.length <= 300) ||
+          "Descrição deve ter menos de 300 caracteres",
+      ],
     };
-  }
+  },
 };
 </script>
 

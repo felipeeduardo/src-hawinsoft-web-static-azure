@@ -1,6 +1,6 @@
 export default {
-    user: {
-        auth: '',
-        message: ''
-    }
+    cod: '',
+    text: '',
+    notification: [],
+    report: []
 }

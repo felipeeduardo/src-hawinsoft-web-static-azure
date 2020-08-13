@@ -36,7 +36,7 @@ export default {
   methods: {
     ...mapActions("auth", ["logOut"]),
     sessionExpired() {
-      EventBus.$emit("showMenuPrivate", false);
+      EventBus.$emit("checkSessionAuth", false);
       sessionStorage.hawinsoft = false;
       sessionStorage.hawinsoft_profile = "";
       this.dialogGeneric = false;

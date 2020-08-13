@@ -13,7 +13,7 @@
       <v-flex class="mt-2">
         <h3
           class="font-weight-light"
-        >Pensamos em como melhorar rotinas de trabalho, criando algoritmos inteligentes de acordo com sua necessidade.</h3>
+        >Pensamos em como melhorar rotinas de trabalho, crie bots em nuvem de acordo com sua necessidade.</h3>
       </v-flex>
       <v-flex class="mt-2">
         <v-btn v-for="icon in icons" :key="icon" class="mx-3" dark icon>

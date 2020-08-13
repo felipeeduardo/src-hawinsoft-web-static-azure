@@ -3,9 +3,9 @@ import { http } from '../config'
 export const getResultRpa = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('rpa/result/' + data.id_user + '/' + data.id_rpa, { headers })
+    return http.get('v1/results/' + data.id_user + '/' + data.id_rpa + '/' + data.flag, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -17,9 +17,9 @@ export const getResultRpa = (data) => {
 export const getResultRpaChart = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('rpa/resultChart/' + data.id_user + '/' + data.id_rpa, { headers })
+    return http.get('v1/results/chart/' + data.id_rpa, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -33,7 +33,7 @@ export const getResultRpaSelected = (data) => {
         'Content-Type': 'application/json',
         'x-access-token': data.token,
     };
-    return http.get('rpa/result/' + data.id_user + '/' + data.id_rpa + '/' + data.date_selected, { headers })
+    return http.get('v1/results/' + data.id_user + '/' + data.id_rpa + '/' + data.date_selected, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -45,9 +45,9 @@ export const getResultRpaSelected = (data) => {
 export const getResultTimerMedioMin = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('rpa/timer/' + data.id_user + '/' + data.id_rpa, { headers })
+    return http.get('v1/results/timer/' + data.id_rpa, { headers })
         .then(res => {
             return Promise.resolve(res)
         })

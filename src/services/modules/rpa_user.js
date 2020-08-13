@@ -4,14 +4,14 @@ import { http } from '../config'
 export const addNewRpaUser = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
     const body = {
         "name": data.name,
-        "steps": data.steps,
+        "steps": JSON.stringify(data.steps),
         "id_user": data.id_user
     }
-    return http.post('rpa', body, { headers })
+    return http.post('/v1/rpas', body, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -23,9 +23,9 @@ export const addNewRpaUser = (data) => {
 export const getAllRpaUser = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('rpa/' + data.id_user, { headers })
+    return http.get('v1/rpas/user/' + data.id_user, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -37,9 +37,9 @@ export const getAllRpaUser = (data) => {
 export const getRpaUserUnique = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('rpa_unique/' + data.id_user + '/' + data.id_rpa, { headers })
+    return http.get('/v1/rpas/' + data.id_user + '/' + data.id_rpa, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -48,16 +48,13 @@ export const getRpaUserUnique = (data) => {
         })
 }
 
+
 export const deleteRpaUser = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
-    const body = {
-        "id_user": data.id_user,
-        "id_rpa": data.id_rpa
-    }
-    return http.post('rpauserdelete', body, { headers })
+    return http.delete('/v1/rpas/' + data.id_rpa + '/' + data.flag, { headers })
         .then(res => {
             return Promise.resolve(res)
         })

@@ -5,7 +5,7 @@
     </h1>
     <v-layout justify-center wrap>
       <v-flex xs12 sm7>
-        <card-generic :data="this.auth.id_user_profile == 1? cardsAdmin:cards" />
+        <card-generic :data="this.auth.user.id_user_profile == 1? cardsAdmin:cards" />
       </v-flex>
       <v-flex xs12 sm5>
         <v-img :src="require('@/assets/img/hawinsoft-mount.jpg')" contain max-height="500"></v-img>
@@ -55,9 +55,9 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          title: "Mensagens",
-          subtitle: "Acompanhamento de informativos.",
-          path: "Message",
+          title: "Notificações",
+          subtitle: "Acompanhamento de informativos e logs",
+          path: "Notification",
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
@@ -98,8 +98,8 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          title: "Mensagens",
-          path: "Message",
+          title: "Notificações",
+          path: "Notification",
           enabled: true,
           hoveText: "",
           hoveTextColor: "",

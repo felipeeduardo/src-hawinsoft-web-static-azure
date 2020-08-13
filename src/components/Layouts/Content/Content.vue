@@ -1,7 +1,7 @@
 <template>
   <v-content class="white">
     <v-toolbar app dark clipped-left color="primary">
-      <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="this.auth.auth"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="checkSessionAuth"></v-toolbar-side-icon>
       <v-toolbar-title @click.stop="drawer = !drawer" class="headline text-uppercase" exact>
         <span class="font-weight-light">HAWINSOFT</span>
       </v-toolbar-title>
@@ -10,8 +10,8 @@
     </v-toolbar>
 
     <!--navigation-->
-    <v-navigation-drawer v-if="this.auth.auth" v-model="drawer" fixed app clipped>
-      <v-list dense v-if="this.auth.auth">
+    <v-navigation-drawer v-if="checkSessionAuth" v-model="drawer" fixed app clipped>
+      <v-list dense v-if="checkSessionAuth">
         <v-list-tile
           v-for="item in itemsMenuAuth"
           :key="item.index"
@@ -25,11 +25,22 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+      <v-divider></v-divider>
+      <v-list>
+        <v-list-tile v-for="item in itemsMenuAuthSuport" :key="item.index">
+          <v-list-tile-action>
+            <v-icon :size="15" :color="item.colorIcon">{{item.icon}}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title :class="item.classColorText">{{item.title}}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
     </v-navigation-drawer>
 
     <loader :loader="this.loading" />
-    <dialog-report :data="dataDialogReport" />
-    <dialog-message :data="dataDialogReport" />
+    <dialog-report v-if="checkSessionAuth" :data="dataDialogReport" />
+    <dialog-notification v-if="checkSessionAuth" :data="dataDialogNotification" />
     <router-view></router-view>
     <loader-play :loaderPlayerRpa="this.loading_play_rpa" />
   </v-content>
@@ -40,7 +51,7 @@ import { EventBus } from "@/services/event-bus.js";
 import MenuHeader from "@/components/organisms/Menu/Private/MenuHeader";
 import Loader from "@/components/organisms/Loader";
 import DialogReport from "@/components/organisms/Dialog/DialogReportProblem";
-import DialogMessage from "@/components/organisms/Dialog/DialogMessage";
+import DialogNotification from "@/components/organisms/Dialog/DialogNotification";
 import LoaderPlay from "@/components/organisms/LoaderPlayRpa";
 import { mapState } from "vuex";
 export default {
@@ -49,81 +60,107 @@ export default {
     Loader,
     LoaderPlay,
     DialogReport,
-    DialogMessage
+    DialogNotification,
+  },
+  created() {
+    if (this.auth.token == "") this.checkSessionAuth = false;
+    else this.checkSessionAuth = true;
+  },
+  mounted() {
+    EventBus.$on("checkSessionAuth", (event) => {
+      this.checkSessionAuth = event;
+    });
   },
   methods: {
     goPath(path, id) {
-      if (path == "Message") {
-        EventBus.$emit("dialogMessage", true);
+      if (path == "Notification") {
+        EventBus.$emit("dialogNotification", true);
       } else if (path == "Report") {
         EventBus.$emit("dialogReport", true);
       } else {
         router.push({
           name: `${path}`,
-          params: { Pid: this.auth.id, Rid: id }
+          params: { Pid: this.auth.user.id_user, Rid: id },
         });
       }
-    }
+    },
   },
   computed: {
     ...mapState("auth", ["auth"]),
     ...mapState(["loading"]),
-    ...mapState(["loading_play_rpa"])
+    ...mapState(["loading_play_rpa"]),
   },
   data() {
     return {
+      checkSessionAuth: false,
       icons: [
         "fab fa-facebook",
         "fab fa-google-plus",
         "fab fa-linkedin",
-        "fab fa-instagram"
+        "fab fa-instagram",
       ],
       dataDialogReport: {
         size: "550",
-        countInput: 0
+        countInput: 0,
       },
-      dataDialogMessage: {
-        size: "550"
+      dataDialogNotification: {
+        size: "750",
       },
       drawer: null,
+      itemsMenuAuthSuport: [
+        {
+          icon: "fas fa-envelope",
+          colorIcon: "grey",
+          title: "suporte@hawinsoft.com.br",
+          classColorText: "grey--text",
+          path: "",
+        },
+      ],
       itemsMenuAuth: [
         {
           icon: "fas fa-home",
           colorIcon: "",
           title: "Página inicial",
           classColorText: "",
-          path: "Home"
+          path: "Home",
+        },
+        {
+          icon: "fas fa-credit-card",
+          colorIcon: "",
+          title: "Inserir créditos",
+          classColorText: "",
+          path: "Payment",
         },
         {
           icon: "fas fa-robot",
           colorIcon: "",
           title: "Robotic process automation",
           classColorText: "",
-          path: "Rpa"
+          path: "Rpa",
         },
         {
           icon: "fas fa-cogs",
           colorIcon: "",
-          title: "API's",
+          title: "Integrações - Rest API",
           classColorText: "",
-          path: "Api"
+          path: "Api",
         },
         {
           icon: "fas fa-bug",
           colorIcon: "",
           title: "Reportar problema",
           classColorText: "",
-          path: "Report"
+          path: "Report",
         },
         {
-          icon: "fas fa-envelope",
+          icon: "fas fa-bell",
           colorIcon: "",
-          title: "Mensagem",
+          title: "Notificações",
           classColorText: "",
-          path: "Message"
-        }
-      ]
+          path: "Notification",
+        },
+      ],
     };
-  }
+  },
 };
 </script>

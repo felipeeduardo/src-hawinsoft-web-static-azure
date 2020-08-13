@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <dialog-generic :data="data" />
-    <dialog-inative :data="dataDialogInative" />
+    <dialog-enabled :data="dialogEnabledOrDisabledRpa" />
     <h1 class="title font-weight-light">
       <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
     </h1>
@@ -23,12 +23,12 @@ import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
 import CardGeneric from "@/components/organisms/Card/CardGeneric";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
-import DialogInative from "@/components/organisms/Dialog/DialogRpaInative";
+import DialogEnabled from "@/components/organisms/Dialog/DialogDisabledOEnabledRpa";
 export default {
   components: {
     CardGeneric,
     DialogGeneric,
-    DialogInative
+    DialogEnabled,
   },
   data() {
     return {
@@ -37,25 +37,29 @@ export default {
         {
           title: "Novo",
           subtitle: "Robotic process automation",
+          iconActive: true,
+          icon: "fas fa-plus-square",
           path: "RpaCreate",
           chip: false,
           enabled: true,
           hoveText: "",
           hoveTextColor: "green--text",
-          hoveColor: "grey lighten-4"
-        }
+          hoveColor: "grey lighten-4",
+        },
       ],
       cards: [
         {
           title: "Novo",
           subtitle: "Crie um Web crawler",
+          iconActive: true,
+          icon: "fas fa-plus",
           path: "RpaCreate",
           chip: false,
           enabled: true,
           hoveText: "",
           hoveTextColor: "green--text",
-          hoveColor: "grey lighten-4"
-        }
+          hoveColor: "grey lighten-4",
+        },
       ],
       data: {
         // success | information | error
@@ -64,23 +68,26 @@ export default {
         textButton: "log in",
         iconButton: "keyboard_backspace",
         sessionExpired: true,
-        size: "290"
+        size: "290",
       },
-      dataDialogInative: {
-        size: "400"
-      }
+      dialogEnabledOrDisabledRpa: {
+        id_user: "",
+        id_rpa: "",
+        token: "",
+        nameRpa: "",
+        size: "400",
+        countInput: 0,
+        active: false,
+      },
     };
   },
   computed: {
-    ...mapState("auth", ["auth"])
+    ...mapState("auth", ["auth"]),
   },
   methods: {
     formatDateDb(date) {
       var data = new Date(date),
-        dia = data
-          .getDate()
-          .toString()
-          .padStart(2, "0"),
+        dia = data.getDate().toString().padStart(2, "0"),
         mes = (data.getMonth() + 1).toString().padStart(2, "0"), //+1 pois no getMonth Janeiro começa com zero.
         ano = data.getFullYear();
       return dia + "/" + mes + "/" + ano;
@@ -91,18 +98,20 @@ export default {
     },
     newRpa() {
       router.push({ name: "RpaCreate" });
-    }
+    },
   },
   created() {
-    if (this.auth.auth) {
+    if (this.auth.token) {
+      this.dialogEnabledOrDisabledRpa.id_user = this.auth.user.id_user;
+      this.dialogEnabledOrDisabledRpa.token = this.auth.token;
       const data = {
-        id_user: this.auth.id,
-        token: this.auth.token
+        id_user: this.auth.user.id_user,
+        token: this.auth.token,
       };
       this.allRpaUser(data)
-        .then(res => {
-          if (res.data != "") {
-            res.data.forEach(element => {
+        .then((res) => {
+          if (res.status == 200) {
+            res.data.forEach((element) => {
               const item = {
                 idRpa: element.id_rpa,
                 title: element.name,
@@ -112,7 +121,7 @@ export default {
                 enabled: element.active == 1 ? true : false,
                 hoveText: "",
                 hoveTextColor: "",
-                hoveColor: "grey lighten-4"
+                hoveColor: "grey lighten-4",
               };
               this.cards.push(item);
             });
@@ -120,11 +129,12 @@ export default {
             this.verifyUserRpa = true;
           }
         })
-        .catch(() => {
-          //erro 500 -> auth expired
-          EventBus.$emit("dialogGeneric", true);
+        .catch((err) => {
+          if (err.response.status == 401) {
+            EventBus.$emit("dialogGeneric", true);
+          }
         });
     }
-  }
+  },
 };
 </script>

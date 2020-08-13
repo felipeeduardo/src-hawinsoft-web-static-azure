@@ -6,11 +6,14 @@
           slot-scope="{ hover }"
           class="elevation-0 grey lighten-5 title-hover text-truncate"
           :style="{ cursor: 'pointer'}"
-          @click="item.enabled? goPath(item.path, item.idRpa):goInative()"
+          @click="item.enabled? goPath(item.path, item.idRpa):goInative(item.idRpa)"
         >
           <div class="py-2 card-bord-top"></div>
           <v-card-text>
-            <p class="headline font-weight-light">{{item.title}}</p>
+            <p class="headline font-weight-light">
+              <v-icon v-show="item.iconActive" class="ma-1" size="25">{{item.icon}}</v-icon>
+              {{item.title}}
+            </p>
             <p class="sub-title font-weight-light">{{item.subtitle}}</p>
           </v-card-text>
           <v-divider light></v-divider>
@@ -43,35 +46,36 @@ export default {
   props: {
     data: {
       type: Array,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
       dialogReport: false,
-      dialogInative: false
+      dialogRemove: false,
     };
   },
   computed: {
-    ...mapState("auth", ["auth"])
+    ...mapState("auth", ["auth"]),
   },
   methods: {
     goPath(path, id) {
-      if (path == "Message") {
-        EventBus.$emit("dialogMessage", true);
+      if (path == "Notification") {
+        EventBus.$emit("dialogNotification", true);
       } else if (path == "Report") {
         EventBus.$emit("dialogReport", true);
       } else {
         router.push({
           name: `${path}`,
-          params: { Pid: this.auth.id, Rid: id }
+          params: { Rid: id },
         });
       }
     },
-    goInative() {
-      EventBus.$emit("dialogInative", true);
-    }
-  }
+    goInative(id) {
+      EventBus.$emit("dialogEnabledOrDisabledRpaIdRpa", id);
+      EventBus.$emit("dialogEnabledOrDisabledRpa", true);
+    },
+  },
 };
 </script>
 <style>

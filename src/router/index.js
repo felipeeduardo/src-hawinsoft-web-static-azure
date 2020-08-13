@@ -16,7 +16,6 @@ import PageRpaResults from '@/components/Page/Private/RpaResults'
 import PageRpaResultsSuccess from '@/components/Page/Private/RpaResults/Success'
 import PageRpaResultsFail from '@/components/Page/Private/RpaResults/Fail'
 
-import PageSuccess from '@/components/Page/Public/Success'
 import NotFound from '@/components/Page/Private/NotFound'
 import PagePayment from '@/components/Page/Private/Payment'
 import PageAccessDenied from '@/components/Page/Private/AccessDenied'
@@ -62,11 +61,6 @@ export default new Router({
             component: PageCreateUser,
         },
         {
-            path: '/success',
-            name: 'Success',
-            component: PageSuccess,
-        },
-        {
             path: '*',
             name: 'NotFound',
             component: NotFound
@@ -102,20 +96,20 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/rparesultsuccess/:Rid',
+            path: '/rpasuccess/:Rid',
             name: 'RpaResultsSuccess',
             component: PageRpaResultsSuccess,
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/rparesultfail/:Rid',
+            path: '/rpafail/:Rid',
             name: 'RpaResultsFail',
             component: PageRpaResultsFail,
             beforeEnter: ifAuthenticated
         },
         {
             //Pid = id_user | Rid = id_Rpa
-            path: '/rpa/:Pid/:Rid',
+            path: '/rpa/:Rid',
             name: 'RpaUniue',
             component: PageRpaUnique,
             beforeEnter: ifAuthenticated

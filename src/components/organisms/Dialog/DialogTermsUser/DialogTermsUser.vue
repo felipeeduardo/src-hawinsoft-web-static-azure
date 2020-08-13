@@ -1,13 +1,13 @@
 <template>
   <v-layout row justify-center>
     <div>
-      <v-dialog v-model="dialogMessage" persistent :max-width="this.data.size">
+      <v-dialog v-model="dialogTermsUser" persistent :max-width="this.data.size">
         <v-card>
           <v-card-title>
-            <span class="headline">Mensagens</span>
+            <span class="headline">Termos de uso</span>
           </v-card-title>
           <v-card-text>
-            <h2 class="title font-weight-light mb-3">[ Mensagens ]</h2>
+            <h2 class="title font-weight-light mb-3">[ Termos ]</h2>
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
@@ -31,18 +31,18 @@ export default {
   },
   methods: {
     close() {
-      this.dialogMessage = false;
+      this.dialogTermsUser = false;
     }
   },
   mounted() {
-    EventBus.$on("dialogMessage", event => {
-      this.dialogMessage = event;
+    EventBus.$on("dialogTermsUser", event => {
+      this.dialogTermsUser = event;
     });
   },
   data() {
     return {
       message: "",
-      dialogMessage: false
+      dialogTermsUser: false
     };
   }
 };

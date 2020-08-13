@@ -3,7 +3,7 @@ import { http } from '../config'
 export const postRpaUploadBacklog = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
 
     const data_backlog = {
@@ -12,7 +12,7 @@ export const postRpaUploadBacklog = (data) => {
         'backlog_data': data.backlog_data
     };
 
-    return http.post('rpa/backlog', data_backlog, { headers })
+    return http.post('/v1/Backlogs', data_backlog, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -24,9 +24,9 @@ export const postRpaUploadBacklog = (data) => {
 export const getbacklogAndProcessed = (data) => {
     const headers = {
         'Content-Type': 'application/json',
-        'x-access-token': data.token,
+        'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('rpa/backlog/' + data.id_user + '/' + data.id_rpa, { headers })
+    return http.get('/v1/Backlogs/processed/' + data.id_user + '/' + data.id_rpa, { headers })
         .then(res => {
             return Promise.resolve(res)
         })

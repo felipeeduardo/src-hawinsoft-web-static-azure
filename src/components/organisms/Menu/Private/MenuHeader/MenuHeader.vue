@@ -1,25 +1,25 @@
 <template>
   <v-menu bottom left>
     <template v-slot:activator="{ on }">
-      <div v-show="showMenuPrivate">
+      <div v-show="checkSessionAuth">
         <v-btn dark icon v-on="on">
           <v-icon size="20">fas fa-user</v-icon>
         </v-btn>
       </div>
-      <div v-show="!showMenuPrivate">
+      <div v-show="!checkSessionAuth">
         <v-btn outline @click="goLogin()">
           <v-icon left size="20">fas fa-sign-in-alt</v-icon>Entrar
         </v-btn>
       </div>
     </template>
     <!--list menu private-->
-    <v-list dense v-if="this.auth.auth">
+    <v-list dense v-if="checkSessionAuth">
       <div class="text-xs-center mt-2">
         <v-img :src="require('@/assets/img/hawinsoft-id.png')" contain max-height="65"></v-img>
       </div>
       <v-list-tile>
         <v-list-tile-content>
-          <v-list-tile-title>{{this.auth.email}}</v-list-tile-title>
+          <v-list-tile-title>{{this.auth.user.email}}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-divider light></v-divider>
@@ -42,41 +42,35 @@ import router from "@/router";
 export default {
   data() {
     return {
-      showMenuPrivate: false,
+      checkSessionAuth: false,
       itemsMenuAuth: [
         {
           icon: "fas fa-credit-card",
           colorIcon: "",
           title: "Inserir créditos",
           classColorText: "",
-          path: "Home"
+          path: "Home",
         },
         {
           icon: "fas fa-sign-out-alt",
           colorIcon: "",
           title: "Sair",
           classColorText: "",
-          path: "Public"
-        }
-      ]
+          path: "Public",
+        },
+      ],
     };
   },
   computed: {
-    ...mapState("auth", ["auth"])
+    ...mapState("auth", ["auth"]),
   },
   created() {
-    if (this.auth.auth) {
-      this.showMenuPrivate = true;
-      this.id = this.auth.id;
-      this.email = this.auth.email;
-      this.token = this.auth.token;
-    } else {
-      this.showMenuPrivate = false;
-    }
+    if (this.auth.token == "") this.checkSessionAuth = false;
+    else this.checkSessionAuth = true;
   },
   mounted() {
-    EventBus.$on("showMenuPrivate", event => {
-      this.showMenuPrivate = event;
+    EventBus.$on("checkSessionAuth", (event) => {
+      this.checkSessionAuth = event;
     });
   },
   methods: {
@@ -86,7 +80,8 @@ export default {
       router.push({ name: "Login" });
     },
     logout() {
-      this.showMenuPrivate = false;
+      EventBus.$emit("checkSessionAuth", false);
+      this.checkSessionAuth = false;
       sessionStorage.hawinsoft = false;
       sessionStorage.hawinsoft_profile = "";
       this.logOut();
@@ -94,14 +89,14 @@ export default {
     },
     goPath(path) {
       if (path == "Public") {
-        this.showMenuPrivate = false;
+        EventBus.$emit("checkSessionAuth", false);
         sessionStorage.hawinsoft = false;
         sessionStorage.hawinsoft_profile = "";
         this.logOut();
         router.push({ name: "Public" });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

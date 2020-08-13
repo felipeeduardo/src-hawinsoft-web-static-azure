@@ -18,11 +18,20 @@ export const logIn = ({ commit }, data) => {
 }
 
 export const logOut = ({ commit }) => {
+
     const data = {
-        id: '',
-        email: '',
-        auth: '',
-        token: ''
+        user: {
+            id_user: "",
+            created: "",
+            id_user_profile: "",
+            email: "",
+            password: "",
+            confirmpassword: "",
+            company: "",
+            aprov: "",
+            active: ""
+        },
+        token: ""
     }
     commit(types.AUTH_DESTROY, data)
 }

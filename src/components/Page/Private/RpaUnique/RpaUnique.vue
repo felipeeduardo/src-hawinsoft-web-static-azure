@@ -1,8 +1,8 @@
 <template>
   <v-container grid-list-md>
     <dialog-generic :data="dataDialog" />
-    <dialog-import :data="dataDialogImport" />
-    <dialog-remove :data="dataDialogRemoveRpa" />
+    <dialog-backlog :data="dataDialogBacklog" />
+    <dialog-disabled :data="dialogEnabledOrDisabledRpa" />
     <h1 class="title font-weight-light">
       <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
     </h1>
@@ -99,99 +99,106 @@ import { EventBus } from "@/services/event-bus.js";
 import router from "@/router";
 import { GChart } from "vue-google-charts";
 import DialogGeneric from "@/components/organisms/Dialog/DialogGeneric";
-import DialogImport from "@/components/organisms/Dialog/DialogImportData";
-import DialogRemove from "@/components/organisms/Dialog/DialogRemoveRpa";
+import DialogBacklog from "@/components/organisms/Dialog/DialogImportBacklog";
+import DialogDisabled from "@/components/organisms/Dialog/DialogDisabledOEnabledRpa";
 import JsonViewer from "vue-json-viewer";
 export default {
   components: {
     DialogGeneric,
-    DialogImport,
+    DialogBacklog,
     JsonViewer,
     GChart,
-    DialogRemove
+    DialogDisabled,
   },
   computed: {
-    ...mapState("auth", ["auth"])
+    ...mapState("auth", ["auth"]),
   },
   created() {
-    this.dataDialogRemoveRpa.id_user = this.auth.id;
-    this.dataDialogRemoveRpa.id_rpa = this.$route.params.Rid;
-    this.dataDialogRemoveRpa.token = this.auth.token;
+    this.dialogEnabledOrDisabledRpa.id_user = this.auth.user.id_user;
+    this.dialogEnabledOrDisabledRpa.id_rpa = this.$route.params.Rid;
+    this.dialogEnabledOrDisabledRpa.token = this.auth.token;
     const data = {
-      id_user: this.auth.id,
+      id_user: this.auth.user.id_user,
       id_rpa: this.$route.params.Rid,
-      token: this.auth.token
+      token: this.auth.token,
     };
     this.UniqueRpaUser(data)
-      .then(res => {
-        res.data.forEach(element => {
+      .then((res) => {
+        res.data.forEach((element) => {
           this.botName = element.name;
-          this.dataDialogRemoveRpa.nameRpa = element.name;
+          this.dialogEnabledOrDisabledRpa.nameRpa = element.name;
+          this.dataDialogBacklog.nameRpa = element.name;
           this.steps = JSON.parse(element.steps);
-          this.steps.Steps.forEach(el => {
-            if (el.BotEvent == "input") this.dataDialogImport.countInput++;
+          this.steps.Steps.forEach((el) => {
+            if (el.BotEvent == "input") this.dataDialogBacklog.countInput++;
           });
         });
       })
-      .catch(() => {
-        //erro 500 -> auth expired
-        EventBus.$emit("dialogGeneric", true);
+      .catch((err) => {
+        if (err.response.status == 401) {
+          EventBus.$emit("dialogGeneric", true);
+        }
       });
     //CHARTS
     this.ResultRpaUserChart(data)
-      .then(res => {
-        res.data.forEach(element => {
-          if (element != "") {
-            this.chartData = [
-              [
-                "Bot",
-                "Sucesso",
-                { role: "annotation" },
-                "Falha",
-                { role: "annotation" }
-              ],
-              [
-                element.name,
-                element.success,
-                element.success,
-                element.fail,
-                element.fail
-              ]
-            ];
-            this.totalExec = element.success + element.fail;
-          }
-        });
+      .then((res) => {
+        if (res.status != 204) {
+          res.data.forEach((element) => {
+            if (element != "") {
+              this.chartData = [
+                [
+                  "Bot",
+                  "Sucesso",
+                  { role: "annotation" },
+                  "Falha",
+                  { role: "annotation" },
+                ],
+                [
+                  element.name,
+                  element.success,
+                  element.success,
+                  element.fail,
+                  element.fail,
+                ],
+              ];
+              this.totalExec = element.success + element.fail;
+            }
+          });
+        }
       })
-      .catch(() => {
-        //erro 500 -> auth expired
-        EventBus.$emit("dialogGeneric", true);
+      .catch((err) => {
+        if (err.response.status == 401) {
+          EventBus.$emit("dialogGeneric", true);
+        }
       });
     //CARDS
     this.GetbacklogAndProcessed(data)
-      .then(res => {
-        res.data.forEach(el => {
-          if (el != "") {
+      .then((res) => {
+        if (res.status == 200) {
+          res.data.forEach((el) => {
             this.qtdBacklog = el.backlog == null ? 0 : el.backlog;
             this.qtdBacklogProcessed = el.done == null ? 0 : el.done;
-          }
-        });
+          });
+        }
       })
-      .catch(() => {
-        //erro 500 -> auth expired
-        EventBus.$emit("dialogGeneric", true);
+      .catch((err) => {
+        if (err.response.status == 401) {
+          EventBus.$emit("dialogGeneric", true);
+        }
       });
     //TIMER RESULT
     this.GetRpaTimerMedio(data)
-      .then(res => {
-        res.data.forEach(el => {
-          if (el != "") {
+      .then((res) => {
+        if (res.status == 200) {
+          res.data.forEach((el) => {
             this.timerMedium = el.timer_medio == null ? 0 : el.timer_medio;
-          }
-        });
+          });
+        }
       })
-      .catch(() => {
-        //erro 500 -> auth expired
-        EventBus.$emit("dialogGeneric", true);
+      .catch((err) => {
+        if (err.response.status == 401) {
+          EventBus.$emit("dialogGeneric", true);
+        }
       });
   },
   data() {
@@ -200,17 +207,19 @@ export default {
       qtdBacklog: 0,
       qtdBacklogProcessed: 0,
       timerMedium: 0,
-      dataDialogRemoveRpa: {
+      dialogEnabledOrDisabledRpa: {
         id_user: "",
         id_rpa: "",
         token: "",
         nameRpa: "",
         size: "400",
-        countInput: 0
+        countInput: 0,
+        active: true,
       },
-      dataDialogImport: {
+      dataDialogBacklog: {
+        nameRpa: "",
         size: "550",
-        countInput: 0
+        countInput: 0,
       },
       dataDialog: {
         // success | information | error
@@ -219,7 +228,7 @@ export default {
         textButton: "log in",
         iconButton: "keyboard_backspace",
         sessionExpired: true,
-        size: "290"
+        size: "290",
       },
       botName: "",
       countInput: 0,
@@ -228,7 +237,7 @@ export default {
       totalExec: 0,
       chartData: [
         ["Bot", "Sucesso", "Falha"],
-        ["", 0, 0]
+        ["", 0, 0],
       ],
       chartOptions: {
         title: "Métricas Bot",
@@ -236,10 +245,10 @@ export default {
         legend: { position: "top", maxLines: 2 },
         annotations: {
           textStyle: {
-            fontSize: 15
-          }
+            fontSize: 15,
+          },
         },
-        colors: ["#43CD80", "#FF4500"]
+        colors: ["#43CD80", "#FF4500"],
       },
       chartEvents: {
         select: () => {
@@ -252,8 +261,8 @@ export default {
           }
         },
         onmouseover: () => {},
-        onmouseout: () => {}
-      }
+        onmouseout: () => {},
+      },
       //END CHATS
     };
   },
@@ -263,23 +272,23 @@ export default {
       "UniqueRpaUser",
       "ResultRpaUserChart",
       "GetbacklogAndProcessed",
-      "GetRpaTimerMedio"
+      "GetRpaTimerMedio",
     ]),
     uploadBacklogBot() {
       EventBus.$emit("dialogImport", true);
     },
     playRpa() {
       const data = {
-        id_user: this.auth.id,
+        id_user: this.auth.user.id_user,
         id_rpa: this.$route.params.Rid,
-        token: this.auth.token
+        token: this.auth.token,
       };
       this.RpaBrowserRemore(data)
-        .then(res => {
+        .then((res) => {
           // eslint-disable-next-line no-console
           console.log("browserRemote -> res", res);
         })
-        .catch(err => {
+        .catch((err) => {
           // eslint-disable-next-line no-console
           console.log("err", err);
         });
@@ -291,9 +300,9 @@ export default {
       router.push({ name: "Rpa" });
     },
     deleteRpa() {
-      EventBus.$emit("dialogRemoveRpa", true);
-    }
-  }
+      EventBus.$emit("dialogEnabledOrDisabledRpa", true);
+    },
+  },
 };
 </script>
 <style scoped>
