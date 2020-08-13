@@ -46,8 +46,8 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          title: "Reportar problema",
-          subtitle: "Relate problemas para o suporte.",
+          title: "Ticket",
+          subtitle: "Relate problemas tire suas dúvidas.",
           path: "Report",
           enabled: true,
           hoveText: "",
@@ -90,7 +90,8 @@ export default {
           hoveColor: "blue-grey lighten-5"
         },
         {
-          title: "Reportar problema",
+          title: "Ticket",
+          subtitle: "Relate problemas tire suas dúvidas.",
           path: "Report",
           enabled: true,
           hoveText: "",

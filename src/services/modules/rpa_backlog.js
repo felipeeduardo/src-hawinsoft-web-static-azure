@@ -12,7 +12,7 @@ export const postRpaUploadBacklog = (data) => {
         'backlog_data': data.backlog_data
     };
 
-    return http.post('/v1/Backlogs', data_backlog, { headers })
+    return http.post('v1/backlogs', data_backlog, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -26,7 +26,7 @@ export const getbacklogAndProcessed = (data) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('/v1/Backlogs/processed/' + data.id_user + '/' + data.id_rpa, { headers })
+    return http.get('v1/backlogs/processed/' + data.id_user + '/' + data.id_rpa, { headers })
         .then(res => {
             return Promise.resolve(res)
         })

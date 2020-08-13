@@ -15,7 +15,7 @@ export const getNotificationUser = (data) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('v1/Messages/' + data.id_user, { headers })
+    return http.get('v1/messages/' + data.id_user, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
@@ -29,7 +29,7 @@ export const postNewReportUser = (data) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + data.token,
     };
-    return http.post('v1/Reports', data, { headers })
+    return http.post('v1/reports', data, { headers })
         .then(res => {
             return Promise.resolve(res)
         })

@@ -2,6 +2,9 @@
   <v-menu bottom left>
     <template v-slot:activator="{ on }">
       <div v-show="checkSessionAuth">
+        <v-btn dark icon @click="goPath('Notification')">
+          <v-icon size="20">fas fa-bell</v-icon>
+        </v-btn>
         <v-btn dark icon v-on="on">
           <v-icon size="20">fas fa-user</v-icon>
         </v-btn>
@@ -94,6 +97,9 @@ export default {
         sessionStorage.hawinsoft_profile = "";
         this.logOut();
         router.push({ name: "Public" });
+      }
+      if (path == "Notification") {
+        EventBus.$emit("dialogNotification", true);
       }
     },
   },

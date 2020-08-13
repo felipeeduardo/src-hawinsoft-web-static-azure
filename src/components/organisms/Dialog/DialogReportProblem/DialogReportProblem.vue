@@ -5,8 +5,8 @@
         <v-card>
           <v-card-title primary-title>
             <div>
-              <div class="headline">Relatar problema</div>
-              <span>Descreva resumidamente seu problema.</span>
+              <div class="headline">Abrir ticket</div>
+              <span>Descreva resumidamente seu problema ou dúvida.</span>
             </div>
           </v-card-title>
           <v-card-text>
@@ -20,13 +20,14 @@
                   required
                 ></v-text-field>
               </v-flex>
-              <v-flex xs12>
-                <v-textarea
+              <v-flex xs12 class="mt-3 mb-3">
+                <editor
+                  apiKey="ub5aobm4v2gdu8up2bw1tnqjco2rqjuk40wto6rhqr8il6uo"
+                  initialValue
+                  :init="this.editorSettings"
                   v-model="descrition"
-                  label="Descrição do problema"
                   :rules="descritionRules"
-                  :counter="300"
-                ></v-textarea>
+                ></editor>
               </v-flex>
             </v-form>
             <v-flex xs12>
@@ -53,12 +54,16 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
+import Editor from "@tinymce/tinymce-vue";
 export default {
   props: {
     data: {
       type: Object,
       default: null,
     },
+  },
+  components: {
+    Editor,
   },
   computed: {
     ...mapState("auth", ["auth"]),
@@ -74,19 +79,25 @@ export default {
           subject: this.subject,
           description: this.descrition,
         };
-        this.newReport(data)
-          .then((res) => {
-            if (res.status == 204) {
-              this.alertShowSuccess = true;
-              this.message =
-                "Seu problema foi enviado com sucesso, em breve estaremos entrando em contato.";
-            }
-          })
-          .catch((err) => {
-            if (err.response.status == 401) {
-              EventBus.$emit("dialogGeneric", true);
-            }
-          });
+        if (this.descrition != "") {
+          this.newReport(data)
+            .then((res) => {
+              if (res.status == 204) {
+                this.alertShowError = false;
+                this.alertShowSuccess = true;
+                this.message =
+                  "Seu problema foi enviado com sucesso, em breve estaremos entrando em contato.";
+              }
+            })
+            .catch((err) => {
+              if (err.response.status == 401) {
+                EventBus.$emit("dialogGeneric", true);
+              }
+            });
+        } else {
+          this.alertShowError = true;
+          this.message = "Descreva seu problema";
+        }
       }
     },
   },
@@ -97,6 +108,19 @@ export default {
   },
   data() {
     return {
+      editorSettings: {
+        menubar: false,
+        plugins: [
+          "advlist autolink lists link image charmap",
+          "searchreplace visualblocks code fullscreen",
+          "print preview anchor insertdatetime media",
+          "paste code help wordcount table",
+        ],
+        toolbar:
+          "undo redo | formatselect | bold italic | \
+                            alignleft aligncenter alignright | \
+                            bullist numlist outdent indent | help",
+      },
       dialogReport: false,
       alertShowError: false,
       alertShowSuccess: false,

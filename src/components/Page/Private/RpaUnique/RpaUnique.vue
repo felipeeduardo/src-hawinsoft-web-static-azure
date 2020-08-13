@@ -278,20 +278,27 @@ export default {
       EventBus.$emit("dialogImport", true);
     },
     playRpa() {
-      const data = {
-        id_user: this.auth.user.id_user,
-        id_rpa: this.$route.params.Rid,
-        token: this.auth.token,
-      };
-      this.RpaBrowserRemore(data)
-        .then((res) => {
-          // eslint-disable-next-line no-console
-          console.log("browserRemote -> res", res);
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.log("err", err);
-        });
+      if (this.qtdBacklog == 0) {
+        this.dataDialog.type = "error";
+        this.dataDialog.title = "Não é possível iniciar sem backlog.";
+        this.dataDialog.textButton = "Ok, Entendi";
+        this.dataDialog.iconButton = "";
+        this.dataDialog.sessionExpired = false;
+        EventBus.$emit("dialogGeneric", true);
+      } else {
+        const data = {
+          id_user: this.auth.user.id_user,
+          id_rpa: this.$route.params.Rid,
+          token: this.auth.token,
+        };
+        this.RpaBrowserRemore(data)
+          .then((res) => {})
+          .catch((err) => {
+            if (err.response.status == 401) {
+              EventBus.$emit("dialogGeneric", true);
+            }
+          });
+      }
     },
     ResultsRpa() {
       router.push({ name: "RpaResults" });

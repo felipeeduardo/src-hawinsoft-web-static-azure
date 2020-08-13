@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-md>
+  <v-container justify-center wrap>
     <dialog-generic :data="dataDialog" />
     <h1 class="title font-weight-light">
       <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
@@ -14,101 +14,109 @@
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1" class="grey lighten-5">
-          <v-flex xs12 class="ma-3">
-            <h3 class="title font-weight-light mb-3">Definições</h3>
-            <v-form ref="definitionform" v-model="valid" lazy-validation class="mb-3">
-              <v-flex xs12>
-                <v-text-field
-                  :disabled="this.addName"
-                  v-model="nameBot"
-                  prepend-icon="fas fa-robot"
-                  label="Nome"
-                  required
-                  maxlength="20"
-                  :counter="20"
-                  :rules="isNameValid"
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field
-                  :disabled="this.addurl"
-                  v-model="url"
-                  prepend-icon="open_in_browser"
-                  label="Url"
-                  required
-                  :rules="isUrlValid"
-                ></v-text-field>
-              </v-flex>
-            </v-form>
-            <v-btn color="primary" outline @click="addDefinition()">Avançar</v-btn>
+          <v-flex xs8 offset-xs2 text-xs-center>
+            <v-flex xs12>
+              <h3 class="title mb-3">Definições</h3>
+              <v-form ref="definitionform" v-model="valid" lazy-validation class="mb-3">
+                <v-flex xs12>
+                  <v-text-field
+                    :disabled="this.addName"
+                    v-model="nameBot"
+                    prepend-icon="fas fa-robot"
+                    label="Nome"
+                    required
+                    maxlength="20"
+                    :counter="20"
+                    :rules="isNameValid"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field
+                    :disabled="this.addurl"
+                    v-model="url"
+                    prepend-icon="open_in_browser"
+                    label="Url"
+                    required
+                    :rules="isUrlValid"
+                  ></v-text-field>
+                </v-flex>
+              </v-form>
+              <v-btn color="primary" outline @click="addDefinition()">Avançar</v-btn>
+            </v-flex>
           </v-flex>
         </v-stepper-content>
         <v-stepper-content step="2" class="grey lighten-5">
-          <v-flex xs12 class="ma-3">
-            <h3 class="title font-weight-light mb-3">Construção</h3>
-            <h3 class="font-weight-light">
-              <span class="red--text">*</span> Utilize o Devtools do Chrome para auxiliar na
-              <b>
-                captura do
-                Selector
-              </b>
-            </h3>
-            <v-form ref="definitionstepsform" v-model="valid" lazy-validation class="mb-3">
-              <v-flex xs12>
-                <v-text-field
-                  v-model="newStep.selectorRpa"
-                  prepend-icon="code"
-                  label="Selector"
-                  required
-                  :rules="isSelectorValid"
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-select
-                  required
-                  :rules="isEventValid"
-                  :items="states"
-                  v-model="newStep.eventRpa"
-                  label="Event"
-                  single-line
-                  prepend-icon="code"
-                ></v-select>
-              </v-flex>
-              <v-flex xs12 text-xs-center>
-                <v-switch
-                  :disabled="this.newStep.eventRpa != `click`"
-                  color="primary"
-                  v-model="newStep.waitForNavigation"
-                  :label="`Aguardar Navegação`"
-                ></v-switch>
-              </v-flex>
-            </v-form>
-            <v-btn
-              color="success"
-              required
-              :v-if="!this.addurl"
-              :disabled="!valid"
-              outline
-              @click="addStep()"
-            >Adicionar</v-btn>
-            <v-btn
-              color="primary"
-              outline
-              @click="addDefinitionSteps()"
-            >Avançar com {{this.countSteps==1? this.countSteps +' passo':this.countSteps +' passos'}}</v-btn>
-            <v-btn color="primary" outline @click="tabStep = 1">Voltar</v-btn>
+          <v-flex xs8 offset-xs2 text-xs-center>
+            <v-flex xs12>
+              <h3 class="title mb-3">Construção</h3>
+              <h3 class="font-weight-light">
+                <span class="red--text">*</span> Utilize o Devtools do Chrome para auxiliar na
+                <b>
+                  captura do
+                  Selector
+                </b>
+              </h3>
+              <v-form ref="definitionstepsform" v-model="valid" lazy-validation class="mb-3">
+                <v-flex xs12>
+                  <v-text-field
+                    v-model="newStep.selectorRpa"
+                    prepend-icon="code"
+                    label="Selector"
+                    required
+                    :rules="isSelectorValid"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-select
+                    required
+                    :rules="isEventValid"
+                    :items="states"
+                    v-model="newStep.eventRpa"
+                    label="Event"
+                    single-line
+                    prepend-icon="code"
+                  ></v-select>
+                </v-flex>
+                <v-flex xs12 text-xs-center>
+                  <v-switch
+                    :disabled="this.newStep.eventRpa != `click`"
+                    color="primary"
+                    v-model="newStep.waitForNavigation"
+                    :label="`Aguardar Navegação`"
+                  ></v-switch>
+                </v-flex>
+              </v-form>
+              <v-btn
+                color="success"
+                required
+                :v-if="!this.addurl"
+                :disabled="!valid"
+                outline
+                @click="addStep()"
+              >Adicionar</v-btn>
+              <v-btn
+                color="primary"
+                outline
+                @click="addDefinitionSteps()"
+              >Avançar com {{this.countSteps==1? this.countSteps +' passo':this.countSteps +' passos'}}</v-btn>
+              <v-btn color="primary" outline @click="tabStep = 1">Voltar</v-btn>
+            </v-flex>
           </v-flex>
         </v-stepper-content>
         <v-stepper-content step="3" class="grey lighten-5">
-          <v-flex xs12 class="ma-4">
-            <h3 class="title font-weight-light mb-3">Finalização</h3>
-            <v-flex xs12 class="ma-3">
-              <h3 class="text-truncate font-weight-light">{{this.url}}</h3>
-            </v-flex>
-            <time-line :data="listSteps" />
-            <v-flex xs12 class="mt-4">
-              <v-btn color="success" outline @click="saveStep()">Finalizar</v-btn>
-              <v-btn color="primary" outline @click="tabStep = 2">Voltar</v-btn>
+          <v-flex xs8 offset-xs2>
+            <v-flex xs12>
+              <v-flex text-xs-center>
+                <h3 class="title mb-4">Finalização</h3>
+              </v-flex>
+              <v-flex xs12 class="ma-3">
+                <h3 class="text-truncate font-weight-light blue--text">{{this.url}}</h3>
+              </v-flex>
+              <time-line :data="listSteps" />
+              <v-flex xs12 class="mt-5" text-xs-center>
+                <v-btn color="success" outline @click="saveStep()">Finalizar</v-btn>
+                <v-btn color="primary" outline @click="tabStep = 2">Voltar</v-btn>
+              </v-flex>
             </v-flex>
           </v-flex>
         </v-stepper-content>

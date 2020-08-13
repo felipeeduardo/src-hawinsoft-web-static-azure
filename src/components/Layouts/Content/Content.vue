@@ -100,7 +100,7 @@ export default {
         "fab fa-instagram",
       ],
       dataDialogReport: {
-        size: "550",
+        size: "750",
         countInput: 0,
       },
       dataDialogNotification: {
@@ -146,19 +146,12 @@ export default {
           path: "Api",
         },
         {
-          icon: "fas fa-bug",
+          icon: "fas fa-ticket-alt",
           colorIcon: "",
-          title: "Reportar problema",
+          title: "Ticket",
           classColorText: "",
           path: "Report",
-        },
-        {
-          icon: "fas fa-bell",
-          colorIcon: "",
-          title: "Notificações",
-          classColorText: "",
-          path: "Notification",
-        },
+        }
       ],
     };
   },
