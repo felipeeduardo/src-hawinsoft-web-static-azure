@@ -1,6 +1,7 @@
 <template>
-  <v-footer class="pa-3" color="#3c8dbc">
+  <v-footer class="pa-3">
     <v-spacer></v-spacer>
-    <div class="white--text">&copy; {{ new Date().getFullYear() }}</div>
+    <div>&copy; {{ new Date().getFullYear() }} - V1.0</div>
   </v-footer>
+
 </template>

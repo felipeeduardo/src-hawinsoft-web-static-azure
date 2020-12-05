@@ -11,7 +11,7 @@
       </div>
       <div v-show="!checkSessionAuth">
         <v-btn outline @click="goLogin()">
-          <v-icon left size="20">fas fa-sign-in-alt</v-icon>Entrar
+          Entrar
         </v-btn>
       </div>
     </template>
