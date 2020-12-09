@@ -1,0 +1,1 @@
+export const getPaymentAddCredit = (state) => state.paymentAddCredit

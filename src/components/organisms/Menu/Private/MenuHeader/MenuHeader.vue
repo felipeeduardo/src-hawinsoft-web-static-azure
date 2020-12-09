@@ -52,7 +52,7 @@ export default {
           colorIcon: "",
           title: "Inserir créditos",
           classColorText: "",
-          path: "Home",
+          path: "Payment",
         },
         {
           icon: "fas fa-sign-out-alt",
@@ -100,6 +100,8 @@ export default {
       }
       if (path == "Notification") {
         EventBus.$emit("dialogNotification", true);
+      }else{
+        router.push({ name: path });
       }
     },
   },

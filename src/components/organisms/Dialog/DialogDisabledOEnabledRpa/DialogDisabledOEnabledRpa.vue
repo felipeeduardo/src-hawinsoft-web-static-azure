@@ -26,9 +26,9 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="error" outline @click="close()">Não</v-btn>
-            <v-btn v-show="this.data.active" color="success" outline @click="disabledRpa()">Sim</v-btn>
-            <v-btn v-show="!this.data.active" color="success" outline @click="enabledRpa()">Sim</v-btn>
+            <v-btn color="error" flat @click="close()">Não</v-btn>
+            <v-btn v-show="this.data.active" color="success" flat @click="disabledRpa()">Sim</v-btn>
+            <v-btn v-show="!this.data.active" color="success" flat @click="enabledRpa()">Sim</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

@@ -55,7 +55,7 @@
             <v-btn
               :disabled="btConfirm"
               color="success"
-              outline
+              flat
               @click="confirmImport()"
             >Confirmar, {{this.qtdRow}} item(s)</v-btn>
           </v-card-actions>

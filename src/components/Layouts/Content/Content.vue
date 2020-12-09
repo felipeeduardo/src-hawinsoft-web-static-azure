@@ -25,8 +25,8 @@
       clipped
     >
       <v-list dense v-if="checkSessionAuth">
-        <v-flex text-xs-center>
-          <h2 class="font-weight-light">Créditos R$ 0.0</h2>
+        <v-flex text-xs-center class="ma-2">
+          <h2 class="font-weight-light">Créditos R$ 0.00</h2>
           <v-btn
             size="20"
             outline

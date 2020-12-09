@@ -1,8 +1,9 @@
 import auth from './auth'
 import user from './user'
 import rpa from './rpa'
+import payment from './payment'
 
-const vuex = { auth, user, rpa }
+const vuex = { auth, user, rpa, payment }
 
 const keys = Object.keys(vuex)
 

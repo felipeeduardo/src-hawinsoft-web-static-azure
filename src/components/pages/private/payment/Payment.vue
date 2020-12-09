@@ -5,7 +5,30 @@
     </h1>
     <v-layout justify-center wrap>
       <v-flex xs12 sm7>
-        <card-generic :data="cards" />
+        <v-layout justify-center wrap class="mt-3">
+          <v-flex xs12 sm3 v-for="item in cardsPayment" :key="item.index">
+            <v-hover>
+              <v-card
+                class="elevation-0 title-hover"
+                color="#6dafd5"
+                dark
+                :style="{ cursor: 'pointer' }"
+                @click="goPaymento(item)"
+              >
+                <v-card-text>
+                  <h2 class="text-xs-center font-weight-light">
+                    R$ {{ item }}
+                  </h2>
+                </v-card-text>
+              </v-card>
+            </v-hover>
+          </v-flex>
+        </v-layout>
+        <v-img
+          :src="require('@/assets/img/hawinsoft-pagseguro.png')"
+          contain
+          max-height="200"
+        ></v-img>
       </v-flex>
       <v-flex xs12 sm5>
         <v-img
@@ -13,84 +36,44 @@
           contain
           max-height="500"
         ></v-img>
-        <v-img
-          :src="require('@/assets/img/hawinsoft-pagseguro.png')"
-          contain
-          max-height="200"
-        ></v-img>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import CardGeneric from "@/components/organisms/cards/cardGeneric";
+import { mapActions, mapState } from "vuex";
 export default {
-  components: {
-    CardGeneric,
-  },
   data() {
     return {
-      cards: [
-        {
-          title: "R$ 20.00",
-          subtitle: "Créditos inseridos através do PagSeguro",
-          path: "Rpa",
-          enabled: true,
-          hoveText: "",
-          hoveTextColor: "green--text",
-          hoveColor: "grey lighten-4",
-        },
-        {
-          title: "R$ 30.00",
-          subtitle: "Créditos inseridos através do PagSeguro",
-          path: "Api",
-          enabled: true,
-          hoveText: "",
-          hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5",
-        },
-        {
-          title: "R$ 40.00",
-          subtitle: "Créditos inseridos através do PagSeguro",
-          path: "Report",
-          enabled: true,
-          hoveText: "",
-          hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5",
-        },
-        {
-          title: "R$ 50.00",
-          subtitle: "Créditos inseridos através do PagSeguro",
-          path: "Notification",
-          enabled: true,
-          hoveText: "",
-          hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5",
-        },
-        {
-          title: "R$ 100.00",
-          subtitle: "Créditos inseridos através do PagSeguro",
-          path: "Notification",
-          enabled: true,
-          hoveText: "",
-          hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5",
-        },
-        {
-          title: "R$ 200.00",
-          subtitle: "Créditos inseridos através do PagSeguro",
-          path: "Notification",
-          enabled: true,
-          hoveText: "",
-          hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5",
-        },
-      ],
+      cardsPayment: ["30.00", "40.00", "50.00", "100.00"],
     };
+  },
+  computed: {
+    ...mapState("auth", ["auth"]),
+  },
+  methods: {
+    ...mapActions("payment", ["paymentAddCredit"]),
+    goPaymento(item) {
+      const data = {
+        environmnet: process.env.VUE_APP_ENVIRONMNET_PAYMENT,
+        id_user: this.auth.user.id_user,
+        token: this.auth.token,
+        transaction: "",
+        credit: item,
+        itemAmount: item,
+        senderName: "",
+        senderAreaCode: "",
+        senderEmail: "f.l.p.eduardo@hotmail.com",
+        senderPhone: "",
+      };
+      console.log(data);
+      this.paymentAddCredit(data).then((res) => {
+        if (res.status == 200) {
+          window.open(res.data.text, "_blank");
+        }
+      });
+    },
   },
 };
 </script>
-
-<style>
-</style>

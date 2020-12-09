@@ -41,7 +41,7 @@
             <v-btn
               :disabled="!validReport"
               color="success"
-              outline
+              flat
               @click="sendReportProblem()"
             >Confirmar</v-btn>
           </v-card-actions>
