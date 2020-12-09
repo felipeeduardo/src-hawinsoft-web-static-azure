@@ -7,16 +7,17 @@ export const addCredit = (data) => {
     };
 
     const dataAdd = {
-        'environmnet': data.environmnet,
+        'environmnet': JSON.parse(data.environmnet),
         'id_user': data.id_user,
         'transaction': data.transaction,
         'credit': data.credit,
         'itemAmount': data.itemAmount,
         'senderName': data.senderName,
         'senderAreaCode': data.senderAreaCode,
-        'senderEmail': data.senderAreaCode,
+        'senderEmail': data.senderEmail,
         'senderPhone': data.senderPhone
     };
+    console.log("dataAdd", dataAdd)
     return http.post('v1/payments', dataAdd, { headers })
         .then(res => {
             return Promise.resolve(res)

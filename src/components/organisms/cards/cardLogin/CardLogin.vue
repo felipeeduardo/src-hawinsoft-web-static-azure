@@ -138,7 +138,7 @@ export default {
     },
     validate() {
       if (this.$refs.form.validate()) {
-        if (this.recaptcha) {
+        //if (this.recaptcha) {
           this.logIn(this.form)
             .then((res) => {
               if (res.status == 200) {
@@ -163,13 +163,13 @@ export default {
                 EventBus.$emit("dialogGeneric", true);
               }
             });
-        } else {
+        /*} else {
           this.dataDialog.type = "error";
           this.dataDialog.title = "ReCaptcha inválido.";
           this.dataDialog.textButton = "Ok, Entendi";
           this.dataDialog.iconButton = "check";
           EventBus.$emit("dialogGeneric", true);
-        }
+        }*/
       }
     },
   },

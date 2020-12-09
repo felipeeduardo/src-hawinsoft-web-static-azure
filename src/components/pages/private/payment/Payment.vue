@@ -55,8 +55,9 @@ export default {
   methods: {
     ...mapActions("payment", ["paymentAddCredit"]),
     goPaymento(item) {
+      let environmnetPayment = process.env.VUE_APP_ENVIRONMNET_PAYMENT
       const data = {
-        environmnet: process.env.VUE_APP_ENVIRONMNET_PAYMENT,
+        environmnet: environmnetPayment,
         id_user: this.auth.user.id_user,
         token: this.auth.token,
         transaction: "",
