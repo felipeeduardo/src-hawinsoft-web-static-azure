@@ -26,7 +26,10 @@
     >
       <v-list dense v-if="checkSessionAuth">
         <v-flex text-xs-center class="ma-2">
-          <h2 class="font-weight-light">Créditos R$ 0.00</h2>
+          <h2 class="font-weight-light">
+            Créditos R$ {{ this.payment.credit }}
+          </h2>
+          <div class="font-weight-light">{{ this.payment.status }}</div>
           <v-btn
             size="20"
             outline
@@ -86,7 +89,7 @@ import Loader from "@/components/organisms/loader";
 import DialogReport from "@/components/organisms/dialog/dialogReportProblem";
 import DialogNotification from "@/components/organisms/dialog/dialogNotification";
 import LoaderPlay from "@/components/organisms/loaderPlayRpa";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   components: {
     MenuHeader,
@@ -98,6 +101,32 @@ export default {
   created() {
     if (this.auth.token == "") this.checkSessionAuth = false;
     else this.checkSessionAuth = true;
+
+    const data = {
+      id_user: this.auth.user.id_user,
+      token: this.auth.token,
+    };
+    this.paymentReferences(data).then((res) => {
+      if (res.status == 200) {
+        res.data.forEach((el) => {
+          const dataPayment = {
+            id_user: this.auth.user.id_user,
+            token: this.auth.token,
+            checkout: el.checkout,
+            reference: el.reference,
+            environmnet: JSON.parse(process.env.VUE_APP_ENVIRONMNET_PAYMENT),
+          };
+          this.paymentVerify(dataPayment).then((resp) => {
+            if (resp.status == 200) {
+              if (resp.data.cod == 3) this.payment.credit = el.credit; //PAGO
+              if (resp.data.cod == 1) this.payment.status = "Aguardando pagamento";
+
+              console.log(resp.data.cod);
+            }
+          });
+        });
+      }
+    });
   },
   mounted() {
     EventBus.$on("checkSessionAuth", (event) => {
@@ -105,6 +134,7 @@ export default {
     });
   },
   methods: {
+    ...mapActions("payment", ["paymentReferences", "paymentVerify"]),
     goPath(path, id) {
       if (path == "Notification") {
         EventBus.$emit("dialogNotification", true);
@@ -125,6 +155,12 @@ export default {
   },
   data() {
     return {
+      payment: {
+        checkout: "",
+        reference: "",
+        credit: "0.00",
+        status: "",
+      },
       checkSessionAuth: false,
       icons: [
         "fab fa-facebook",
