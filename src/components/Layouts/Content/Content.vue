@@ -29,7 +29,7 @@
           <h2 class="font-weight-light">
             Créditos R$ {{ this.payment.credit }}
           </h2>
-          <div class="font-weight-light">{{ this.payment.status }}</div>
+          <div>{{ this.payment.status }}</div>
           <v-btn
             size="20"
             outline
@@ -99,42 +99,75 @@ export default {
     DialogNotification,
   },
   created() {
-    if (this.auth.token == "") this.checkSessionAuth = false;
-    else this.checkSessionAuth = true;
-
-    const data = {
-      id_user: this.auth.user.id_user,
-      token: this.auth.token,
-    };
-    this.paymentReferences(data).then((res) => {
-      if (res.status == 200) {
-        res.data.forEach((el) => {
-          const dataPayment = {
-            id_user: this.auth.user.id_user,
-            token: this.auth.token,
-            checkout: el.checkout,
-            reference: el.reference,
-            environmnet: JSON.parse(process.env.VUE_APP_ENVIRONMNET_PAYMENT),
-          };
-          this.paymentVerify(dataPayment).then((resp) => {
-            if (resp.status == 200) {
-              if (resp.data.cod == 3) this.payment.credit = el.credit; //PAGO
-              if (resp.data.cod == 1) this.payment.status = "Aguardando pagamento";
-
-              console.log(resp.data.cod);
-            }
-          });
-        });
-      }
-    });
+    if (this.auth.token == "") {
+      this.checkSessionAuth = false;
+    } else {
+      this.checkSessionAuth = true;
+      this.credits();
+      this.payments();
+    }
   },
   mounted() {
     EventBus.$on("checkSessionAuth", (event) => {
       this.checkSessionAuth = event;
+      if (event) {
+        this.credits();
+        this.payments();
+      }
     });
   },
   methods: {
-    ...mapActions("payment", ["paymentReferences", "paymentVerify"]),
+    ...mapActions("payment", [
+      "paymentGetCredits",
+      "paymentReferences",
+      "paymentVerify",
+    ]),
+    credits() {
+      const data = {
+        id_user: this.auth.user.id_user,
+        token: this.auth.token,
+      };
+      this.paymentGetCredits(data)
+        .then((res) => {
+          if (res.status == 200) {
+            const credit = res.data.map((el) => el.credit);
+            this.payment.credit = credit.toString();
+          }
+          if (res.status == 204) {
+            this.payment.credit = "0.00";
+          }
+        })
+        .catch((err) => {
+          if (err.response.status == 401) {
+            EventBus.$emit("dialogGeneric", true);
+          }
+        });
+    },
+    payments() {
+      const data = {
+        id_user: this.auth.user.id_user,
+        token: this.auth.token,
+      };
+      this.paymentReferences(data).then((res) => {
+        if (res.status == 200) {
+          res.data.forEach((el) => {
+            const dataPayment = {
+              id_user: this.auth.user.id_user,
+              token: this.auth.token,
+              checkout: el.checkout,
+              reference: el.reference,
+              environmnet: JSON.parse(process.env.VUE_APP_ENVIRONMNET_PAYMENT),
+            };
+            this.paymentVerify(dataPayment).then((resp) => {
+              if (resp.status == 200) {
+                if (resp.data.cod == 1)
+                  this.payment.status = el.credit + " Aguardando processamento";
+              }
+            });
+          });
+        }
+      });
+    },
     goPath(path, id) {
       if (path == "Notification") {
         EventBus.$emit("dialogNotification", true);
@@ -156,8 +189,6 @@ export default {
   data() {
     return {
       payment: {
-        checkout: "",
-        reference: "",
         credit: "0.00",
         status: "",
       },

@@ -24,6 +24,12 @@ const mutations = {
     },
     [types.PAYMENT_REFERENCES_ERROR](state, paymentReferences) {
         state.paymentReferences = paymentReferences
+    },
+    [types.CREDITS_SUCCESS](state, credits) {
+        state.credits = credits
+    },
+    [types.CREDITS_ERROR](state, credits) {
+        state.credits = credits
     }
 }
 

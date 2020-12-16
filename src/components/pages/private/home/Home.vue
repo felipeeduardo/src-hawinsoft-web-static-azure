@@ -5,24 +5,30 @@
     </h1>
     <v-layout justify-center wrap>
       <v-flex xs12 sm7>
-        <card-generic :data="this.auth.user.id_user_profile == 1? cardsAdmin:cards" />
+        <card-generic
+          :data="this.auth.user.id_user_profile == 1 ? cardsAdmin : cards"
+        />
       </v-flex>
       <v-flex xs12 sm5>
-        <v-img :src="require('@/assets/img/hawinsoft-mount.jpg')" contain max-height="500"></v-img>
+        <v-img
+          :src="require('@/assets/img/hawinsoft-mount.jpg')"
+          contain
+          max-height="500"
+        ></v-img>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import CardGeneric from "@/components/organisms/cards/cardGeneric";
 export default {
   components: {
-    CardGeneric
+    CardGeneric,
   },
   computed: {
-    ...mapState("auth", ["auth"])
+    ...mapState("auth", ["auth"]),
   },
   data() {
     return {
@@ -34,7 +40,7 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "green--text",
-          hoveColor: "grey lighten-4"
+          hoveColor: "grey lighten-4",
         },
         {
           title: "Integrações",
@@ -43,7 +49,7 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5"
+          hoveColor: "blue-grey lighten-5",
         },
         {
           title: "Ticket",
@@ -52,7 +58,7 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5"
+          hoveColor: "blue-grey lighten-5",
         },
         {
           title: "Notificações",
@@ -61,8 +67,8 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5"
-        }
+          hoveColor: "blue-grey lighten-5",
+        },
       ],
       cardsAdmin: [
         {
@@ -71,7 +77,7 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5"
+          hoveColor: "blue-grey lighten-5",
         },
         {
           title: "RPA's",
@@ -79,7 +85,7 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "green--text",
-          hoveColor: "grey lighten-4"
+          hoveColor: "grey lighten-4",
         },
         {
           title: "API's",
@@ -87,7 +93,7 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5"
+          hoveColor: "blue-grey lighten-5",
         },
         {
           title: "Ticket",
@@ -96,7 +102,7 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5"
+          hoveColor: "blue-grey lighten-5",
         },
         {
           title: "Notificações",
@@ -104,10 +110,10 @@ export default {
           enabled: true,
           hoveText: "",
           hoveTextColor: "",
-          hoveColor: "blue-grey lighten-5"
-        }
-      ]
+          hoveColor: "blue-grey lighten-5",
+        },
+      ],
     };
-  }
+  },
 };
 </script>

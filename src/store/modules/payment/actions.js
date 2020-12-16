@@ -64,3 +64,20 @@ export const paymentVerify = ({ commit }, data) => {
             return Promise.reject(err)
         })
 }
+
+
+export const paymentGetCredits = ({ commit }, data) => {
+    return payment.getCredits(data)
+        .then(result => {
+            if (result.data.auth) {
+                commit(types.CREDITS_SUCCESS, result.data)
+                return Promise.resolve(result)
+            } else {
+                commit(types.CREDITS_ERROR, result.data)
+                return Promise.resolve(result)
+            }
+        }).catch(err => {
+            commit(types.CREDITS_ERROR, err)
+            return Promise.reject(err)
+        })
+}

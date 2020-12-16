@@ -3,4 +3,5 @@ export default {
     paymentCreditHistoric: {},
     paymentVerify: {},
     paymentReferences: {},
+    credits: {}
 }
