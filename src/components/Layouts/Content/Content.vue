@@ -26,10 +26,8 @@
     >
       <v-list dense v-if="checkSessionAuth">
         <v-flex text-xs-center class="ma-2">
-          <h2 class="font-weight-light">
-            Créditos R$ {{ this.payment.credit }}
-          </h2>
-          <div>{{ this.payment.status }}</div>
+          <h2 class="font-weight-light">Créditos {{ this.payment.credit }}</h2>
+          <div class="font-weight-light">{{ this.payment.status }}</div>
           <v-btn
             size="20"
             outline
@@ -72,6 +70,7 @@
     </v-navigation-drawer>
 
     <loader :loader="this.loading" />
+    <dialog-generic :data="dataDialog" />
     <dialog-report v-if="checkSessionAuth" :data="dataDialogReport" />
     <dialog-notification
       v-if="checkSessionAuth"
@@ -88,6 +87,7 @@ import MenuHeader from "@/components/organisms/menu/private/menuHeader";
 import Loader from "@/components/organisms/loader";
 import DialogReport from "@/components/organisms/dialog/dialogReportProblem";
 import DialogNotification from "@/components/organisms/dialog/dialogNotification";
+import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 import LoaderPlay from "@/components/organisms/loaderPlayRpa";
 import { mapActions, mapState } from "vuex";
 export default {
@@ -97,6 +97,7 @@ export default {
     LoaderPlay,
     DialogReport,
     DialogNotification,
+    DialogGeneric,
   },
   created() {
     if (this.auth.token == "") {
@@ -131,7 +132,10 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             const credit = res.data.map((el) => el.credit);
-            this.payment.credit = credit.toString();
+            this.payment.credit = credit.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
+            });
           }
           if (res.status == 204) {
             this.payment.credit = "0.00";
@@ -148,25 +152,37 @@ export default {
         id_user: this.auth.user.id_user,
         token: this.auth.token,
       };
-      this.paymentReferences(data).then((res) => {
-        if (res.status == 200) {
-          res.data.forEach((el) => {
-            const dataPayment = {
-              id_user: this.auth.user.id_user,
-              token: this.auth.token,
-              checkout: el.checkout,
-              reference: el.reference,
-              environmnet: JSON.parse(process.env.VUE_APP_ENVIRONMNET_PAYMENT),
-            };
-            this.paymentVerify(dataPayment).then((resp) => {
-              if (resp.status == 200) {
-                if (resp.data.cod == 1)
-                  this.payment.status = el.credit + " Aguardando processamento";
-              }
+      this.paymentReferences(data)
+        .then((res) => {
+          if (res.status == 200) {
+            res.data.forEach((el) => {
+              const dataPayment = {
+                id_user: this.auth.user.id_user,
+                token: this.auth.token,
+                checkout: el.checkout,
+                reference: el.reference,
+                environmnet: JSON.parse(
+                  process.env.VUE_APP_ENVIRONMNET_PAYMENT
+                ),
+              };
+              this.paymentVerify(dataPayment).then((resp) => {
+                if (resp.status == 200) {
+                  if (resp.data.cod == 1)
+                    this.payment.status =
+                      el.credit.toLocaleString("pt-br", {
+                        style: "currency",
+                        currency: "BRL",
+                      }) + ", aguardando processamento";
+                }
+              });
             });
-          });
-        }
-      });
+          }
+        })
+        .catch((err) => {
+          if (err.response.status == 401) {
+            EventBus.$emit("dialogGeneric", true);
+          }
+        });
     },
     goPath(path, id) {
       if (path == "Notification") {
@@ -191,6 +207,15 @@ export default {
       payment: {
         credit: "0.00",
         status: "",
+      },
+      dataDialog: {
+        // success | information | error
+        type: "information",
+        title: "Sessão expirada!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290",
       },
       checkSessionAuth: false,
       icons: [

@@ -28,7 +28,7 @@
                 Bots de forma prática e simples.
               </h3>
               <div>
-                Crie seus prórios robôs de forma pratica e simples por meio de
+                Crie seus próprios robôs de forma prática e simples por meio de
                 nosso construtor de passos.
               </div>
             </div>

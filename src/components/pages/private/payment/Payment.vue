@@ -33,7 +33,7 @@
             max-height="50"
           ></v-img>
         </div>
-        <h1 class="title font-weight-light">Detalhamento</h1>
+        <h1 class="title font-weight-light">Detalhes</h1>
         <v-data-table :headers="headers" :items="historic">
           <template v-slot:items="props">
             <td class="text-xs-left">{{ props.item.created }}</td>
@@ -107,7 +107,10 @@ export default {
             var obj = {
               created: this.formatDateDb(el.created),
               description: el.description,
-              credit: el.credit,
+              credit: el.credit.toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              }),
             };
             this.historic.push(obj);
           });
@@ -138,11 +141,11 @@ export default {
         id_user: this.auth.user.id_user,
         token: this.auth.token,
         transaction: "",
-        credit: item,
+        credit: parseFloat(item),
         itemAmount: item,
         senderName: "",
         senderAreaCode: "",
-        senderEmail: "f.l.p.eduardo@hotmail.com",
+        senderEmail: this.auth.user.email,
         senderPhone: "",
       };
       console.log(data);
