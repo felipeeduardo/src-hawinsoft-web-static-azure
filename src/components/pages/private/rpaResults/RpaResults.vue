@@ -1,8 +1,8 @@
 <template>
   <v-container grid-list-md>
-    <dialog-generic :data="data" />
     <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
+      automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6>
@@ -11,7 +11,7 @@
             <h1 class="title font-weight-light">Total de execução</h1>
           </v-card-title>
           <v-card-text>
-            <h1 class="text-xs-center ma-2">{{this.totalExec}}</h1>
+            <h1 class="text-xs-center ma-2">{{ this.totalExec }}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -50,30 +50,28 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
-import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 import { GChart } from "vue-google-charts";
 import router from "@/router";
 export default {
   components: {
-    DialogGeneric,
-    GChart
+    GChart,
   },
   computed: {
-    ...mapState("auth", ["auth"])
+    ...mapState("auth", ["auth"]),
   },
   created() {
     const data = {
       token: this.auth.token,
       id_user: this.auth.id,
-      id_rpa: this.$route.params.Rid
+      id_rpa: this.$route.params.Rid,
     };
     this.resultRpaUserChart(data)
-      .then(res => {
-        res.data.forEach(element => {
+      .then((res) => {
+        res.data.forEach((element) => {
           if (element != "") {
             this.chartData = [
               ["Bot", "Sucesso", "Falha"],
-              [element.name, element.success, element.fail]
+              [element.name, element.success, element.fail],
             ];
             this.totalExec = element.success + element.fail;
           }
@@ -81,18 +79,18 @@ export default {
       })
       .catch(() => {
         //erro 500 -> auth expired
-        EventBus.$emit("dialogGeneric", true);
+        EventBus.$emit("dialogGeneric", true, this.dataDialog);
       });
   },
   methods: {
-    ...mapActions("rpa", ["resultRpaUserChart"])
+    ...mapActions("rpa", ["resultRpaUserChart"]),
   },
   data() {
     return {
       totalExec: 0,
       chartData: [
         ["Bot", "Sucesso", "Falha"],
-        ["", 0, 0]
+        ["", 0, 0],
       ],
       chartOptions: {
         title: "Métricas Bot",
@@ -100,19 +98,19 @@ export default {
         legend: { position: "top", maxLines: 2 },
         annotations: {
           textStyle: {
-            fontSize: 15
-          }
+            fontSize: 15,
+          },
         },
-        colors: ["#43CD80", "#FF4500"]
+        colors: ["#43CD80", "#FF4500"],
       },
-      data: {
+      dataDialog: {
         // success | information | error
         type: "information",
         title: "Sessão expirada!",
         textButton: "log in",
         iconButton: "keyboard_backspace",
         sessionExpired: true,
-        size: "290"
+        size: "290",
       },
       chartEvents: {
         select: () => {
@@ -125,9 +123,9 @@ export default {
           }
         },
         onmouseover: () => {},
-        onmouseout: () => {}
-      }
+        onmouseout: () => {},
+      },
     };
-  }
+  },
 };
 </script>

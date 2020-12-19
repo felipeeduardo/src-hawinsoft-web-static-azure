@@ -67,7 +67,7 @@
                 Pré-pago
               </h3>
               <div>
-                Seu funcionamento é por meio pré-pago, insira créditos e use a
+                Seu funcionamento é por meio pré-pago, insira créditos e use à
                 vontade.
               </div>
             </div>
@@ -75,7 +75,9 @@
         </v-card>
       </v-flex>
       <v-flex class="mt-3" text-xs-center>
-        <v-btn color="primary" large>Conheça o projeto</v-btn>
+        <v-btn color="primary" large @click="goAbout()"
+          >Conheça o projeto</v-btn
+        >
       </v-flex>
       <v-flex xs12 class="mt-0" text-xs-center>
         <v-img
@@ -85,15 +87,15 @@
         ></v-img>
         <v-flex class="mt-2">
           <h2 class="font-weight-light">
-            Pensamos em como melhorar rotinas de trabalho, criando bots em nuvem
-            de acordo com sua necessidade.
+            Pensamos em como melhorar rotinas de trabalho, crie bots em nuvem de
+            acordo com sua necessidade.
           </h2>
         </v-flex>
         <v-flex class="mt-2">
           <v-btn v-for="icon in icons" :key="icon" class="mx-3" dark icon>
             <v-icon color="primary" size="24px">{{ icon }}</v-icon>
-          </v-btn> </v-flex
-        >-
+          </v-btn>
+        </v-flex>
       </v-flex>
     </v-layout>
   </v-layout>
@@ -116,6 +118,9 @@ export default {
   methods: {
     goLogin() {
       router.push({ name: "Login" });
+    },
+    goAbout() {
+      router.push({ name: "About" });
     },
   },
 };

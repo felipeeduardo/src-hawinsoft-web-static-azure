@@ -31,8 +31,12 @@
               </v-flex>
             </v-form>
             <v-flex xs12>
-              <v-alert :value="alertShowError" outline type="error">{{this.message}}</v-alert>
-              <v-alert :value="alertShowSuccess" outline type="success">{{this.message}}</v-alert>
+              <v-alert :value="alertShowError" outline type="error">{{
+                this.message
+              }}</v-alert>
+              <v-alert :value="alertShowSuccess" outline type="success">{{
+                this.message
+              }}</v-alert>
             </v-flex>
           </v-card-text>
           <v-divider></v-divider>
@@ -43,7 +47,8 @@
               color="success"
               flat
               @click="sendReportProblem()"
-            >Confirmar</v-btn>
+              >Confirmar</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -91,7 +96,7 @@ export default {
             })
             .catch((err) => {
               if (err.response.status == 401) {
-                EventBus.$emit("dialogGeneric", true);
+                EventBus.$emit("dialogGeneric", true, this.dataDialog);
               }
             });
         } else {
@@ -108,6 +113,15 @@ export default {
   },
   data() {
     return {
+      dataDialog: {
+        // success | information | error
+        type: "information",
+        title: "Sessão expirada!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290",
+      },
       editorSettings: {
         menubar: false,
         plugins: [

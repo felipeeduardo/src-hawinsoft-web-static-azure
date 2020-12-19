@@ -1,9 +1,9 @@
 <template>
   <v-container grid-list-md>
-    <dialog-generic :data="data" />
     <dialog-enabled :data="dialogEnabledOrDisabledRpa" />
     <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
+      automation
     </h1>
     <v-layout justify-center wrap>
       <v-flex xs12 sm7>
@@ -11,7 +11,11 @@
         <card-generic v-if="!verifyUserRpa" :data="cards" />
       </v-flex>
       <v-flex xs12 sm5>
-        <v-img :src="require('@/assets/img/hawinsoft-rpa-exe.jpg')" contain max-height="500"></v-img>
+        <v-img
+          :src="require('@/assets/img/hawinsoft-rpa-exe.jpg')"
+          contain
+          max-height="500"
+        ></v-img>
       </v-flex>
     </v-layout>
   </v-container>
@@ -22,12 +26,10 @@ import { mapActions, mapState } from "vuex";
 import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
 import CardGeneric from "@/components/organisms/cards/cardGeneric";
-import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 import DialogEnabled from "@/components/organisms/dialog/dialogDisabledOEnabledRpa";
 export default {
   components: {
     CardGeneric,
-    DialogGeneric,
     DialogEnabled,
   },
   data() {
@@ -61,7 +63,7 @@ export default {
           hoveColor: "grey lighten-4",
         },
       ],
-      data: {
+      dataDialog: {
         // success | information | error
         type: "information",
         title: "Sessão expirada!",
@@ -131,7 +133,7 @@ export default {
         })
         .catch((err) => {
           if (err.response.status == 401) {
-            EventBus.$emit("dialogGeneric", true);
+            EventBus.$emit("dialogGeneric", true, this.dataDialog);
           }
         });
     }

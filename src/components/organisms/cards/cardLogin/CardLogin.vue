@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <dialog-generic :data="dataDialog" />
     <dialog-forgotpw :data="dataDialogForgotPw" />
     <v-layout justify-center wrap>
       <v-flex xs12 sm6>
@@ -77,14 +76,12 @@
 <script>
 import { mapActions } from "vuex";
 import router from "@/router";
-import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 import DialogForgotpw from "@/components/organisms/dialog/dialogForgotPassword";
 import VueRecaptcha from "vue-recaptcha";
 import { EventBus } from "@/services/event-bus.js";
 export default {
   components: {
     VueRecaptcha,
-    DialogGeneric,
     DialogForgotpw,
   },
   data() {
@@ -92,15 +89,6 @@ export default {
       dataDialogForgotPw: {
         size: "500",
         countInput: 0,
-      },
-      dataDialog: {
-        // success | information | error
-        type: "information",
-        title: "Sessão expirada!",
-        textButton: "log in",
-        iconButton: "keyboard_backspace",
-        sessionExpired: true,
-        size: "290",
       },
       sitekey: "6LesJKQUAAAAAPuojWPcTSEYQbDBOzmQtMTS8j_g",
       valid: true,
@@ -139,36 +127,42 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         //if (this.recaptcha) {
-          this.logIn(this.form)
-            .then((res) => {
-              if (res.status == 200) {
-                sessionStorage.hawinsoft = res.data.user.active;
-                sessionStorage.hawinsoft_profile = res.data.user.id_user;
-                EventBus.$emit("checkSessionAuth", true);
-                router.push({ name: "Home" });
-              }
-            })
-            .catch((err) => {
-              if (err.response.status == 404) {
-                this.dataDialog.type = "error";
-                this.dataDialog.title = "Usuário ou senha inválido.";
-                this.dataDialog.textButton = "Ok, Entendi";
-                this.dataDialog.iconButton = "check";
-                EventBus.$emit("dialogGeneric", true);
-              } else {
-                this.dataDialog.type = "information";
-                this.dataDialog.title = "Serviço temporariamente indisponível.";
-                this.dataDialog.textButton = "Ok, Entendi";
-                this.dataDialog.iconButton = "check";
-                EventBus.$emit("dialogGeneric", true);
-              }
-            });
+        this.logIn(this.form)
+          .then((res) => {
+            if (res.status == 200) {
+              sessionStorage.hawinsoft = res.data.user.active;
+              sessionStorage.hawinsoft_profile = res.data.user.id_user;
+              EventBus.$emit("checkSessionAuth", true);
+              router.push({ name: "Home" });
+            }
+          })
+          .catch((err) => {
+            if (err.response.status == 404) {
+              const data = {
+                type: "error",
+                title: "Usuário ou senha inválido.",
+                textButton: "Ok, Entendi",
+                iconButton: "check",
+              };
+              EventBus.$emit("dialogGeneric", true, data);
+            } else {
+              const data = {
+                type: "information",
+                title: "Serviço temporariamente indisponível.",
+                textButton: "Ok, Entendi",
+                iconButton: "check",
+              };
+              EventBus.$emit("dialogGeneric", true, data);
+            }
+          });
         /*} else {
-          this.dataDialog.type = "error";
-          this.dataDialog.title = "ReCaptcha inválido.";
-          this.dataDialog.textButton = "Ok, Entendi";
-          this.dataDialog.iconButton = "check";
-          EventBus.$emit("dialogGeneric", true);
+          const data = {
+            type: "error",
+            title: "ReCaptcha inválido.",
+            textButton: "Ok, Entendi",
+            iconButton: "check",
+          };
+          EventBus.$emit("dialogGeneric", true, data);
         }*/
       }
     },

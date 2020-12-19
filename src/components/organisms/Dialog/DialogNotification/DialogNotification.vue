@@ -24,12 +24,10 @@
                 <td class="text-xs-left">{{ props.item.message }}</td>
               </template>
               <template v-slot:no-results>
-                <v-alert
-                  outline
-                  :value="true"
-                  color="error"
-                  icon="warning"
-                >Sua pesquisa por "{{ search }}" não encontrou nenhum resultado.</v-alert>
+                <v-alert outline :value="true" color="error" icon="warning"
+                  >Sua pesquisa por "{{ search }}" não encontrou nenhum
+                  resultado.</v-alert
+                >
               </template>
             </v-data-table>
           </v-card-text>
@@ -82,7 +80,7 @@ export default {
       })
       .catch((err) => {
         if (err.response.status == 401) {
-          EventBus.$emit("dialogGeneric", true);
+          EventBus.$emit("dialogGeneric", true, this.dataDialog);
         }
       });
   },
@@ -115,6 +113,15 @@ export default {
       ],
       messages: [],
       dialogNotification: false,
+      dataDialog: {
+        // success | information | error
+        type: "information",
+        title: "Sessão expirada!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290",
+      },
     };
   },
 };

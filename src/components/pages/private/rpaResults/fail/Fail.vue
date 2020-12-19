@@ -1,8 +1,8 @@
 <template>
   <v-container grid-list-md>
-    <dialog-generic :data="dataDialog" />
     <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
+      automation
     </h1>
     <v-layout class="mt-3">
       <v-flex xs12>
@@ -18,20 +18,27 @@
               hide-details
             ></v-text-field>
           </v-card-title>
-          <v-data-table :headers="headers" :items="failResults" :search="search">
+          <v-data-table
+            :headers="headers"
+            :items="failResults"
+            :search="search"
+          >
             <template v-slot:items="props">
               <td class="text-xs-left">{{ props.item.created }}</td>
               <td class="text-xs-left">
-                <json-viewer class="ma-2" :value="JSON.parse(props.item.result)" :expand-depth="1" copyable></json-viewer>
+                <json-viewer
+                  class="ma-2"
+                  :value="JSON.parse(props.item.result)"
+                  :expand-depth="1"
+                  copyable
+                ></json-viewer>
               </td>
             </template>
             <template v-slot:no-results>
-              <v-alert
-                outline
-                :value="true"
-                color="error"
-                icon="warning"
-              >Sua pesquisa por "{{ search }}" não encontrou nenhum resultado.</v-alert>
+              <v-alert outline :value="true" color="error" icon="warning"
+                >Sua pesquisa por "{{ search }}" não encontrou nenhum
+                resultado.</v-alert
+              >
             </template>
           </v-data-table>
         </v-card>
@@ -43,11 +50,9 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
-import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 import JsonViewer from "vue-json-viewer";
 export default {
   components: {
-    DialogGeneric,
     JsonViewer,
   },
   computed: {
@@ -84,7 +89,7 @@ export default {
       })
       .catch((err) => {
         if (err.response.status == 401) {
-          EventBus.$emit("dialogGeneric", true);
+          EventBus.$emit("dialogGeneric", true, this.dataDialog);
         }
       });
   },

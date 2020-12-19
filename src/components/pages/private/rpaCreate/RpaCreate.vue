@@ -1,6 +1,5 @@
 <template>
   <v-container justify-center wrap>
-    <dialog-generic :data="dataDialog" />
     <h1 class="title font-weight-light">
       <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
       automation
@@ -156,12 +155,10 @@
 import router from "@/router";
 import { mapActions, mapState } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
-import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 import TimeLine from "@/components/organisms/timeLine";
 export default {
   components: {
     TimeLine,
-    DialogGeneric,
   },
   data() {
     return {
@@ -218,7 +215,7 @@ export default {
       })
       .catch((err) => {
         if (err.response.status == 401) {
-          EventBus.$emit("dialogGeneric", true);
+          EventBus.$emit("dialogGeneric", true, this.dataDialog);
         }
       });
   },
@@ -290,7 +287,7 @@ export default {
         })
         .catch((err) => {
           if (err.response.status == 401) {
-            EventBus.$emit("dialogGeneric", true);
+            EventBus.$emit("dialogGeneric", true, this.dataDialog);
           }
         });
     },

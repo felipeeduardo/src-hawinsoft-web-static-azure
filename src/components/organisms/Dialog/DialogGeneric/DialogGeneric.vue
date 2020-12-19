@@ -1,19 +1,30 @@
 <template>
   <v-layout row justify-center>
     <div>
-      <v-dialog v-model="dialogGeneric" persistent :max-width="this.data.size">
+      <v-dialog
+        v-model="dialogGeneric"
+        persistent
+        :max-width="this.dialogData.size"
+      >
         <v-card>
           <v-card-text>
-            <v-img v-if="this.img" height="120px" contain :src="this.img"></v-img>
+            <v-img
+              v-if="this.img"
+              height="120px"
+              contain
+              :src="this.img"
+            ></v-img>
             <div class="mt-4">
-              <h1 class="title text-xs-center font-weight-light">{{this.data.title}}</h1>
+              <h1 class="title text-xs-center font-weight-light">
+                {{ this.dialogData.title }}
+              </h1>
             </div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" flat @click="verify()">
-              <v-icon left>{{this.data.iconButton}}</v-icon>
-              {{this.data.textButton}}
+              <v-icon left>{{ this.dialogData.iconButton }}</v-icon>
+              {{ this.dialogData.textButton }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -27,12 +38,12 @@ import { mapActions } from "vuex";
 import router from "@/router";
 import { EventBus } from "@/services/event-bus.js";
 export default {
-  props: {
+  /*props: {
     data: {
       type: Object,
-      default: null
-    }
-  },
+      default: null,
+    },
+  },*/
   methods: {
     ...mapActions("auth", ["logOut"]),
     sessionExpired() {
@@ -44,23 +55,27 @@ export default {
       router.push({ name: "Login" });
     },
     verify() {
-      if (this.data.sessionExpired) {
+      if (this.dialogGeneric.sessionExpired) {
         this.sessionExpired();
       } else {
         this.dialogGeneric = false;
       }
-    }
+    },
   },
   mounted() {
-    EventBus.$on("dialogGeneric", event => {
+    EventBus.$on("dialogGeneric", (event, data) => {
       this.dialogGeneric = event;
-      if (this.data.type == "success") {
+      this.dialogData.type = data.type;
+      this.dialogData.title = data.title;
+      this.dialogData.textButton = data.textButton;
+      this.dialogData.iconButton = data.iconButton;
+      if (data.type == "success") {
         this.img = require("@/assets/img/hawinsoft-success.png");
       }
-      if (this.data.type == "information") {
+      if (data.type == "information") {
         this.img = require("@/assets/img/hawinsoft-information.png");
       }
-      if (this.data.type == "error") {
+      if (data.type == "error") {
         this.img = require("@/assets/img/hawinsoft-error.png");
       }
     });
@@ -68,9 +83,17 @@ export default {
   data() {
     return {
       dialogGeneric: false,
-      img: ""
+      img: "",
+      dialogData: {
+        type: "",
+        title: "",
+        textButton: "",
+        iconButton: "",
+        sessionExpired: true,
+        size: "290",
+      },
     };
-  }
+  },
 };
 </script>
 

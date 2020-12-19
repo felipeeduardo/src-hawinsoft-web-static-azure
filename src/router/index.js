@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 //publics
 import PublicHome from '@/components/pages/public/home'
+import PublicAbout from '@/components/pages/public/about'
 import Login from '@/components/pages/public/user/login'
 import CreateUser from '@/components/pages/public/user/create'
 //privates
@@ -59,6 +60,11 @@ export default new Router({
             path: '/newuser',
             name: 'Create',
             component: CreateUser,
+        },
+        {
+            path: '/about',
+            name: 'About',
+            component: PublicAbout
         },
         {
             path: '*',

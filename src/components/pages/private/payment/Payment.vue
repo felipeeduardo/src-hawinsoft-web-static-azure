@@ -1,6 +1,5 @@
 <template>
   <v-container grid-list-md>
-    <dialog-generic :data="dataDialog" />
     <h1 class="title font-weight-light">
       <v-icon class="ma-1" size="20">fas fa-credit-card</v-icon>Créditos
     </h1>
@@ -56,11 +55,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
-import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 export default {
-  components: {
-    DialogGeneric,
-  },
   data() {
     return {
       cardsPayment: ["30.00", "40.00", "50.00", "100.00"],
@@ -118,7 +113,7 @@ export default {
       })
       .catch((err) => {
         if (err.response.status == 401) {
-          EventBus.$emit("dialogGeneric", true);
+          EventBus.$emit("dialogGeneric", true, this.dataDialog);
         }
       });
   },

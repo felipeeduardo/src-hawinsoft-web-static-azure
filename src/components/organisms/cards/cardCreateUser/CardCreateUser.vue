@@ -1,10 +1,13 @@
 <template>
   <v-container>
-    <dialog-generic :data="dataDialog" />
     <dialog-terms :data="dataDialogTerms" />
     <v-layout justify-center wrap>
       <v-flex xs12 sm6>
-        <v-img :src="require('@/assets/img/hawinsoft-register.jpg')" contain max-height="600"></v-img>
+        <v-img
+          :src="require('@/assets/img/hawinsoft-register.jpg')"
+          contain
+          max-height="600"
+        ></v-img>
       </v-flex>
       <v-flex xs12 sm6>
         <v-card class="elevation-0 pt-3">
@@ -66,13 +69,24 @@
               </v-btn>
             </v-flex>
             <v-flex xs12 mt-3>
-              <vue-recaptcha @verify="onVerify" @expired="onExpired" :sitekey="sitekey"></vue-recaptcha>
+              <vue-recaptcha
+                @verify="onVerify"
+                @expired="onExpired"
+                :sitekey="sitekey"
+              ></vue-recaptcha>
             </v-flex>
           </v-card-text>
           <v-divider light></v-divider>
           <v-card-actions class="pa-3">
             <v-spacer></v-spacer>
-            <v-btn :disabled="!valid" color="success" flat outline @click="validateNew()">Registrar</v-btn>
+            <v-btn
+              :disabled="!valid"
+              color="success"
+              flat
+              outline
+              @click="validateNew()"
+              >Registrar</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -82,7 +96,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 import DialogTerms from "@/components/organisms/dialog/dialogTermsUser";
 import VueRecaptcha from "vue-recaptcha";
 import router from "@/router";
@@ -91,7 +104,6 @@ import { EventBus } from "@/services/event-bus.js";
 export default {
   components: {
     VueRecaptcha,
-    DialogGeneric,
     DialogTerms,
   },
   data() {
@@ -161,39 +173,47 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 if (res.data.cod == 0) {
-                  this.dataDialog.type = "success";
-                  this.dataDialog.title = "Cadastro efetuado com sucesso.";
-                  this.dataDialog.textButton = "Ok, Entendi";
-                  this.dataDialog.iconButton = "check";
-                  this.dataDialog.sessionExpired = false;
-                  EventBus.$emit("dialogGeneric", true);
+                  const data = {
+                    type: "success",
+                    title: "Cadastro efetuado com sucesso.",
+                    textButton: "Ok, Entendi",
+                    iconButton: "check",
+                    sessionExpired: false,
+                  };
+                  EventBus.$emit("dialogGeneric", true, data);
                 } else {
-                  this.dataDialog.type = "error";
-                  this.dataDialog.title = "Usuário já cadastrado.";
-                  this.dataDialog.textButton = "Ok, Entendi";
-                  this.dataDialog.iconButton = "check";
-                  this.dataDialog.sessionExpired = false;
-                  EventBus.$emit("dialogGeneric", true);
+                  const data = {
+                    type: "error",
+                    title: "Usuário já cadastrado.",
+                    textButton: "Ok, Entendi",
+                    iconButton: "check",
+                    sessionExpired: false,
+                  };
+                  EventBus.$emit("dialogGeneric", true, data);
                 }
               } else {
-                this.dataDialog.type = "error";
-                this.dataDialog.title = "Erro.";
-                this.dataDialog.textButton = "Ok, Entendi";
-                this.dataDialog.iconButton = "check";
-                this.dataDialog.sessionExpired = false;
-                EventBus.$emit("dialogGeneric", true);
+                const data = {
+                  type: "error",
+                  title: "Erro.",
+                  textButton: "Ok, Entendi",
+                  iconButton: "check",
+                  sessionExpired: false,
+                };
+                EventBus.$emit("dialogGeneric", true, data);
               }
             })
             .catch((err) => {
               console.log("err", err);
             });
         } else {
-          this.dataDialog.type = "error";
-          this.dataDialog.title = "ReCaptcha inválido.";
-          this.dataDialog.textButton = "Ok, Entendi";
-          this.dataDialog.iconButton = "check";
-          this.dataDialog.sessionExpired = false;
-          EventBus.$emit("dialogGeneric", true);
+          const data = {
+            type: "error",
+            title: "ReCaptcha inválido.",
+            textButton: "Ok, Entendi",
+            iconButton: "check",
+            sessionExpired: false,
+          };
+          EventBus.$emit("dialogGeneric", true, data);
         }
       }
     },

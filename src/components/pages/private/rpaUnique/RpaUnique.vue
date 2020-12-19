@@ -1,19 +1,24 @@
 <template>
   <v-container grid-list-md>
-    <dialog-generic :data="dataDialog" />
     <dialog-backlog :data="dataDialogBacklog" />
     <dialog-disabled :data="dialogEnabledOrDisabledRpa" />
     <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
+      automation
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6>
         <v-card class="elevation-0 grey lighten-5 heightCard">
           <v-card-title>
-            <h1 class="title">{{this.botName}}</h1>
+            <h1 class="title">{{ this.botName }}</h1>
           </v-card-title>
           <v-card-text>
-            <v-bottom-nav :value="true" top color="transparent" class="elevation-0">
+            <v-bottom-nav
+              :value="true"
+              top
+              color="transparent"
+              class="elevation-0"
+            >
               <v-btn @click="playRpa()">
                 <span class="green--text">Iniciar</span>
                 <v-icon medium color="green darken-2">play_arrow</v-icon>
@@ -40,7 +45,7 @@
             <h1 class="title font-weight-light">Backlog</h1>
           </v-card-title>
           <v-card-text>
-            <h1 class="text-xs-center ma-2">{{this.qtdBacklog}}</h1>
+            <h1 class="text-xs-center ma-2">{{ this.qtdBacklog }}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -50,7 +55,7 @@
             <h1 class="title font-weight-light">Processados</h1>
           </v-card-title>
           <v-card-text>
-            <h1 class="text-xs-center ma-2">{{this.qtdBacklogProcessed}}</h1>
+            <h1 class="text-xs-center ma-2">{{ this.qtdBacklogProcessed }}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -60,7 +65,7 @@
             <h1 class="title font-weight-light">Tempo Médio</h1>
           </v-card-title>
           <v-card-text>
-            <h1 class="text-xs-center ma-2">{{this.timerMedium}}</h1>
+            <h1 class="text-xs-center ma-2">{{ this.timerMedium }}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -70,7 +75,11 @@
             <h1 class="title font-weight-light">JSON</h1>
           </v-card-title>
           <v-card-text>
-            <json-viewer :value="this.steps" :expand-depth="2" copyable></json-viewer>
+            <json-viewer
+              :value="this.steps"
+              :expand-depth="2"
+              copyable
+            ></json-viewer>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -98,13 +107,11 @@ import { mapState, mapActions } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
 import router from "@/router";
 import { GChart } from "vue-google-charts";
-import DialogGeneric from "@/components/organisms/dialog/dialogGeneric";
 import DialogBacklog from "@/components/organisms/dialog/dialogImportBacklog";
 import DialogDisabled from "@/components/organisms/dialog/dialogDisabledOEnabledRpa";
 import JsonViewer from "vue-json-viewer";
 export default {
   components: {
-    DialogGeneric,
     DialogBacklog,
     JsonViewer,
     GChart,
@@ -136,7 +143,7 @@ export default {
       })
       .catch((err) => {
         if (err.response.status == 401) {
-          EventBus.$emit("dialogGeneric", true);
+          EventBus.$emit("dialogGeneric", true, this.dataDialog);
         }
       });
     //CHARTS
@@ -168,7 +175,7 @@ export default {
       })
       .catch((err) => {
         if (err.response.status == 401) {
-          EventBus.$emit("dialogGeneric", true);
+          EventBus.$emit("dialogGeneric", true, this.dataDialog);
         }
       });
     //CARDS
@@ -183,7 +190,7 @@ export default {
       })
       .catch((err) => {
         if (err.response.status == 401) {
-          EventBus.$emit("dialogGeneric", true);
+          EventBus.$emit("dialogGeneric", true, this.dataDialog);
         }
       });
     //TIMER RESULT
@@ -197,7 +204,7 @@ export default {
       })
       .catch((err) => {
         if (err.response.status == 401) {
-          EventBus.$emit("dialogGeneric", true);
+          EventBus.$emit("dialogGeneric", true, this.dataDialog);
         }
       });
   },
@@ -279,12 +286,14 @@ export default {
     },
     playRpa() {
       if (this.qtdBacklog == 0) {
-        this.dataDialog.type = "error";
-        this.dataDialog.title = "Não é possível iniciar sem backlog.";
-        this.dataDialog.textButton = "Ok, Entendi";
-        this.dataDialog.iconButton = "";
-        this.dataDialog.sessionExpired = false;
-        EventBus.$emit("dialogGeneric", true);
+        const data = {
+          type: "error",
+          title: "Não é possível iniciar sem backlog.",
+          textButton: "Ok, Entendi",
+          iconButton: "",
+          sessionExpired: false,
+        };
+        EventBus.$emit("dialogGeneric", true, data);
       } else {
         const data = {
           id_user: this.auth.user.id_user,
@@ -295,7 +304,7 @@ export default {
           .then((res) => {})
           .catch((err) => {
             if (err.response.status == 401) {
-              EventBus.$emit("dialogGeneric", true);
+              EventBus.$emit("dialogGeneric", true, this.dataDialog);
             }
           });
       }

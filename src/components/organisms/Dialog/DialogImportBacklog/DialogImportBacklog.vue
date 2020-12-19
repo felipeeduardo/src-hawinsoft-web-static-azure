@@ -5,20 +5,20 @@
         <v-card>
           <v-card-title primary-title>
             <div>
-              <div class="headline">{{this.data.nameRpa}}</div>
+              <div class="headline">{{ this.data.nameRpa }}</div>
               <span>Upload Backlog</span>
             </div>
           </v-card-title>
           <v-card-text>
-            <h3 class="font-weight-light" v-if="this.data.countInput >1">
+            <h3 class="font-weight-light" v-if="this.data.countInput > 1">
               O backlog deve conter apenas
-              <b>{{this.data.countInput}} colunas</b> separados por
+              <b>{{ this.data.countInput }} colunas</b> separados por
               <b>| (pipe)</b> e finalizados com
               <b>; (ponto e vírgula)</b>
             </h3>
             <h3 class="font-weight-light" v-if="this.data.countInput <= 1">
               O backlog deve conter apenas
-              <b>{{this.data.countInput}} coluna</b>
+              <b>{{ this.data.countInput }} coluna</b>
               finalizados com
               <b>; (ponto e vírgula)</b>
             </h3>
@@ -45,8 +45,12 @@
               ></v-textarea>
             </v-flex>
             <v-flex xs12>
-              <v-alert :value="alertShowSuccess" outline type="success">{{this.messageSuccess}}</v-alert>
-              <v-alert :value="alertShowError" outline type="error">{{this.messageErr}}</v-alert>
+              <v-alert :value="alertShowSuccess" outline type="success">{{
+                this.messageSuccess
+              }}</v-alert>
+              <v-alert :value="alertShowError" outline type="error">{{
+                this.messageErr
+              }}</v-alert>
             </v-flex>
           </v-card-text>
           <v-divider></v-divider>
@@ -57,7 +61,8 @@
               color="success"
               flat
               @click="confirmImport()"
-            >Confirmar, {{this.qtdRow}} item(s)</v-btn>
+              >Confirmar, {{ this.qtdRow }} item(s)</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -136,7 +141,7 @@ export default {
               })
               .catch((err) => {
                 if (err.response.status == 401) {
-                  EventBus.$emit("dialogGeneric", true);
+                  EventBus.$emit("dialogGeneric", true, this.dataDialog);
                 } else {
                   this.alertShowError = true;
                   this.messageErr = "Erro em sua requisição.";
@@ -180,6 +185,15 @@ export default {
         id_user: "",
         id_rpa: "",
         backlog_data: "",
+      },
+      dataDialog: {
+        // success | information | error
+        type: "information",
+        title: "Sessão expirada!",
+        textButton: "log in",
+        iconButton: "keyboard_backspace",
+        sessionExpired: true,
+        size: "290",
       },
     };
   },
