@@ -303,8 +303,18 @@ export default {
         this.RpaBrowserRemore(data)
           .then((res) => {})
           .catch((err) => {
-            if (err.response.status == 401) {
+            if (ponserr.rese.status == 401) {
               EventBus.$emit("dialogGeneric", true, this.dataDialog);
+            }
+            if (ponserr.rese.status == 500) {
+              const data500 = {
+                type: "error",
+                title: "Serviço temporariamente indisponível, tente novamente mais tarde.",
+                textButton: "Ok, Entendi",
+                iconButton: "",
+                sessionExpired: false,
+              };
+              EventBus.$emit("dialogGeneric", true, data500);
             }
           });
       }

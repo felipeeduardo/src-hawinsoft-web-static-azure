@@ -25,14 +25,9 @@
           >
             <template v-slot:items="props">
               <td class="text-xs-left">{{ props.item.created }}</td>
-              <td class="text-xs-left">
-                <json-viewer
-                  class="ma-2"
-                  :value="JSON.parse(props.item.result)"
-                  :expand-depth="1"
-                  copyable
-                ></json-viewer>
-              </td>
+              <td class="text-xs-left">{{ props.item.timer }}</td>
+              <td class="text-xs-left">{{ props.item.version }}</td>
+              <td class="text-xs-left">{{ props.item.result }}</td>
             </template>
             <template v-slot:no-results>
               <v-alert outline :value="true" color="error" icon="warning"
@@ -72,7 +67,7 @@ export default {
     const data = {
       id_user: this.auth.user.id_user,
       id_rpa: parseInt(this.$route.params.Rid),
-      flag: true,
+      flag: false,
       token: this.auth.token,
     };
     this.resultRpaUser(data)
@@ -81,7 +76,9 @@ export default {
           res.data.forEach((element) => {
             var obj = {
               created: this.formatDateDb(element.created),
-              result: element.result,
+              timer: JSON.parse(element.result).timer,
+              version: JSON.parse(element.result).version,
+              result: JSON.parse(element.result).response,
             };
             this.successResults.push(obj);
           });
@@ -110,6 +107,16 @@ export default {
           text: "Criado",
           align: "left",
           value: "created",
+        },
+        {
+          text: "Tempo",
+          align: "left",
+          value: "timer",
+        },
+        {
+          text: "Versão",
+          align: "left",
+          value: "version",
         },
         {
           text: "Resultado",

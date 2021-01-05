@@ -55,7 +55,7 @@ export default {
       router.push({ name: "Login" });
     },
     verify() {
-      if (this.dialogGeneric.sessionExpired) {
+      if (this.dialogData.sessionExpired) {
         this.sessionExpired();
       } else {
         this.dialogGeneric = false;
@@ -69,6 +69,8 @@ export default {
       this.dialogData.title = data.title;
       this.dialogData.textButton = data.textButton;
       this.dialogData.iconButton = data.iconButton;
+      this.dialogData.sessionExpired = data.sessionExpired;
+      console.log(data.type);
       if (data.type == "success") {
         this.img = require("@/assets/img/hawinsoft-success.png");
       }

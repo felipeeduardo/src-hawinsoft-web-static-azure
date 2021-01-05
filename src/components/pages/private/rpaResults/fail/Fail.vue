@@ -25,14 +25,7 @@
           >
             <template v-slot:items="props">
               <td class="text-xs-left">{{ props.item.created }}</td>
-              <td class="text-xs-left">
-                <json-viewer
-                  class="ma-2"
-                  :value="JSON.parse(props.item.result)"
-                  :expand-depth="1"
-                  copyable
-                ></json-viewer>
-              </td>
+              <td class="text-xs-left">{{ props.item.result }}</td>
             </template>
             <template v-slot:no-results>
               <v-alert outline :value="true" color="error" icon="warning"
@@ -72,7 +65,7 @@ export default {
     const data = {
       id_user: this.auth.user.id_user,
       id_rpa: parseInt(this.$route.params.Rid),
-      flag: false,
+      flag: true,
       token: this.auth.token,
     };
     this.resultRpaUser(data)
@@ -81,7 +74,7 @@ export default {
           res.data.forEach((element) => {
             var obj = {
               created: this.formatDateDb(element.created),
-              result: element.result,
+              result: JSON.parse(element.result).mesage,
             };
             this.failResults.push(obj);
           });
@@ -112,7 +105,7 @@ export default {
           value: "created",
         },
         {
-          text: "Resultado",
+          text: "Erro log",
           align: "left",
           sortable: false,
           value: "result",
