@@ -8,7 +8,7 @@
       <v-flex xs12>
         <v-card class="elevation-0">
           <v-card-title>
-            <v-btn color="primary" outline>Exportar</v-btn>
+            <b>{{ this.botName }}</b>
             <v-spacer></v-spacer>
             <v-text-field
               v-model="search"
@@ -17,6 +17,16 @@
               single-line
               hide-details
             ></v-text-field>
+            <v-btn
+              class="mt-3"
+              fab
+              dark
+              small
+              color="primary"
+              @click="csvExport(failResults)"
+            >
+              <v-icon dark>download</v-icon>
+            </v-btn>
           </v-card-title>
           <v-data-table
             :headers="headers"
@@ -41,15 +51,12 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import { EventBus } from "@/services/event-bus.js";
-import JsonViewer from "vue-json-viewer";
 export default {
-  components: {
-    JsonViewer,
-  },
   computed: {
     ...mapState("auth", ["auth"]),
+    ...mapGetters("rpa", ["getRpaUserUnique"]),
   },
   methods: {
     ...mapActions("rpa", ["resultRpaUser"]),
@@ -60,8 +67,27 @@ export default {
         ano = data.getFullYear();
       return dia + "/" + mes + "/" + ano;
     },
+    csvExport(arrData) {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += [
+        Object.keys(arrData[0]).join(";"),
+        ...arrData.map((item) => Object.values(item).join(";")),
+      ]
+        .join("\n")
+        .replace(/(^\[)|(\]$)/gm, "");
+
+      const data = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", data);
+      link.setAttribute(
+        "download",
+        this.botName + " - Erro - " + new Date().valueOf() + ".csv"
+      );
+      link.click();
+    },
   },
   created() {
+    this.botName = this.getRpaUserUnique.map((x) => x.name).toString();
     const data = {
       id_user: this.auth.user.id_user,
       id_rpa: parseInt(this.$route.params.Rid),
@@ -88,6 +114,7 @@ export default {
   },
   data() {
     return {
+      botName: "",
       dataDialog: {
         // success | information | error
         type: "information",

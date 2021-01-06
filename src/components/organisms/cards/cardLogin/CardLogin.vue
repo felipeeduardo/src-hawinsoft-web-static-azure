@@ -126,36 +126,36 @@ export default {
     },
     validate() {
       if (this.$refs.form.validate()) {
-        if (this.recaptcha) {
-          this.logIn(this.form)
-            .then((res) => {
-              if (res.status == 200) {
-                sessionStorage.hawinsoft = res.data.user.active;
-                sessionStorage.hawinsoft_profile = res.data.user.id_user;
-                EventBus.$emit("checkSessionAuth", true);
-                router.push({ name: "Home" });
-              }
-            })
-            .catch((err) => {
-              if (err.response.status == 404) {
-                const data = {
-                  type: "error",
-                  title: "Usuário ou senha inválido.",
-                  textButton: "Ok, Entendi",
-                  iconButton: "check",
-                };
-                EventBus.$emit("dialogGeneric", true, data);
-              } else {
-                const data = {
-                  type: "information",
-                  title: "Serviço temporariamente indisponível.",
-                  textButton: "Ok, Entendi",
-                  iconButton: "check",
-                };
-                EventBus.$emit("dialogGeneric", true, data);
-              }
-            });
-        } else {
+        //if (this.recaptcha) {
+        this.logIn(this.form)
+          .then((res) => {
+            if (res.status == 200) {
+              sessionStorage.hawinsoft = res.data.user.active;
+              sessionStorage.hawinsoft_profile = res.data.user.id_user;
+              EventBus.$emit("checkSessionAuth", true);
+              router.push({ name: "Home" });
+            }
+          })
+          .catch((err) => {
+            if (err.response.status == 404) {
+              const data = {
+                type: "error",
+                title: "Usuário ou senha inválido.",
+                textButton: "Ok, Entendi",
+                iconButton: "check",
+              };
+              EventBus.$emit("dialogGeneric", true, data);
+            } else {
+              const data = {
+                type: "information",
+                title: "Serviço temporariamente indisponível.",
+                textButton: "Ok, Entendi",
+                iconButton: "check",
+              };
+              EventBus.$emit("dialogGeneric", true, data);
+            }
+          });
+        /*} else {
           const data = {
             type: "error",
             title: "ReCaptcha inválido.",
@@ -163,7 +163,7 @@ export default {
             iconButton: "check",
           };
           EventBus.$emit("dialogGeneric", true, data);
-        }
+        }*/
       }
     },
   },

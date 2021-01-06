@@ -10,11 +10,11 @@
           <v-card-text>
             <v-img
               v-if="this.img"
-              height="120px"
+              height="80px"
               contain
               :src="this.img"
             ></v-img>
-            <div class="mt-4">
+            <div class="mt-3">
               <h1 class="title text-xs-center font-weight-light">
                 {{ this.dialogData.title }}
               </h1>

@@ -23,10 +23,10 @@
                 <span class="green--text">Iniciar</span>
                 <v-icon medium color="green darken-2">play_arrow</v-icon>
               </v-btn>
-              <v-btn>
+              <!--<v-btn>
                 <span class="error--text">Parar</span>
                 <v-icon medium color="error">stop</v-icon>
-              </v-btn>
+              </v-btn>-->
               <v-btn @click="uploadBacklogBot()">
                 <span class="primary--text">Backlog</span>
                 <v-icon medium color="primary">cloud_upload</v-icon>
@@ -309,7 +309,8 @@ export default {
             if (ponserr.rese.status == 500) {
               const data500 = {
                 type: "error",
-                title: "Serviço temporariamente indisponível, tente novamente mais tarde.",
+                title:
+                  "Serviço temporariamente indisponível, tente novamente mais tarde.",
                 textButton: "Ok, Entendi",
                 iconButton: "",
                 sessionExpired: false,

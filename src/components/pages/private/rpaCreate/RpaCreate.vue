@@ -4,150 +4,159 @@
       <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
       automation
     </h1>
-    <v-stepper alt-labels v-model="tabStep" class="mt-3 elevation-0">
-      <v-stepper-header class="elevation-0">
-        <v-stepper-step :complete="tabStep > 1" step="1"
-          >Definições</v-stepper-step
-        >
-        <v-divider></v-divider>
-        <v-stepper-step :complete="tabStep > 2" step="2"
-          >Construção</v-stepper-step
-        >
-        <v-divider></v-divider>
-        <v-stepper-step step="3">Finalização</v-stepper-step>
-      </v-stepper-header>
-      <v-stepper-items>
-        <v-stepper-content step="1" class="grey lighten-5">
-          <!--<v-flex xs8 offset-xs2 text-xs-center>-->
-          <v-flex xs12>
-            <h3 class="title mb-3 font-weight-light primary--text">
-              Definições
-            </h3>
-            <v-form
-              ref="definitionform"
-              v-model="valid"
-              lazy-validation
-              class="mb-3"
+    <v-layout justify-center wrap>
+      <v-flex xs12 sm7>
+        <v-stepper alt-labels v-model="tabStep" class="mt-3 elevation-0">
+          <v-stepper-header class="elevation-0">
+            <v-stepper-step :complete="tabStep > 1" step="1"
+              >Definições</v-stepper-step
             >
+            <v-divider></v-divider>
+            <v-stepper-step :complete="tabStep > 2" step="2"
+              >Construção</v-stepper-step
+            >
+            <v-divider></v-divider>
+            <v-stepper-step step="3">Finalização</v-stepper-step>
+          </v-stepper-header>
+          <v-stepper-items>
+            <v-stepper-content step="1" class="grey lighten-5">
               <v-flex xs12>
-                <v-text-field
-                  :disabled="this.addName"
-                  v-model="nameBot"
-                  prepend-icon="fas fa-robot"
-                  label="Nome do robô"
-                  required
-                  maxlength="20"
-                  :counter="20"
-                  :rules="isNameValid"
-                ></v-text-field>
+                <h3 class="title mb-3 font-weight-light primary--text">
+                  Definições
+                </h3>
+                <v-form
+                  ref="definitionform"
+                  v-model="valid"
+                  lazy-validation
+                  class="mb-3"
+                >
+                  <v-flex xs12>
+                    <v-text-field
+                      :disabled="this.addName"
+                      v-model="nameBot"
+                      prepend-icon="fas fa-robot"
+                      label="Nome do robô"
+                      required
+                      maxlength="20"
+                      :counter="20"
+                      :rules="isNameValid"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-text-field
+                      :disabled="this.addurl"
+                      v-model="url"
+                      prepend-icon="open_in_browser"
+                      label="Url"
+                      required
+                      :rules="isUrlValid"
+                    ></v-text-field>
+                  </v-flex>
+                </v-form>
+                <v-btn color="primary" outline @click="addDefinition()"
+                  >Avançar</v-btn
+                >
               </v-flex>
+            </v-stepper-content>
+            <v-stepper-content step="2" class="grey lighten-5">
               <v-flex xs12>
-                <v-text-field
-                  :disabled="this.addurl"
-                  v-model="url"
-                  prepend-icon="open_in_browser"
-                  label="Url"
+                <h3 class="title mb-3 font-weight-light primary--text">
+                  Construção
+                </h3>
+                <h3 class="font-weight-light">
+                  <span class="red--text">*</span> Utilize o Devtools do Chrome
+                  para auxiliar na
+                  <b> captura do Selector </b>
+                </h3>
+                <v-form
+                  ref="definitionstepsform"
+                  v-model="valid"
+                  lazy-validation
+                  class="mb-3"
+                >
+                  <v-flex xs12>
+                    <v-text-field
+                      v-model="newStep.selectorRpa"
+                      prepend-icon="code"
+                      label="Selector"
+                      required
+                      :rules="isSelectorValid"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-select
+                      required
+                      :rules="isEventValid"
+                      :items="states"
+                      v-model="newStep.eventRpa"
+                      label="Event"
+                      single-line
+                      prepend-icon="code"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 text-xs-center>
+                    <v-switch
+                      :disabled="this.newStep.eventRpa != `click`"
+                      color="primary"
+                      v-model="newStep.waitForNavigation"
+                      :label="`Aguardar Navegação`"
+                    ></v-switch>
+                  </v-flex>
+                </v-form>
+                <v-btn
+                  color="success"
                   required
-                  :rules="isUrlValid"
-                ></v-text-field>
+                  :v-if="!this.addurl"
+                  :disabled="!valid"
+                  outline
+                  @click="addStep()"
+                  >Adicionar</v-btn
+                >
+                <v-btn color="primary" outline @click="addDefinitionSteps()"
+                  >Avançar com
+                  {{
+                    this.countSteps == 1
+                      ? this.countSteps + " passo"
+                      : this.countSteps + " passos"
+                  }}</v-btn
+                >
+                <v-btn color="primary" outline @click="tabStep = 1"
+                  >Voltar</v-btn
+                >
               </v-flex>
-            </v-form>
-            <v-btn color="primary" outline @click="addDefinition()"
-              >Avançar</v-btn
-            >
-          </v-flex>
-          <!--</v-flex>-->
-        </v-stepper-content>
-        <v-stepper-content step="2" class="grey lighten-5">
-          <!--<v-flex xs8 offset-xs2 text-xs-center>-->
-          <v-flex xs12>
-            <h3 class="title mb-3 font-weight-light primary--text">
-              Construção
-            </h3>
-            <h3 class="font-weight-light">
-              <span class="red--text">*</span> Utilize o Devtools do Chrome para
-              auxiliar na
-              <b> captura do Selector </b>
-            </h3>
-            <v-form
-              ref="definitionstepsform"
-              v-model="valid"
-              lazy-validation
-              class="mb-3"
-            >
+            </v-stepper-content>
+            <v-stepper-content step="3" class="grey lighten-5">
               <v-flex xs12>
-                <v-text-field
-                  v-model="newStep.selectorRpa"
-                  prepend-icon="code"
-                  label="Selector"
-                  required
-                  :rules="isSelectorValid"
-                ></v-text-field>
+                <h3 class="title mb-4 font-weight-light primary--text">
+                  Finalização
+                </h3>
+                <v-flex xs12 class="ma-3">
+                  <h3 class="text-truncate font-weight-light blue--text">
+                    {{ this.url }}
+                  </h3>
+                </v-flex>
+                <time-line :data="listSteps" />
+                <v-flex xs12 class="mt-5" text-xs-center>
+                  <v-btn color="success" outline @click="saveStep()"
+                    >Finalizar</v-btn
+                  >
+                  <v-btn color="primary" outline @click="tabStep = 2"
+                    >Voltar</v-btn
+                  >
+                </v-flex>
               </v-flex>
-              <v-flex xs12>
-                <v-select
-                  required
-                  :rules="isEventValid"
-                  :items="states"
-                  v-model="newStep.eventRpa"
-                  label="Event"
-                  single-line
-                  prepend-icon="code"
-                ></v-select>
-              </v-flex>
-              <v-flex xs12 text-xs-center>
-                <v-switch
-                  :disabled="this.newStep.eventRpa != `click`"
-                  color="primary"
-                  v-model="newStep.waitForNavigation"
-                  :label="`Aguardar Navegação`"
-                ></v-switch>
-              </v-flex>
-            </v-form>
-            <v-btn
-              color="success"
-              required
-              :v-if="!this.addurl"
-              :disabled="!valid"
-              outline
-              @click="addStep()"
-              >Adicionar</v-btn
-            >
-            <v-btn color="primary" outline @click="addDefinitionSteps()"
-              >Avançar com
-              {{
-                this.countSteps == 1
-                  ? this.countSteps + " passo"
-                  : this.countSteps + " passos"
-              }}</v-btn
-            >
-            <v-btn color="primary" outline @click="tabStep = 1">Voltar</v-btn>
-          </v-flex>
-          <!--</v-flex>-->
-        </v-stepper-content>
-        <v-stepper-content step="3" class="grey lighten-5">
-          <!--<v-flex xs8 offset-xs2>-->
-          <v-flex xs12>
-            <h3 class="title mb-4 font-weight-light primary--text">
-              Finalização
-            </h3>
-            <v-flex xs12 class="ma-3">
-              <h3 class="text-truncate font-weight-light blue--text">
-                {{ this.url }}
-              </h3>
-            </v-flex>
-            <time-line :data="listSteps" />
-            <v-flex xs12 class="mt-5" text-xs-center>
-              <v-btn color="success" outline @click="saveStep()"
-                >Finalizar</v-btn
-              >
-              <v-btn color="primary" outline @click="tabStep = 2">Voltar</v-btn>
-            </v-flex>
-          </v-flex>
-          <!--</v-flex>-->
-        </v-stepper-content>
-      </v-stepper-items>
-    </v-stepper>
+            </v-stepper-content>
+          </v-stepper-items>
+        </v-stepper>
+      </v-flex>
+      <v-flex xs12 sm5>
+        <v-img
+          :src="require('@/assets/img/hawinsoft-create.jpg')"
+          contain
+          height="500"
+        ></v-img>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 

@@ -1,8 +1,6 @@
 <template>
   <v-container grid-list-md>
-    <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-cogs</v-icon>API's
-    </h1>
+    <h1 class="title font-weight-light">Em construção...</h1>
   </v-container>
 </template>
 
