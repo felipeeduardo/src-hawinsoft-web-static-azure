@@ -161,9 +161,6 @@ export default {
                 token: this.auth.token,
                 checkout: el.checkout,
                 reference: el.reference,
-                environmnet: JSON.parse(
-                  process.env.VUE_APP_ENVIRONMNET_PAYMENT
-                ),
               };
               this.paymentVerify(dataPayment).then((resp) => {
                 if (resp.status == 200) {

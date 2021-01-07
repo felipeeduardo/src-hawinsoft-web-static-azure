@@ -7,7 +7,6 @@ export const addCredit = (data) => {
     };
 
     const dataAdd = {
-        'environmnet': JSON.parse(data.environmnet),
         'id_user': data.id_user,
         'transaction': data.transaction,
         'credit': data.credit,
