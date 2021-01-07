@@ -2,8 +2,7 @@
   <v-container grid-list-md>
     <dialog-enabled :data="dialogEnabledOrDisabledRpa" />
     <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
-      automation
+      <v-icon class="ma-1" size="20">fas fa-th-large</v-icon>Painel de bots
     </h1>
     <v-layout justify-center wrap>
       <v-flex xs12 sm7>

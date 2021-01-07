@@ -1,8 +1,7 @@
 <template>
   <v-container justify-center wrap>
     <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
-      automation
+      <v-icon class="ma-1" size="20">fas fa-plus</v-icon>Novo bot
     </h1>
     <v-layout justify-center wrap>
       <v-flex xs12 sm7>

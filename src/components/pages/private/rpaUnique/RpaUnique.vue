@@ -3,21 +3,17 @@
     <dialog-backlog :data="dataDialogBacklog" />
     <dialog-disabled :data="dialogEnabledOrDisabledRpa" />
     <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
-      automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>{{ this.botName }}
     </h1>
     <v-layout justify-center wrap class="mt-3">
       <v-flex xs12 sm6>
         <v-card class="elevation-0 grey lighten-5 heightCard">
-          <v-card-title>
-            <h1 class="title">{{ this.botName }}</h1>
-          </v-card-title>
           <v-card-text>
             <v-bottom-nav
               :value="true"
               top
               color="transparent"
-              class="elevation-0"
+              class="elevation-0 mt-2"
             >
               <v-btn @click="playRpa()">
                 <span class="green--text">Iniciar</span>
@@ -41,30 +37,24 @@
       </v-flex>
       <v-flex xs12 sm2>
         <v-card class="elevation-0 heightCard" color="#6dafd5" dark>
-          <v-card-title>
-            <h1 class="title font-weight-light">Backlog</h1>
-          </v-card-title>
           <v-card-text>
+            <p class="title font-weight-light">Backlog</p>
             <h1 class="text-xs-center ma-2">{{ this.qtdBacklog }}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex xs12 sm2>
         <v-card class="elevation-0 heightCard" color="#4b82bc" dark>
-          <v-card-title>
-            <h1 class="title font-weight-light">Processados</h1>
-          </v-card-title>
           <v-card-text>
+            <p class="title font-weight-light">Processados</p>
             <h1 class="text-xs-center ma-2">{{ this.qtdBacklogProcessed }}</h1>
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex xs12 sm2>
         <v-card class="elevation-0 heightCard" color="#DAA520" dark>
-          <v-card-title>
-            <h1 class="title font-weight-light">Tempo Médio</h1>
-          </v-card-title>
           <v-card-text>
+            <p class="title font-weight-light">Tempo Médio</p>
             <h1 class="text-xs-center ma-2">{{ this.timerMedium }}</h1>
           </v-card-text>
         </v-card>
@@ -334,6 +324,6 @@ export default {
 </script>
 <style scoped>
 .heightCard {
-  height: 160px;
+  height: 100px;
 }
 </style>

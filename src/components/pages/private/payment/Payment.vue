@@ -141,7 +141,6 @@ export default {
         senderEmail: this.auth.user.email,
         senderPhone: "",
       };
-      console.log(data);
       this.paymentAddCredit(data).then((res) => {
         if (res.status == 200) {
           window.open(res.data.text, "_blank");

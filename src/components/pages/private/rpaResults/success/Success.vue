@@ -1,14 +1,12 @@
 <template>
   <v-container grid-list-md>
     <h1 class="title font-weight-light">
-      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>Robotic process
-      automation
+      <v-icon class="ma-1" size="20">fas fa-robot</v-icon>{{ this.botName }}
     </h1>
     <v-layout class="mt-3">
       <v-flex xs12>
         <v-card class="elevation-0">
           <v-card-title>
-            <b>{{ this.botName }}</b>
             <v-spacer></v-spacer>
             <v-text-field
               v-model="search"
