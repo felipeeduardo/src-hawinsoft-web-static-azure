@@ -130,9 +130,7 @@ export default {
       return dia + "/" + mes + "/" + ano;
     },
     goPaymento(item) {
-      let environmnetPayment = process.env.VUE_APP_ENVIRONMNET_PAYMENT;
       const data = {
-        environmnet: environmnetPayment,
         id_user: this.auth.user.id_user,
         token: this.auth.token,
         transaction: "",

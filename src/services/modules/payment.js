@@ -60,7 +60,7 @@ export const getPayment = (data) => {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + data.token,
     };
-    return http.get('v1/payments/' + data.id_user + '/' + data.checkout + '/' + data.reference + '/' + data.environmnet, { headers })
+    return http.get('v1/payments/' + data.id_user + '/' + data.checkout + '/' + data.reference, { headers })
         .then(res => {
             return Promise.resolve(res)
         })
