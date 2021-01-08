@@ -75,9 +75,15 @@
         </v-card>
       </v-flex>
       <v-flex class="mt-3" text-xs-center>
-        <v-btn color="primary" large @click="goAbout()"
+        <!--<v-btn color="primary" large @click="goAbout()"
           >Conheça o projeto</v-btn
-        >
+        >-->
+        <h3 class="headline font-weight-light mb-2 primary--text">
+          Saiba mais sobre o projeto, entre em contato conosco.
+        </h3>
+        <h3 class="headline font-weight-light mb-2 primary--text">
+          <b>contato@hawinsoft.com.br</b>
+        </h3>
       </v-flex>
       <v-flex xs12 class="mt-0" text-xs-center>
         <v-img
