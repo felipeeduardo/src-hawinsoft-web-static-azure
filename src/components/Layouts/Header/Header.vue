@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import MenuHeader from "@/components/organisms/Menu/Private/MenuHeader";
+import MenuHeader from "@/components/organisms/menu/private/menuHeader";
 export default {
   components: {
     MenuHeader
