@@ -6,7 +6,7 @@
 import CardLogin from "@/components/organisms/cards/cardLogin";
 export default {
   components: {
-    CardLogin
-  }
+    CardLogin,
+  },
 };
 </script>

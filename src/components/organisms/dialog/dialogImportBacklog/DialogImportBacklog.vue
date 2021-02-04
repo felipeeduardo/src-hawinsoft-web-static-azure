@@ -127,6 +127,7 @@ export default {
           //verify
           if (this.qtdRowPipe == this.data.countInput) {
             this.qtdUploadSuccess++;
+            this.dialogImport = false;
             this.uploadBacklog(this.dataUploadBacklog)
               .then((res) => {
                 if (res.status == 204) {
@@ -137,6 +138,7 @@ export default {
                     "Backlog com " +
                     this.qtdUploadSuccess +
                     " item(s) válido importado.";
+                    this.dialogImport = false;
                 }
               })
               .catch((err) => {
