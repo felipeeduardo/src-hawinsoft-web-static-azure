@@ -46,7 +46,7 @@
             <v-img
               :src="require('@/assets/img/hawinsoft-chromium-logo.png')"
               contain
-              max-height="150"
+              max-height="100"
             ></v-img>
           </v-flex>
           <v-flex d-flex xs9 class="pa-1">
@@ -115,7 +115,7 @@
           seu uso.<br />
           O custo é de <b>R$ 0.35/seg</b> (trinta e cinco centavos por segundo
           de processamento).<br />
-          O Processo de pagamento é feita através do pagseguro.
+          O Processamento de pagamento é feito através do pagseguro.
           <v-img
             :src="require('@/assets/img/hawinsoft-pagseguro.png')"
             contain
